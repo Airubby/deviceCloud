@@ -94,6 +94,10 @@ em{
 .loncom_pt10{
   padding-top: 10px !important;
 }
+.loncom_mtb20{
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
 .loncom_fl{
   float:left;
 }
@@ -126,6 +130,15 @@ em{
   width: 100% !important;
   height: 100% !important;
 }
+.loncom_bgfff{
+  background: #fff;
+}
+.loncom_color{
+  color: #409EFF;
+}
+.loncom_color:hover{
+  color: #66B1FF;
+}
 
 /*sidebar侧边导航*/
 .loncom_sidebar{
@@ -143,8 +156,6 @@ em{
   width: 100%;
   height: 120px;
   padding: 15px;
-  font-size: 21px;
-  line-height: 35px;
   position: relative;
 }
 .loncom_sidebar_top>div{
@@ -156,10 +167,19 @@ em{
 }
 .loncom_navbtn{
   position: absolute;
-  right: -26px;
+  right: -60px;
+  width: 40px;
+  height: 40px;
+  border-right: 1px solid #ddd;
   transition: all 0.2s ease-in;
   cursor: pointer;
   color: #20436b;
+  line-height: 40px;
+  display: block;
+  top: 10px;
+}
+.loncom_navbtn img{
+  vertical-align: middle;
 }
 .loncom_sidebar_list li{
   margin-top: 20px;
@@ -209,11 +229,12 @@ em{
   font-size: 14px;
   padding-left:20px;
   top: 0;
+  border-radius: 3px;
 }
 .loncom_sidebar_list .loncom_morenav dd{
   height: 16px;
   line-height: 16px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .loncom_sidebar_list .loncom_morenav em{
   height: 16px;
@@ -243,7 +264,6 @@ em{
 .loncom_sidebar_list .loncom_morenav .router-link-active em img{
   margin-top: -16px;
 }
-
 /*公共右边*/
 .loncom_sidebar_right{
   width: 100%;
@@ -251,6 +271,74 @@ em{
   float: left;
   padding-left: 160px;
 }
+.loncom_public_top{
+  width: 100%;
+  height: 60px;
+  padding: 10px 0 10px 70px;
+  line-height: 40px;
+  background: #fff;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+.loncom_public_topinfo{
+  font-size: 16px;
+  color: #33C466;
+} 
+.loncom_public_top img{
+  vertical-align: middle;
+}
+.loncom_public_right{
+  width: 100%;
+  height: calc(100% - 60px);
+}
+.loncom_tpadding{
+  padding: 0 15px;
+}
+.loncom_public_filter{
+  width: 100%;
+  height: 35px;
+}
+.loncom_filter_group{
+  display: inline-block;
+}
+.loncom_filter_label{
+  color: #999;
+}
+.loncom_public_filter .el-select{
+  width: 100px;
+}
+.loncom_table_btn{ 
+  position: absolute;
+  left: 48px;
+  bottom: 15px;
+}
+
+
+/*realControl实时监控*/
+.realControl_loginInfo{
+  float: right;
+}
+.realControl_loginInfo span{
+  margin-left: 20px;
+}
+.top_logout{
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+  border-left: 1px solid #ddd;
+}
+.realControl_search_box{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/*接入管理accessManage*/
+
+
+
+
 
 
 @media (min-width: 1000px) {

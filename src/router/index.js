@@ -5,8 +5,13 @@ import Index from '@/page/index'
 import realControl from '@/page/realControl'
 import realControlGis from '@/page/realControl_GIS'
 import realControlListView from '@/page/realControl_ListView'
+import realControlEventView from '@/page/realControl_EventView'
 //接入管理
 import accessManage from '@/page/accessManage'
+import accessManageGateway from '@/page/accessManage_Gateway'
+import accessManageDevice from '@/page/accessManage_Device'
+import accessManageTemplate from '@/page/accessManage_Template'
+import accessManageEvent from '@/page/accessManage_Event'
 //运维管理
 import operationManage from '@/page/operationManage'
 //数据分析
@@ -36,10 +41,18 @@ export default new Router({
       children:[
         {path:'/realControl/gis',component:realControlGis},
         {path:'/realControl/listView',component:realControlListView},
+        {path:'/realControl/eventView',component:realControlEventView},
       ]
     },{
       path:'/accessManage',
-      component:accessManage
+      component:accessManage,
+      redirect:'/accessManage/gateway',
+      children:[
+        {path:'/accessManage/gateway',component:accessManageGateway},
+        {path:'/accessManage/device',component:accessManageDevice},
+        {path:'/accessManage/template',component:accessManageTemplate},
+        {path:'/accessManage/event',component:accessManageEvent},
+      ]
     },{
       path:'/operationManage',
       component:operationManage

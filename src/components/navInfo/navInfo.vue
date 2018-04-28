@@ -5,7 +5,9 @@
                 <router-link to="/" class="loncom_logo"><img src="static/images/logo.svg"></router-link>
                 <router-link to="/" class="loncom_logosmall"><img src="static/images/logo_small.svg"></router-link>
             </div>
-            <span class="loncom_fr loncom_navbtn" @click="navclick" ref="navbtn"><i class="fa fa-navicon"></i></span>
+            <span class="loncom_fr loncom_navbtn" @click="navclick" ref="navbtn">
+                <img src="static/images/top_change.svg">
+            </span>
         </div>
         <div class="loncom_sidebar_list" ref="sidebar_list">
             <ul>
@@ -40,6 +42,28 @@
                         <div class="loncom_nav">
                             <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">接入管理</span>
                         </div>
+                        <dl class="loncom_morenav">
+                            <dd>
+                                <router-link to="/accessManage/gateway">
+                                <em><img src="static/images/morenav.png"></em><span>网关接入</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/accessManage/device">
+                                <em><img src="static/images/morenav.png"></em><span>设备接入</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/accessManage/template">
+                                <em><img src="static/images/morenav.png"></em><span>监控模板</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/accessManage/event">
+                                <em><img src="static/images/morenav.png"></em><span>事件规则</span>
+                                </router-link>
+                            </dd>
+                        </dl>
                     </router-link>
                 </li>
                 <li>

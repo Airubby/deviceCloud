@@ -2,7 +2,7 @@
     <div class="loncom_content">
         <navInfo></navInfo>
         <div class="loncom_sidebar_right" ref="content">
-            <router-view></router-view>
+            事件
         </div>
     </div>
 </template>

@@ -1,9 +1,6 @@
 <template>
     <div class="loncom_content">
-        <navInfo></navInfo>
-        <div class="loncom_sidebar_right" ref="content">
-            <router-view></router-view>
-        </div>
+         实时监控列表视图
     </div>
 </template>
 
