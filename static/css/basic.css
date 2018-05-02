@@ -312,6 +312,56 @@ em{
   left: 48px;
   bottom: 15px;
 }
+.loncom_public_add{
+  width: 100%;
+  max-width: 1120px;
+  height: 100%;
+  padding-top: 20px;
+  margin: 0 auto;
+}
+.loncom_public_add_title{
+  width: 100%;
+  height: 46px;
+  line-height: 46px;
+  text-indent: 15px;
+  background: #F3F3F3;
+  border: 1px solid #e0e0e0;
+}
+.loncom_public_add_con{
+  width: 100%;
+  height: calc(100% - 120px);
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  padding: 30px 20px 0 20px;
+}
+.loncom_public_submit {
+    text-align: right;
+    padding: 12px 0;
+}
+.loncom_list_boxform {
+    width: 420px;
+    min-height: 36px;
+    line-height: 36px;
+    font-size: 12px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.loncom_list_box_left {
+    width: 100px;
+    margin-right: 20px;
+    float: left;
+    color: #666;
+    text-align: right;
+}
+.loncom_list_box_left em {
+    color: #fb0101;
+    margin-right: 5px;
+}
+.loncom_list_box_right {
+    width: 300px;
+    float: left;
+    color: #666;
+}
 
 
 /*realControl实时监控*/

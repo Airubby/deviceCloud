@@ -8,20 +8,21 @@ import realControlListView from '@/page/realControl_ListView'  //当前告警
 import realControlHisData from '@/page/realControl_HisData'  //设备历史数据
 import realControlHisAlarm from '@/page/realControl_HisAlarm'  //设备历史告警
 
-// import realControlEventView from '@/page/realControl_EventView'  
 
 
 //接入管理
 import accessManage from '@/page/accessManage'
 import accessManageClient from '@/page/accessManage_Client'  //客户管理
+import accessManage_Client_Add from '@/page/accessManage_Client_Add'  //客户管理新增
+
 import accessManageProject from '@/page/accessManage_Project'  //项目管理
 import accessManageGateway from '@/page/accessManage_Gateway'  //接入网关
 import accessManageDevice from '@/page/accessManage_Device'  //接入设备
 import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备类型管理
 
 
-// import accessManageTemplate from '@/page/accessManage_Template'
-// import accessManageEvent from '@/page/accessManage_Event'
+
+
 //运维管理
 import operationManage from '@/page/operationManage'
 import operationManageAbnormalLog from '@/page/operationManage_AbnormalLog'  //系统异常日志
@@ -70,7 +71,6 @@ export default new Router({
         {path:'/realControl/listView',component:realControlListView},
         {path:'/realControl/hisData',component:realControlHisData},
         {path:'/realControl/hisAlarm',component:realControlHisAlarm},
-        // {path:'/realControl/eventView',component:realControlEventView},
       ]
     },{ //接入管理
       path:'/accessManage',
@@ -78,13 +78,12 @@ export default new Router({
       redirect:'/accessManage/client',
       children:[
         {path:'/accessManage/client',component:accessManageClient},
+        {path:'/accessManage/client/add',component:accessManage_Client_Add}, //新增客户信息
         {path:'/accessManage/project',component:accessManageProject},
         {path:'/accessManage/gateway',component:accessManageGateway},
         {path:'/accessManage/device',component:accessManageDevice},
         {path:'/accessManage/deviceType',component:accessManageDeviceType},
         
-        // {path:'/accessManage/template',component:accessManageTemplate},
-        // {path:'/accessManage/event',component:accessManageEvent},
       ]
     },{
       path:'/operationManage', //运维管理
