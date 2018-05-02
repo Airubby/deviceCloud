@@ -33,7 +33,7 @@
                         </el-input>
                     </div>
                     <div class="loncom_fr">
-                        <el-button type="primary" size="small">新增</el-button>
+                        <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
                 <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
@@ -134,7 +134,10 @@ export default {
        del:function(){
 
        },
-
+       //新增
+       add:function(){
+        
+       },
 
     },
     components:{}

@@ -26,12 +26,22 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/realControl/gis">
-                                <em><img src="static/images/morenav.png"></em><span>Gis视图</span>
+                                <em><img src="static/images/morenav.png"></em><span>设备监控</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/realControl/listView">
-                                <em><img src="static/images/morenav.png"></em><span>列表视图</span>
+                                <em><img src="static/images/morenav.png"></em><span>当前告警</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/realControl/hisData">
+                                <em><img src="static/images/morenav.png"></em><span>设备历史数据</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/realControl/hisAlarm">
+                                <em><img src="static/images/morenav.png"></em><span>告警历史数据</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -44,23 +54,28 @@
                         </div>
                         <dl class="loncom_morenav">
                             <dd>
+                                <router-link to="/accessManage/client">
+                                <em><img src="static/images/morenav.png"></em><span>客户管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/accessManage/project">
+                                <em><img src="static/images/morenav.png"></em><span>项目管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
                                 <router-link to="/accessManage/gateway">
-                                <em><img src="static/images/morenav.png"></em><span>网关接入</span>
+                                <em><img src="static/images/morenav.png"></em><span>接入网关</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/accessManage/device">
-                                <em><img src="static/images/morenav.png"></em><span>设备接入</span>
+                                <em><img src="static/images/morenav.png"></em><span>接入设备</span>
                                 </router-link>
                             </dd>
                             <dd>
-                                <router-link to="/accessManage/template">
-                                <em><img src="static/images/morenav.png"></em><span>监控模板</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/accessManage/event">
-                                <em><img src="static/images/morenav.png"></em><span>事件规则</span>
+                                <router-link to="/accessManage/deviceType">
+                                <em><img src="static/images/morenav.png"></em><span>设备类型管理</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -71,20 +86,96 @@
                         <div class="loncom_nav">
                             <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">运维管理</span>
                         </div>
+                        <dl class="loncom_morenav">
+                            <dd>
+                                <router-link to="/operationManage/abnormalLog">
+                                <em><img src="static/images/morenav.png"></em><span>系统异常日志</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/operationManage/operationLog">
+                                <em><img src="static/images/morenav.png"></em><span>系统操作日志</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/operationManage/control">
+                                <em><img src="static/images/morenav.png"></em><span>队列监控</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/operationManage/informLog">
+                                <em><img src="static/images/morenav.png"></em><span>通知消息日志</span>
+                                </router-link>
+                            </dd>
+                        </dl>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/dataAnalysis">
+                    <router-link to="/templateManage">
                         <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">数据分析</span>
+                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">模板管理</span>
                         </div>
+                        <dl class="loncom_morenav">
+                            <dd>
+                                <router-link to="/templateManage/collection">
+                                <em><img src="static/images/morenav.png"></em><span>采集控制模板</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/templateManage/deviceType">
+                                <em><img src="static/images/morenav.png"></em><span>设备类型模板</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/templateManage/eventRule">
+                                <em><img src="static/images/morenav.png"></em><span>事件规则模板</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/templateManage/inform">
+                                <em><img src="static/images/morenav.png"></em><span>消息模板</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/templateManage/eventBase">
+                                <em><img src="static/images/morenav.png"></em><span>事件库</span>
+                                </router-link>
+                            </dd>
+                        </dl>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/msConfig">
+                    <router-link to="/msManage">
                         <div class="loncom_nav">
                             <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">系统配置</span>
                         </div>
+                        <dl class="loncom_morenav">
+                            <dd>
+                                <router-link to="/msManage/userManage">
+                                <em><img src="static/images/morenav.png"></em><span>用户管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/msManage/roleManage">
+                                <em><img src="static/images/morenav.png"></em><span>角色管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/msManage/limitsManage">
+                                <em><img src="static/images/morenav.png"></em><span>权限管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/msManage/datadicManage">
+                                <em><img src="static/images/morenav.png"></em><span>数据字典管理</span>
+                                </router-link>
+                            </dd>
+                            <dd>
+                                <router-link to="/msManage/addrManage">
+                                <em><img src="static/images/morenav.png"></em><span>位置管理</span>
+                                </router-link>
+                            </dd>
+                        </dl>
                     </router-link>
                 </li>
             </ul>

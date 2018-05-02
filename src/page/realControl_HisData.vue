@@ -1,9 +1,9 @@
 <template>
     <div class="loncom_content">
-        <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">事件</span>
+        <navInfo></navInfo>
+        <div class="loncom_sidebar_right" ref="content">
+            设备接入
         </div>
-        <div class="loncom_public_right loncom_scroll_con"></div>
     </div>
 </template>
 

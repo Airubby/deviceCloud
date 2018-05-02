@@ -1,8 +1,10 @@
 <template>
     <div class="loncom_content">
-        <navInfo></navInfo>
-        <div class="loncom_sidebar_right" ref="content">
-            数据分析
+        <div class="loncom_public_top">
+            <span class="loncom_public_topinfo">事件</span>
+        </div>
+        <div class="loncom_public_right loncom_scroll_con">
+        12312
         </div>
     </div>
 </template>
