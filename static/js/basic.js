@@ -131,8 +131,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 }
 //tabs页面级的切换的滚动
-function tabScroll(num){
-    $('.loncom_public_tabbox'+num).niceScroll(".loncom_public_tabboxcon"+num,{
+function numScroll(num){
+    $('.numScroll'+num).niceScroll(".numScrollCon"+num,{
         cursorcolor: "rgba(204, 204, 204, 0.4)",//#CC0071 光标颜色
         cursoropacitymax: 1, //改变不透明度非常光标处于活动状态（scrollabar“可见”状态），范围从1到0
         touchbehavior: false, //使光标拖动滚动像在台式电脑触摸设备

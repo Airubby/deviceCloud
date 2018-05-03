@@ -13,6 +13,10 @@
 export default {
     methods:{
       giveUp:function(){
+        var str=this.$route.path;
+        var index=str.lastIndexOf("\/")
+        var _path=str.substring(0, index);
+        this.$router.push({path:_path});
         this.$emit('giveUp');    //v-on:giveUp
       },
       submitInfo:function(){

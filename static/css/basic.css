@@ -9,7 +9,7 @@ html,body,div,h2,ul,li,span,em,p,dl,dd,i,input, textarea, select, option,button{
 body{
     font-family: "Microsoft Yahei", "Arial" ;
     font-size: 14px;
-    background: #edf1f5;
+    background: #f7f7f7;
     height: 100%;
     overflow: hidden;
     color: #666;
@@ -293,6 +293,8 @@ em{
 }
 .loncom_tpadding{
   padding: 0 15px;
+  height: 100%;
+  width: 100%;
 }
 .loncom_public_filter{
   width: 100%;
@@ -303,6 +305,11 @@ em{
 }
 .loncom_filter_label{
   color: #999;
+}
+.loncom_public_table{
+  width: 100%;
+  height: calc(100% - 75px);
+  background: #fff;
 }
 .loncom_public_filter .el-select{
   width: 100px;
@@ -342,6 +349,7 @@ em{
     width: 420px;
     min-height: 36px;
     line-height: 36px;
+    padding-bottom: 20px;
     font-size: 12px;
     overflow: hidden;
     margin: 0 auto;
@@ -362,7 +370,12 @@ em{
     float: left;
     color: #666;
 }
-
+.el-form-item{
+  margin-bottom: 0 !important;
+}
+.loncom_list_box_right textarea{
+  min-height: 150px !important;
+}
 
 /*realControl实时监控*/
 .realControl_loginInfo{
@@ -387,6 +400,32 @@ em{
 /*接入管理accessManage*/
 
 
+/*系统管理*/
+.msManage_table{
+  width: calc(100% - 250px);
+  height: 100%;
+  float: left;
+}
+.msManage_tree{
+  width: 250px;
+  height: 100%;
+  float: left;
+}
+.msManage_tree_title{
+    height: 75px;
+    line-height: 35px;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 16px;
+    color: #33c466;
+}
+.msManage_tree_con{
+  width: 100%;
+  height: calc(100% - 75px);
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px 0 0 10px;
+}
 
 
 

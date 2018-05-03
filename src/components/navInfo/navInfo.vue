@@ -147,7 +147,7 @@
                 <li>
                     <router-link to="/msManage">
                         <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">系统配置</span>
+                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">系统管理</span>
                         </div>
                         <dl class="loncom_morenav">
                             <dd>
