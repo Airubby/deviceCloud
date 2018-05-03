@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/page/login'
 import Index from '@/page/index'
 //实时监控
 import realControl from '@/page/realControl'
@@ -33,7 +34,9 @@ import operationManageInformLog from '@/page/operationManage_InformLog'  //通�
 //模板管理
 import templateManage from '@/page/templateManage'
 import templateManage_Collection from '@/page/templateManage_Collection'  //采集控制模板
+import templateManage_collection_add from '@/page/templateManage_collection_add' 
 import templateManage_DeviceType from '@/page/templateManage_DeviceType'  //设备类型模板
+import templateManage_DeviceType_add from '@/page/templateManage_DeviceType_add'
 import templateManage_EventRule from '@/page/templateManage_EventRule'  //事件规则模板
 import templateManage_Inform from '@/page/templateManage_Inform'  //消息模板
 import templateManage_EventBase from '@/page/templateManage_EventBase'  //事件库
@@ -48,8 +51,8 @@ import msManageLimits from '@/page/msManage_Limits'
 import msManage_limits_add from '@/page/msManage_limits_add'
 import msManageDatadic from '@/page/msManage_Datadic'
 import msManage_datadic_add from '@/page/msManage_datadic_add'
-
 import msManageAddr from '@/page/msManage_Addr'
+import msManage_Addr_add from '@/page/msManage_Addr_add'
 
 
 import Test from '@/page/test'
@@ -65,8 +68,8 @@ export default new Router({
       path: '/',
       component: Index
     },{
-      path: '/home',
-      component: Index
+      path: '/login',
+      component: Login
     },{
       path:'/realControl',  //监控管理
       component:realControl,
@@ -106,7 +109,10 @@ export default new Router({
       redirect:'/templateManage/collection',
       children:[
           {path:'/templateManage/collection',component:templateManage_Collection},
+          {path:'/templateManage/collection/add',component:templateManage_collection_add},
           {path:'/templateManage/deviceType',component:templateManage_DeviceType},
+          {path:'/templateManage/deviceType/add',component:templateManage_DeviceType_add},
+
           {path:'/templateManage/eventRule',component:templateManage_EventRule},
           {path:'/templateManage/inform',component:templateManage_Inform},
           {path:'/templateManage/eventBase',component:templateManage_EventBase},
@@ -126,6 +132,8 @@ export default new Router({
         {path:'/msManage/datadicManage',component:msManageDatadic },
         {path:'/msManage/datadicManage/add',component:msManage_datadic_add },  //数据字典新增
         {path:'/msManage/addrManage',component:msManageAddr }, 
+        {path:'/msManage/addrManage/add',component:msManage_Addr_add }, 
+        
       ]
     }
     

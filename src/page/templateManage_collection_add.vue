@@ -1,12 +1,12 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">权限管理 &gt; {{topInfo}}</span>
+            <span class="loncom_public_topinfo">采集控制模板 &gt; {{topInfo}}</span>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
                 <div class="loncom_public_add_title">
-                    权限信息
+                    采集控制模板信息
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
@@ -22,55 +22,53 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>编码：
+                                <em>*</em>采集周期：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                <el-form-item prop="collectCycle">
+                                    <el-input size="small" placeholder="采集周期以秒为单位" v-model="form_info.collectCycle"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>权限类型：
+                                <em>*</em>传输规则：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.menuType">
-                                    <el-radio label="module">模块</el-radio>
-                                    <el-radio label="menu">菜单</el-radio>
-                                    <el-radio label="func">功能</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform" v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>图标：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="icon">
-                                    <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
+                                <el-form-item prop="transferCode">
+                                    <el-input size="small" placeholder="请输入传输规则" v-model="form_info.transferCode"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform" v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>链接：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="url">
-                                    <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                备注：
+                                <em>*</em>传输周期：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.remark"></el-input>
+                                <el-form-item prop="transferCycle">
+                                    <el-input size="small" placeholder="请输入传输规则" v-model="form_info.transferCycle"></el-input>
+                                </el-form-item>
                             </div>
-                           
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>模块心跳：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="clientHBeat">
+                                    <el-input size="small" placeholder="请输入模块心跳" v-model="form_info.clientHBeat"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>设备心跳：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="devHBeat">
+                                    <el-input size="small" placeholder="请输入模块心跳" v-model="form_info.devHBeat"></el-input>
+                                </el-form-item>
+                            </div>
                         </div>
                     </el-form>
                 </div>
@@ -87,9 +85,9 @@ export default {
     created () {
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
-            this.topInfo="新增角色信息";
+            this.topInfo="新增采集控制模板信息";
         }else{
-            this.topInfo="编辑角色信息"
+            this.topInfo="编辑采集控制模板信息"
             this.activeBtn=false;
         }
     },
@@ -103,24 +101,30 @@ export default {
            activeBtn:true,  //默认新增
            form_info:{
                name:'',
-               code:'',
-               menuType:'module',
-               icon:'',
-               url:'',
-               remark:'',
+               collectCycle:'',
+               transferCode:'',
+               transferCycle:'',
+               clientHBeat:'',
+               devHBeat:'',
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
-                code:[
-                    { required: true, message: '请输入编码', trigger: 'blur' },
+                collectCycle:[
+                    { required: true, message: '请输入采集周期', trigger: 'blur' },
                 ],
-                icon:[
-                    { required: true, message: '请输入图片地址', trigger: 'blur' },
+                transferCode:[
+                    { required: true, message: '请输入传输规则', trigger: 'blur' },
                 ],
-                url:[
-                    { required: true, message: '请输入链接', trigger: 'blur' },
+                transferCycle:[
+                    { required: true, message: '请输入传输周期', trigger: 'blur' },
+                ],
+                clientHBeat:[
+                    { required: true, message: '请输入模块心跳', trigger: 'blur' },
+                ],
+                devHBeat:[
+                    { required: true, message: '请输入设备心跳', trigger: 'blur' },
                 ],
            },
        }
