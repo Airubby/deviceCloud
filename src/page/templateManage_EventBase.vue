@@ -1,9 +1,9 @@
 <template>
     <div class="loncom_content">
-        <navInfo></navInfo>
-        <div class="loncom_sidebar_right" ref="content">
-            <router-view></router-view>
+        <div class="loncom_public_top">
+            <span class="loncom_public_topinfo">1233</span>
         </div>
+        <div class="loncom_public_right loncom_scroll_con"></div>
     </div>
 </template>
 

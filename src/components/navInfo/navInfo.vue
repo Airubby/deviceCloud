@@ -170,11 +170,6 @@
                                 <em><img src="static/images/morenav.png"></em><span>数据字典管理</span>
                                 </router-link>
                             </dd>
-                            <dd>
-                                <router-link to="/msManage/addrManage">
-                                <em><img src="static/images/morenav.png"></em><span>位置管理</span>
-                                </router-link>
-                            </dd>
                         </dl>
                     </router-link>
                 </li>

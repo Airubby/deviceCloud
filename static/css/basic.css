@@ -264,6 +264,36 @@ em{
 .loncom_sidebar_list .loncom_morenav .router-link-active em img{
   margin-top: -16px;
 }
+/*重置element*/
+.el-dialog__body{
+  padding: 0 !important;
+}
+.el-dialog, .el-message-box {
+    margin-bottom: 0 !important;
+    border-radius: 10px !important;
+}
+.el-dialog__header, .el-message-box__header {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 11px 20px 10px !important;
+    background: #f2f2f2;
+    border-radius: 10px 10px 0 0;
+}
+.el-dialog__title, .el-message-box__title {
+    font-size: 14px !important;
+    color: #666 !important;
+}
+.dialog-footer {
+    padding: 20px !important;
+    text-align: right;
+}
+.dialog-footer, .el-message-box__btns {
+    border-top: 1px solid #e0e0e0;
+}
+.dialog-footer .el-button, .el-message-box__btns .el-button {
+    padding: 8px 20px;
+}
+
+
 /*公共右边*/
 .loncom_sidebar_right{
   width: 100%;
@@ -339,7 +369,7 @@ em{
   height: calc(100% - 120px);
   border: 1px solid #e0e0e0;
   background: #fff;
-  padding: 30px 20px 0 20px;
+  padding: 30px 20px 20px 20px;
 }
 .loncom_public_submit {
     text-align: right;
@@ -376,10 +406,12 @@ em{
 .loncom_login_input .el-form-item{
   margin-bottom: 20px !important;
 }
-.loncom_list_box_right textarea{
+.loncom_list_boxform textarea{
   min-height: 120px !important;
 }
-
+.loncom_dialog_con{
+  border: none;
+}
 
 /*登录页面*/
 

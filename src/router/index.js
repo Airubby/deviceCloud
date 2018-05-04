@@ -51,8 +51,6 @@ import msManageLimits from '@/page/msManage_Limits'
 import msManage_limits_add from '@/page/msManage_limits_add'
 import msManageDatadic from '@/page/msManage_Datadic'
 import msManage_datadic_add from '@/page/msManage_datadic_add'
-import msManageAddr from '@/page/msManage_Addr'
-import msManage_Addr_add from '@/page/msManage_Addr_add'
 
 
 import Test from '@/page/test'
@@ -131,8 +129,6 @@ export default new Router({
         
         {path:'/msManage/datadicManage',component:msManageDatadic },
         {path:'/msManage/datadicManage/add',component:msManage_datadic_add },  //数据字典新增
-        {path:'/msManage/addrManage',component:msManageAddr }, 
-        {path:'/msManage/addrManage/add',component:msManage_Addr_add }, 
         
       ]
     }

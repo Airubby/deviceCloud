@@ -7,7 +7,7 @@
             <div class="loncom_tpadding">
                 <div class="loncom_public_filter loncom_mtb20">
                     <div class="loncom_filter_group">
-                        <el-input placeholder="编号" v-model="code" size="small">
+                        <el-input placeholder="编号/名称" v-model="search_info" size="small">
                             <el-button slot="append" icon="el-icon-search"></el-button>
                         </el-input>
                     </div>
@@ -54,6 +54,7 @@ export default {
     },
     data() {
        return {
+           search_info:'',
            table_data:[
                 {name:'小张',code:'编码',remark:'12313123',vaild:true}
            ],
