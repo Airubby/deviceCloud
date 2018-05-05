@@ -35,11 +35,14 @@ import operationManageInformLog from '@/page/operationManage_InformLog'  //通�
 import templateManage from '@/page/templateManage'
 import templateManage_Collection from '@/page/templateManage_Collection'  //采集控制模板
 import templateManage_collection_add from '@/page/templateManage_collection_add' 
-import templateManage_DeviceType from '@/page/templateManage_DeviceType'  //设备类型模板
-import templateManage_DeviceType_add from '@/page/templateManage_DeviceType_add'
+import templateManage_DeviceType from '@/page/templateManage_DeviceType'  //设备类型
+import templateManage_DeviceTypeTemp from '@/page/templateManage_DeviceTypeTemp'  //设备类型模板
+import templateManage_DeviceTypeTemp_add from '@/page/templateManage_DeviceTypeTemp_add'  //设备类型模板增加
 import templateManage_EventRule from '@/page/templateManage_EventRule'  //事件规则模板
+import templateManage_EventRule_add from '@/page/templateManage_EventRule_add' //事件规则增加
 import templateManage_Inform from '@/page/templateManage_Inform'  //消息模板
 import templateManage_EventBase from '@/page/templateManage_EventBase'  //事件库
+import templateManage_EventBase_add from '@/page/templateManage_EventBase_add'
 
 //系统管理
 import msManage from '@/page/msManage'
@@ -109,11 +112,13 @@ export default new Router({
           {path:'/templateManage/collection',component:templateManage_Collection},
           {path:'/templateManage/collection/add',component:templateManage_collection_add},
           {path:'/templateManage/deviceType',component:templateManage_DeviceType},
-          {path:'/templateManage/deviceType/add',component:templateManage_DeviceType_add},
-
+          {path:'/templateManage/deviceTypeTemp',component:templateManage_DeviceTypeTemp},
+          {path:'/templateManage/deviceTypeTemp/add',component:templateManage_DeviceTypeTemp_add},
           {path:'/templateManage/eventRule',component:templateManage_EventRule},
+          {path:'/templateManage/eventRule/add',component:templateManage_EventRule_add},
           {path:'/templateManage/inform',component:templateManage_Inform},
           {path:'/templateManage/eventBase',component:templateManage_EventBase},
+          {path:'/templateManage/eventBase/add',component:templateManage_EventBase_add},
       ]
     },{
       path:'/msManage',  //系统管理

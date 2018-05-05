@@ -1,12 +1,12 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">设备类型模板 &gt; {{topInfo}}</span>
+            <span class="loncom_public_topinfo">事件库 &gt; {{topInfo}}</span>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
                 <div class="loncom_public_add_title">
-                    设备类型模板信息
+                    事件库信息
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
@@ -22,24 +22,33 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>模板编码：
+                                <em>*</em>编码：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入设备模板编码" v-model="form_info.code"></el-input>
+                                    <el-input size="small" placeholder="" v-model="form_info.code"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>是否可用：
+                                <em>*</em>是否有效：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.isVaild">
-                                    <el-radio label="true">可用</el-radio>
-                                    <el-radio label="false">不可用</el-radio>
+                                <el-radio-group v-model="form_info.vaild">
+                                    <el-radio :label="true">有效</el-radio>
+                                    <el-radio :label="false">无效</el-radio>
                                 </el-radio-group>
                             </div>
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                备注：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-input type="textarea" v-model="form_info.remark" style="height:150px;"></el-input>
+                            </div>
+                           
                         </div>
                     </el-form>
                 </div>
@@ -56,9 +65,9 @@ export default {
     created () {
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
-            this.topInfo="新增设备类型模板信息";
+            this.topInfo="新增事件库";
         }else{
-            this.topInfo="编辑设备类型模板信息"
+            this.topInfo="编辑事件库"
             this.activeBtn=false;
         }
     },
@@ -72,30 +81,15 @@ export default {
            activeBtn:true,  //默认新增
            form_info:{
                name:'',
-               collectCycle:'',
-               transferCode:'',
-               transferCycle:'',
-               clientHBeat:'',
-               devHBeat:'',
+               code:'',
+               vaild:true,
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
-                collectCycle:[
-                    { required: true, message: '请输入采集周期', trigger: 'blur' },
-                ],
-                transferCode:[
-                    { required: true, message: '请输入传输规则', trigger: 'blur' },
-                ],
-                transferCycle:[
-                    { required: true, message: '请输入传输周期', trigger: 'blur' },
-                ],
-                clientHBeat:[
-                    { required: true, message: '请输入模块心跳', trigger: 'blur' },
-                ],
-                devHBeat:[
-                    { required: true, message: '请输入设备心跳', trigger: 'blur' },
+                code:[
+                    { required: true, message: '请输入编码', trigger: 'blur' },
                 ],
            },
        }

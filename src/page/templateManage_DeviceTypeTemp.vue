@@ -1,21 +1,26 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">事件规则模板</span>
+            <span class="loncom_public_topinfo">设备类型模板管理</span>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
                 <div class="loncom_public_filter loncom_mtb20">
+                    <div class="loncom_filter_group">
+                        <el-input placeholder="编号/名称" v-model="search_info" size="small">
+                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        </el-input>
+                    </div>
                     <div class="loncom_fr">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
                 <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="isVaild">
+                     <template slot-scope="scope" slot="vaild">
                         <div>
-                            <span v-if="scope.row.isVaild==true||scope.row.isVaild=='true'">可用</span>
-                            <span v-else>不可用</span>
+                            <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
+                            <span v-else>无效</span>
                         </div>
                     </template>
                     <template slot-scope="scope" slot="preview-handle">
@@ -51,23 +56,14 @@ export default {
     },
     data() {
        return {
+           search_info:'',
            table_data:[
-                {name:'小张',vara1:'12',opta:'true'}
+                {name:'123',code:'123',vaild:true}
            ],
            table_columns:[
-              { prop: 'name', label: '模板名称',minWidth:100},
-              { prop: 'vara1', label: '值',minWidth:100},
-              { prop: 'opta', label: '运算符',minWidth:100},
-              { prop: 'vara2', label: '值',minWidth:100},
-              { prop: 'optc', label: '逻辑符',minWidth:100},
-              { prop: 'varb1', label: '值',minWidth:100},
-              { prop: 'optb', label: '运算符',minWidth:100},
-              { prop: 'varb2', label: '值',minWidth:100},
-              { prop: 'action', label: '',minWidth:100},
-              { prop: 'useFel', label: '是否使用自定义',minWidth:100},
-              { prop: 'fel', label: '自定义',minWidth:100},
-              { prop: 'eventLibId', label: '事件库id',minWidth:100},
-              { prop: 'eventLevel', label: '事件等级',minWidth:100},
+              { prop: 'name', label: '名称',minWidth:100},
+              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -84,16 +80,16 @@ export default {
        },
        //停用
        stop:function(){
-            
+
        },
        //编辑
        edit:function(row){
             var id='1';
-            this.$router.push({path:'/templateManage/eventRule/add',query:{id:id}});
+            this.$router.push({path:'/templateManage/deviceTypeTemp/add',query:{id:id}});
        },
        //新增
        add:function(){
-            this.$router.push({path:'/templateManage/eventRule/add'});
+            this.$router.push({path:'/templateManage/deviceTypeTemp/add'});
        },
 
     },

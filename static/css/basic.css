@@ -292,6 +292,9 @@ em{
 .dialog-footer .el-button, .el-message-box__btns .el-button {
     padding: 8px 20px;
 }
+.el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label{
+  font-size: 14px !important;
+}
 
 
 /*公共右边*/
