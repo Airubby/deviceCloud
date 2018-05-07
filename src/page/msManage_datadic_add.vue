@@ -48,13 +48,17 @@
                             <div class="loncom_list_box_right">
                                 <el-input type="textarea" v-model="form_info.remark" style="height:150px;"></el-input>
                             </div>
-                           
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">&nbsp;</div>
+                            <div class="loncom_list_box_right">
+                                <el-button type="primary" size="small" @click="save">保存</el-button>
+                            </div>
                         </div>
                         <div class="">
                             <div class="loncom_public_filter loncom_mtb20">
                                 <div class="loncom_fl">字典项列表</div>
                                 <div class="loncom_fr">
-                                    <el-button type="primary" size="small" @click="save">保存</el-button>
                                     <el-button type="primary" size="small" @click="add">新增</el-button>
                                 </div>
                             </div>
@@ -84,7 +88,14 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <div class="loncom_public_submit">
+                    <span>
+                        <el-button type="info" size="mini" plain @click="giveUp">返回</el-button>
+                    </span>
+                    <span>
+                        <el-button type="primary" size="mini" @click="submitInfo">确定</el-button>
+                    </span>
+                </div>
             </div>
         </div>
         <dialogDatadic v-bind:dialogInfo="dialogInfo" v-if="dialogInfo.visible"></dialogDatadic>
@@ -104,6 +115,11 @@ export default {
         }else{
             this.topInfo="编辑数据字典信息"
             this.activeBtn=false;
+            this.$api.get('', {id:obj.id}, r => {
+                if(r.success){
+                    this.form_info=r.data[0];
+                }
+            }); 
         }
     },
     mounted() {
@@ -115,6 +131,7 @@ export default {
            topInfo:'',
            activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                code:'',
                remark:'',
@@ -130,7 +147,7 @@ export default {
            },
 
            table_data:[
-                {label:'321',code:'2342',remark:'12313123',isVaild:true}
+                {id:'1',label:'321',code:'2342',remark:'12313123',isVaild:true}
            ],
            table_columns:[
               { prop: 'label', label: '名称',minWidth:100},
@@ -146,6 +163,8 @@ export default {
                 visible:false,
                 width:"600px",
                 add:true,  //默认新增
+                 //存字典的id，因为先保存字典，才可以添加列表项
+                dicId:"1",
                 data:{},
             },
 
@@ -154,11 +173,19 @@ export default {
     methods:{
         //新增字典项列表信息
         add:function(){
-            this.dialogInfo.visible=true;
+            if(this.dialogInfo.dicId!=""){
+                this.dialogInfo.visible=true;
+            }else{
+                this.$message.warning("请先保存字典信息");
+            }
         },
-        //保存字典项列表信息
+        //保存字典信息，保存了才能增加字典列表
         save:function(){
-
+            this.$api.post('', form_info , r => {
+                if(r.success){
+                    this.dialogInfo.dicId=r.id;
+                }
+            }); 
         },
         //删除字典项列表信息
        del:function(){
@@ -178,17 +205,24 @@ export default {
             this.dialogInfo.add=false;
             this.dialogInfo.title="编辑字典项信息"
        },
+       giveUp:function(){
+            var str=this.$route.path;
+            var index=str.lastIndexOf("\/")
+            var _path=str.substring(0, index);
+            this.$router.push({path:_path});
+       },
        //提交
        submitInfo:function(formName){
-            this.$refs[formName].validate((valid) => {
-                if(valid){
-                    if(this.activeBtn){  //新增
+           this.giveUp();
+            // this.$refs[formName].validate((valid) => {
+            //     if(valid){
+            //         if(this.activeBtn){  //新增
 
-                    }else{  //编辑
+            //         }else{  //编辑
 
-                    }
-                }
-            })
+            //         }
+            //     }
+            // })
        },
 
     },

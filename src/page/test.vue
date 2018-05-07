@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <el-search-table-pagination type="remote"
-            url="/api/itom/api/v1/baseStation/query"
+            url="/itom/api/v1/baseStation/query"
             list-field="data.Rows" 
             total-field="data.RecordCount"
             :show-pagination="true"
@@ -20,7 +20,7 @@ export default {
         //url="/api/itom/api/v1/baseStation/query"
         //  http://120.25.226.251:18089/itom/api/v1/baseStation/query
         console.log(123)
-        this.$api.get('/api/itom/api/v1/baseStation/query', {}, r => {
+        this.$api.post('/user/getById', {'id':1}, r => {
             console.log(r)
             //this.table_data=r.data.Rows;
         }); 

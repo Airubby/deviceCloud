@@ -27,7 +27,7 @@
                         <em>*</em>是否有效：
                     </div>
                     <div class="loncom_list_box_right">
-                        <el-radio-group v-model="form_info.vaild">
+                        <el-radio-group v-model="form_info.isVaild">
                             <el-radio :label="true">有效</el-radio>
                             <el-radio :label="false">无效</el-radio>
                         </el-radio-group>
@@ -60,10 +60,12 @@ export default {
     data() {
         return {
             form_info:{
+                id:'',
                label:'',
                code:'',
                remark:'',
-               vaild:true,
+               isVaild:true,
+               dicId:dialogInfo.dicId,
            },
            formRules:{
                 label:[
@@ -86,6 +88,14 @@ export default {
                     }else{  //编辑
 
                     }
+                    this.$api.post('', form_info, r => {
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.dialogInfo.visible=false;
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
         },

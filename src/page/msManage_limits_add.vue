@@ -91,6 +91,11 @@ export default {
         }else{
             this.topInfo="编辑角色信息"
             this.activeBtn=false;
+            this.$api.get('', {id:obj.id}, r => {
+                if(r.success){
+                    this.form_info=r.data[0];
+                }
+            }); 
         }
     },
     mounted() {
@@ -102,6 +107,7 @@ export default {
            topInfo:'',
            activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                code:'',
                menuType:'module',
@@ -135,6 +141,14 @@ export default {
                     }else{  //编辑
 
                     }
+                    this.$api.post('', form_info, r => {
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

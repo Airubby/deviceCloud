@@ -36,13 +36,13 @@
                                 备注：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.remark" style="height:150px;"></el-input>
+                                <el-input type="textarea" v-model="form_info.remark"></el-input>
                             </div>
                            
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -59,6 +59,11 @@ export default {
         }else{
             this.topInfo="编辑角色信息"
             this.activeBtn=false;
+            this.$api.get('', {id:obj.id}, r => {
+                if(r.success){
+                    this.form_info=r.data[0];
+                }
+            }); 
         }
     },
     mounted() {
@@ -70,21 +75,16 @@ export default {
            topInfo:'',
            activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
-               fullName:'',
-               contacts:'',
-               phoneNo:'',
-               isVaild:true,
+               code:'',
+               remark:'',
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
            },
-           //客户信息
-           custNameList:[],
-           //角色信息
-           roleNamesList:[],
        }
    },
     methods:{
@@ -97,6 +97,14 @@ export default {
                     }else{  //编辑
 
                     }
+                    this.$api.post('', form_info, r => {
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

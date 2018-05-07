@@ -11,9 +11,10 @@
                     </div>
                     <div class="msManage_tree_con numScroll0">
                         <el-tree
+                        ref="tree"
                         :data="tree_data"
-                        show-checkbox
                         node-key="id"
+                        @node-click="nodeClick"
                         class="numScrollCon0"
                         default-expand-all
                         >
@@ -28,7 +29,7 @@
                     </div>
                     <div class="loncom_public_table numScroll1">
                         <div class="numScrollCon1">
-                        <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
+                        <el-search-table-pagination type="local" :show-pagination="false" border :data="table_data" :columns="table_columns" >                                           
                             <el-table-column slot="prepend" type="selection"></el-table-column>
                             <template slot-scope="scope" slot="preview-handle">
                                 <div>
@@ -52,7 +53,12 @@
 
 export default {
     created () {
-        
+        //获取权限树
+        this.$api.get('', {}, r => {
+            if(r.success){
+                this.tree_data=r.data;
+            }
+        }); 
     },
     mounted() {
         numScroll(0);
@@ -61,8 +67,7 @@ export default {
     data() {
        return {
            table_data:[
-                {code:'12',url:'11232131',name:'小明'},
-                {code:'123',url:'11232131',name:'小明'},
+                {id:'1',code:'12',url:'11232131',name:'小明'},
            ],
            table_columns:[
               { prop: 'code', label: 'code',minWidth:100},
@@ -111,22 +116,42 @@ export default {
        }
    },
     methods:{
+        //点击树形节点
+        nodeClick:function(node){
+            console.log(node)
+            this.$api.get('', {"id":node.id}, r => {
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
        //删除
-       del:function(){
+       del:function(row){
+            var ids=[];
+            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+               ids.push(row.id);
+           }
 
-       },
-       //启用
-       start:function(){
-
-       },
-       //停用
-       stop:function(){
-
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //编辑
        edit:function(row){
-            var id='1';
-            this.$router.push({path:'/msManage/limitsManage/add',query:{id:id}});
+            this.$router.push({path:'/msManage/limitsManage/add',query:{id:row.id}});
        },
        //新增
        add:function(){

@@ -45,9 +45,9 @@
                                 <em>*</em>所属客户：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="custName">
-                                    <el-select v-model="form_info.custName" placeholder="请选择">
-                                        <el-option v-for="item in custNameList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                <el-form-item prop="custId">
+                                    <el-select v-model="form_info.custId" placeholder="请选择">
+                                        <el-option v-for="item in custNameList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </div>
@@ -57,9 +57,9 @@
                                 <em>*</em>角色：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="roleNames">
-                                    <el-select v-model="form_info.roleNames" placeholder="请选择">
-                                        <el-option v-for="item in roleNamesList" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                <el-form-item prop="roleIDs">
+                                    <el-select v-model="form_info.roleIDs" placeholder="请选择">
+                                        <el-option v-for="item in roleNamesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </div>
@@ -77,7 +77,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -88,12 +88,30 @@ import SubmitBtnInfo from '../components/submitBtnInfo.vue'
 export default {
 
     created () {
+        //获取角色信息
+        this.$api.get('', {}, r => {
+            if(r.success){
+                this.roleNamesList=r.data;
+            }
+        }); 
+        //获取客户信息
+        this.$api.get('', {}, r => {
+            if(r.success){
+                this.custNameList=r.data;
+            }
+        }); 
+
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增用户信息";
         }else{
             this.topInfo="编辑用户信息"
             this.activeBtn=false;
+            this.$api.get('', {id:obj.id}, r => {
+                if(r.success){
+                    this.form_info=r.list[0];
+                }
+            }); 
         }
     },
     mounted() {
@@ -105,11 +123,14 @@ export default {
            topInfo:'',
            activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                fullName:'',
                contacts:'',
                phoneNo:'',
                isVaild:true,
+               roleIDs:'',
+               custId:'',
            },
            formRules:{
                 name:[
@@ -137,10 +158,18 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     if(this.activeBtn){  //新增
-
+                        
                     }else{  //编辑
 
                     }
+                    this.$api.post('', form_info, r => {
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

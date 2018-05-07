@@ -47,7 +47,12 @@
 
 export default {
     created () {
-        
+        //获取字典列表
+        this.$api.get('', {}, r => {
+            if(r.success){
+                this.tree_data=r.data;
+            }
+        }); 
     },
     mounted() {
 
@@ -56,7 +61,7 @@ export default {
        return {
            search_info:'',
            table_data:[
-                {name:'小张',code:'编码',remark:'12313123',vaild:true}
+                {id:'1',name:'小张',code:'编码',remark:'12313123',vaild:true}
            ],
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
@@ -70,21 +75,89 @@ export default {
    },
     methods:{
        //删除
-       del:function(){
+       del:function(row){
+            var ids=[];
+            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的角色");
+                    return;
+                }
+           }
 
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //启用
        start:function(){
-
+            var ids=[];
+            if(this.multipleSelection.length>0){
+                ids=this.multipleSelection;
+            }else{
+                this.$message.warning("请勾选需要启用的项");
+                return;
+            }
+            this.$confirm("确定启用?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+		    	 this.$api.post('', {"ids":thisID,"action":1}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //停用
        stop:function(){
-
+            var ids=[];
+            if(this.multipleSelection.length>0){
+                ids=this.multipleSelection;
+            }else{
+                this.$message.warning("请勾选需要停用的项");
+                return;
+            }
+            this.$confirm("确定停用?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+		    	 this.$api.post('', {"ids":thisID,"action":0}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //编辑
        edit:function(row){
-            var id='1';
-            this.$router.push({path:'/msManage/datadicManage/add',query:{id:id}});
+            this.$router.push({path:'/msManage/datadicManage/add',query:{id:row.id}});
        },
        //新增
        add:function(){
