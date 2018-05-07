@@ -148,7 +148,7 @@
                                 <em>*</em>自定义表达式：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.fel" style="height:150px;"></el-input>
+                                <el-input type="textarea" v-model="form_info.fel"></el-input>
                             </div>
                         </div>
                     </el-form>
@@ -170,6 +170,11 @@ export default {
         }else{
             this.topInfo="编辑事件规则模板信息"
             this.activeBtn=false;
+            this.$api.get('', {id:obj.id}, r => {
+                if(r.success){
+                    this.form_info=r.data[0];
+                }
+            }); 
         }
     },
     mounted() {
@@ -199,6 +204,36 @@ export default {
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
+                vara1:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                opta:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                vara2:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                optc:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                varb1:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                optb:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                varb2:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                action:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                eventLibId:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
+                eventLevel:[
+                    { required: true, message: '请选择', trigger: 'change' },
+                ],
            },
        }
    },
@@ -212,6 +247,15 @@ export default {
                     }else{  //编辑
 
                     }
+                    this.$api.post('', this.form_info, r => {
+                        console.log(r)
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

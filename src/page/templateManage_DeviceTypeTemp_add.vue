@@ -35,25 +35,34 @@
                                 <em>*</em>是否有效：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.isVaild">
+                                <el-radio-group v-model="form_info.vaild">
                                     <el-radio :label="true">有效</el-radio>
                                     <el-radio :label="false">无效</el-radio>
                                 </el-radio-group>
+                            </div>
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                &nbsp;
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-button type="primary" size="small" @click="save">保存</el-button>
                             </div>
                         </div>
                         <div class="">
                             <div class="loncom_public_filter loncom_mtb20">
                                 <div class="loncom_fl">测点列表</div>
                                 <div class="loncom_fr">
-                                    <el-button type="primary" size="small" @click="save">保存</el-button>
+                                    
                                     <el-button type="primary" size="small" @click="add">新增</el-button>
                                 </div>
                             </div>
-                            <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
+                            <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns"
+                             @selection-change="handleSelectionChange" >                                           
                                 <el-table-column slot="prepend" type="selection"></el-table-column>
-                                <template slot-scope="scope" slot="isVaild">
+                                <template slot-scope="scope" slot="vaild">
                                     <div>
-                                        <span v-if="scope.row.isVaild==true||scope.row.isVaild=='true'">有效</span>
+                                        <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
                                         <span v-else>无效</span>
                                     </div>
                                 </template>
@@ -66,12 +75,14 @@
                                         </p>
                                     </div>
                                 </template>
-                                
+                                <div class="loncom_table_btn">
+                                    <el-button type="info" plain size="mini" @click="del">删除</el-button>
+                                </div>
                             </el-search-table-pagination>
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <noSubmitBtnInfo></noSubmitBtnInfo>
             </div>
         </div>
         <dialogTempPoiint v-bind:dialogInfo="dialogInfo" v-if="dialogInfo.visible"></dialogTempPoiint>
@@ -79,7 +90,7 @@
 </template>
 
 <script>
-import SubmitBtnInfo from '../components/submitBtnInfo.vue'
+import noSubmitBtnInfo from '../components/nosubmitBtnInfo.vue'
 import dialogTempPoiint from '../components/dialog_temp_point.vue'
 
 export default {
@@ -89,8 +100,23 @@ export default {
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增设备类型模板";
         }else{
-            this.topInfo="编辑设备类型模板"
-            this.activeBtn=false;
+            this.topInfo="编辑设备类型模板";
+            this.dialogInfo.typeTempId=obj.id;
+            //获取设备类型模板
+            this.$api.post('', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.form_info=r.data[0];
+                }
+            }); 
+            //获取设备类型测点信息
+            this.$api.post('', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+
         }
     },
     mounted() {
@@ -100,11 +126,11 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
-           activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                code:'',
-               isVaild:true,
+               vaild:true,
            },
            formRules:{
                 name:[
@@ -116,65 +142,106 @@ export default {
            },
 
            table_data:[
-                {num:'1',label:'321',code:'2342',isVaild:true}
+                {id:'1',serialNO:'1',name:'321',code:'2342'}
            ],
            table_columns:[
-              { prop: 'num', label: '序号',minWidth:100},
-              { prop: 'label', label: '名称',minWidth:100},
+              { prop: 'serialNO', label: '序号',minWidth:100},
+              { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'code', label: '值类型',minWidth:100},
-              { prop: 'code', label: '偏移量',minWidth:100},
-              { prop: 'code', label: '可读',minWidth:100},
-              { prop: 'code', label: '可写',minWidth:100},
-              { prop: 'code', label: '单位',minWidth:100},
+              { prop: 'valueType', label: '值类型',minWidth:100},
+              { prop: 'offSet', label: '偏移量',minWidth:100},
+              { prop: 'readFlag', label: '可读',minWidth:100},
+              { prop: 'writeFlag', label: '可写',minWidth:100},
+              { prop: 'unit', label: '单位',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
-          //新增字典项列表信息
+          //新增设备类型模板项列表信息
           dialogInfo:{
                 title:'新增测点信息',
                 visible:false,
                 width:"650px",
                 add:true,  //默认新增
+                typeTempId:'1',
                 data:{},
             },
+            //勾选的测点信息
+            multipleSelection:[],
 
        }
    },
     methods:{
-        //新增字典项列表信息
+        //勾选测点信息
+        handleSelectionChange:function(val){
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
+        //新增设备类型模板项列表信息
         add:function(){
-            this.dialogInfo.visible=true;
+            if(this.dialogInfo.typeTempId!=""){
+                this.dialogInfo.visible=true;
+            }else{
+                this.$message.warning("请先保存设备类型模板信息");
+            }
         },
-        //保存字典项列表信息
+        //保存设备类型模板项列表信息
         save:function(){
-
+            this.$refs[formName].validate((valid) => {
+                if(valid){
+                    //form_info.id为空为新增
+                    this.$api.post('', this.form_info , r => {
+                        console.log(r)
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.dialogInfo.typeTempId=r.id;
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
+                }
+            })
         },
-        //删除字典项列表信息
-       del:function(){
+        //删除设备类型模板项测点信息
+       del:function(row){
+            var ids=[];
+            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的项");
+                    return;
+                }
+           }
 
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
-      
-       //编辑字典项列表信息
+       
+       //编辑设备类型模板项测点信息
        edit:function(row){
             this.dialogInfo.visible=true;
             this.dialogInfo.add=false;
             this.dialogInfo.title="编辑测点信息"
        },
-       //提交
-       submitInfo:function(formName){
-            this.$refs[formName].validate((valid) => {
-                if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
-                }
-            })
-       },
-
+       
     },
-    components:{SubmitBtnInfo,dialogTempPoiint}
+    components:{noSubmitBtnInfo,dialogTempPoiint}
 }
 </script>

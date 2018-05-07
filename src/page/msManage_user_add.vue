@@ -69,7 +69,7 @@
                                 <em>*</em>状态：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.isVaild">
+                                <el-radio-group v-model="form_info.vaild">
                                     <el-radio :label="true">启用</el-radio>
                                     <el-radio :label="false">停用</el-radio>
                                 </el-radio-group>
@@ -89,13 +89,14 @@ export default {
 
     created () {
         //获取角色信息
-        this.$api.get('', {}, r => {
+        this.$api.post('/role/roleList', {}, r => {
             if(r.success){
                 this.roleNamesList=r.data;
             }
         }); 
         //获取客户信息
-        this.$api.get('', {}, r => {
+        this.$api.post('/customer/customerList', {}, r => {
+            console.log(r)
             if(r.success){
                 this.custNameList=r.data;
             }
@@ -128,7 +129,7 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
-               isVaild:true,
+               vaild:true,
                roleIDs:'',
                custId:'',
            },

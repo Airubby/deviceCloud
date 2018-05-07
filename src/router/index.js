@@ -17,6 +17,7 @@ import accessManageClient from '@/page/accessManage_Client'  //客户管理
 import accessManage_Client_Add from '@/page/accessManage_Client_Add'  //客户管理新增
 
 import accessManageProject from '@/page/accessManage_Project'  //项目管理
+import accessManage_Project_add from '@/page/accessManage_Project_add'  //项目管理新增
 import accessManageGateway from '@/page/accessManage_Gateway'  //接入网关
 import accessManageDevice from '@/page/accessManage_Device'  //接入设备
 import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备类型管理
@@ -35,7 +36,6 @@ import operationManageInformLog from '@/page/operationManage_InformLog'  //通�
 import templateManage from '@/page/templateManage'
 import templateManage_Collection from '@/page/templateManage_Collection'  //采集控制模板
 import templateManage_collection_add from '@/page/templateManage_collection_add' 
-import templateManage_DeviceType from '@/page/templateManage_DeviceType'  //设备类型
 import templateManage_DeviceTypeTemp from '@/page/templateManage_DeviceTypeTemp'  //设备类型模板
 import templateManage_DeviceTypeTemp_add from '@/page/templateManage_DeviceTypeTemp_add'  //设备类型模板增加
 import templateManage_EventRule from '@/page/templateManage_EventRule'  //事件规则模板
@@ -89,6 +89,8 @@ export default new Router({
         {path:'/accessManage/client',component:accessManageClient},
         {path:'/accessManage/client/add',component:accessManage_Client_Add}, //新增客户信息
         {path:'/accessManage/project',component:accessManageProject},
+        {path:'/accessManage/project/add',component:accessManage_Project_add},
+        
         {path:'/accessManage/gateway',component:accessManageGateway},
         {path:'/accessManage/device',component:accessManageDevice},
         {path:'/accessManage/deviceType',component:accessManageDeviceType},
@@ -111,7 +113,6 @@ export default new Router({
       children:[
           {path:'/templateManage/collection',component:templateManage_Collection},
           {path:'/templateManage/collection/add',component:templateManage_collection_add},
-          {path:'/templateManage/deviceType',component:templateManage_DeviceType},
           {path:'/templateManage/deviceTypeTemp',component:templateManage_DeviceTypeTemp},
           {path:'/templateManage/deviceTypeTemp/add',component:templateManage_DeviceTypeTemp_add},
           {path:'/templateManage/eventRule',component:templateManage_EventRule},

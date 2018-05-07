@@ -83,7 +83,7 @@ export default {
                 if(this.multipleSelection.length>0){
                     ids=this.multipleSelection;
                 }else{
-                    this.$message.warning("请勾选需要删除的角色");
+                    this.$message.warning("请勾选需要删除的项");
                     return;
                 }
            }

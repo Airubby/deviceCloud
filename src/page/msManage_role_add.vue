@@ -22,11 +22,11 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>code：
+                                <em>*</em>编码：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入账号" v-model="form_info.code"></el-input>
+                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -84,6 +84,9 @@ export default {
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
+                code:[
+                    { required: true, message: '请输入编码', trigger: 'blur' },
+                ],
            },
        }
    },
@@ -97,7 +100,8 @@ export default {
                     }else{  //编辑
 
                     }
-                    this.$api.post('', form_info, r => {
+                    this.$api.post('/role/saveOrUpdateEntity', this.form_info, r => {
+                        console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);
                             this.$refs.goBack.giveUp();

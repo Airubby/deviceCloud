@@ -104,7 +104,7 @@
                                             <em>*</em>状态：
                                         </div>
                                         <div class="loncom_list_box_right">
-                                            <el-radio-group v-model="form_info.isVaild">
+                                            <el-radio-group v-model="form_info.vaild">
                                                 <el-radio label="true">启用</el-radio>
                                                 <el-radio label="false">停用</el-radio>
                                             </el-radio-group>
@@ -167,7 +167,7 @@ export default {
                downContent:'',
                removeContent:'',
                confirmContent:'',
-               isVaild:'true',
+               vaild:'true',
 
            },
            formRules:{

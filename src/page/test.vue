@@ -34,7 +34,7 @@ export default {
               { prop: 'grade', label: '账号',minWidth:100},
               { prop: 'group_name', label: '联系人',minWidth:100},
               { prop: 'province', label: '联系电话',minWidth:100},
-              { prop: 'monitor_center', label: '是否有效',slotName:'isVaild',minWidth:100},
+              { prop: 'monitor_center', label: '是否有效',slotName:'vaild',minWidth:100},
           ],
        }
    },

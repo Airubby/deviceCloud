@@ -63,7 +63,8 @@
 export default {
     created () {
         //获取角色列表信息
-        this.$api.get('', {}, r => {
+        this.$api.post('/role/roleList', {}, r => {
+            console.log(r)
             if(r.success){
                 this.table_data=r.data;
             }
@@ -162,7 +163,7 @@ export default {
                 if(this.multipleSelection.length>0){
                     ids=this.multipleSelection;
                 }else{
-                    this.$message.warning("请勾选需要删除的角色");
+                    this.$message.warning("请勾选需要删除的项");
                     return;
                 }
            }

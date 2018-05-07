@@ -22,11 +22,11 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>账号：
+                                <em>*</em>单位：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="fullName">
-                                    <el-input size="small" placeholder="请输入账号" v-model="form_info.fullName"></el-input>
+                                    <el-input size="small" placeholder="请输入单位" v-model="form_info.fullName"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 <em>*</em>是否有效：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.isVaild">
+                                <el-radio-group v-model="form_info.vaild">
                                     <el-radio :label="true">有效</el-radio>
                                     <el-radio :label="false">无效</el-radio>
                                 </el-radio-group>
@@ -63,7 +63,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:giveUp="giveUp" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -91,18 +91,19 @@ export default {
            topInfo:'',
            activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                fullName:'',
                contacts:'',
                phoneNo:'',
-               isVaild:true,
+               vaild:true,
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
                 fullName:[
-                    { required: true, message: '请输入账号', trigger: 'blur' },
+                    { required: true, message: '请输入单位', trigger: 'blur' },
                 ],
                 contacts:[
                     { required: true, message: '请输入联系人', trigger: 'blur' },
@@ -114,10 +115,6 @@ export default {
        }
    },
     methods:{
-       //取消返回
-       giveUp:function(){
-            
-       },
        //提交
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
@@ -127,6 +124,15 @@ export default {
                     }else{  //编辑
 
                     }
+                    this.$api.post('/customer/saveEntity', this.form_info, r => {
+                        console.log(r)
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

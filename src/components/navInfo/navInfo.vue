@@ -122,11 +122,6 @@
                                 </router-link>
                             </dd>
                             <dd>
-                                <router-link to="/templateManage/deviceType">
-                                <em><img src="static/images/morenav.png"></em><span>设备类型</span>
-                                </router-link>
-                            </dd>
-                            <dd>
                                 <router-link to="/templateManage/deviceTypeTemp">
                                 <em><img src="static/images/morenav.png"></em><span>设备类型模板</span>
                                 </router-link>

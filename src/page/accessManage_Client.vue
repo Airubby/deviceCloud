@@ -10,11 +10,12 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
+                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange" >                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="isVaild">
+                     <template slot-scope="scope" slot="vaild">
                         <div>
-                            <span v-if="scope.row.isVaild==true||scope.row.isVaild=='true'">有效</span>
+                            <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
                             <span v-else>无效</span>
                         </div>
                     </template>
@@ -27,7 +28,9 @@
                             </p>
                         </div>
                     </template>
-                    
+                    <div class="loncom_table_btn">
+                        <el-button type="info" plain size="mini" @click="del">删除</el-button>
+                    </div>
                 </el-search-table-pagination>
             </div>
         </div>
@@ -38,7 +41,12 @@
 
 export default {
     created () {
-        
+        this.$api.post('/customer/customerList', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.table_data=r.data;
+            }
+        }); 
     },
     mounted() {
 
@@ -46,27 +54,63 @@ export default {
     data() {
        return {
            table_data:[
-                {name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',isVaild:true}
+                {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'fullName', label: '账号',minWidth:100},
+              { prop: 'fullName', label: '单位',minWidth:100},
               { prop: 'contacts', label: '联系人',minWidth:100},
               { prop: 'phoneNo', label: '联系电话',minWidth:100},
-              { prop: 'isVaild', label: '是否有效',slotName:'isVaild',minWidth:100},
+              { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
+
+          //勾选的
+          multipleSelection:[],
 
        }
    },
     methods:{
+        //勾选框
+        handleSelectionChange:function(val){
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
        //删除
-       del:function(){
+       del:function(row){
+            var ids=[];
+            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的项");
+                    return;
+                }
+           }
 
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //编辑
-       edit:function(){
-
+       edit:function(row){
+            this.$router.push({path:'/accessManage/client/add',query:{id:row.id}});
        },
        //新增
        add:function(){

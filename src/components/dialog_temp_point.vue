@@ -261,6 +261,7 @@ export default {
             valueType_data:[],
 
             form_info:{
+                id:'',
                name:'',
                code:'',
                serialNO:'',
