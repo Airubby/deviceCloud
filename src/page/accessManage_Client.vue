@@ -54,7 +54,7 @@ export default {
     data() {
        return {
            table_data:[
-                {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
+                // {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},

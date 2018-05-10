@@ -19,7 +19,7 @@
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
@@ -36,20 +36,15 @@
 
 export default {
     created () {
-        this.$api.get('', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
+        this.getList();
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {
            table_data:[
-                {id:'1',name:'小张',vara1:'12',opta:'true'}
+                // {id:'1',name:'小张',vara1:'12',opta:'true'}
            ],
            table_columns:[
               { prop: 'name', label: '模板名称',minWidth:100},
@@ -73,6 +68,14 @@ export default {
        }
    },
     methods:{
+        getList:function(){
+            this.$api.post('/eventRuleTemplate/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
          //勾选框
         handleSelectionChange:function(val){
             for(var i=0;i<val.length;i++){
@@ -80,7 +83,7 @@ export default {
             }
         },
        //删除
-       del:function(){
+       del:function(row){
             var ids=[];
             if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
                ids.push(row.id);
@@ -100,7 +103,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/eventRuleTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
 		       		}else{

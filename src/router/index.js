@@ -15,10 +15,10 @@ import realControlHisAlarm from '@/page/realControl_HisAlarm'  //设备历史告
 import accessManage from '@/page/accessManage'
 import accessManageClient from '@/page/accessManage_Client'  //客户管理
 import accessManage_Client_Add from '@/page/accessManage_Client_Add'  //客户管理新增
-
 import accessManageProject from '@/page/accessManage_Project'  //项目管理
 import accessManage_Project_add from '@/page/accessManage_Project_add'  //项目管理新增
 import accessManageGateway from '@/page/accessManage_Gateway'  //接入网关
+import accessManage_Gateway_add from '@/page/accessManage_Gateway_add'  //接入网关
 import accessManageDevice from '@/page/accessManage_Device'  //接入设备
 import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备类型管理
 
@@ -90,8 +90,8 @@ export default new Router({
         {path:'/accessManage/client/add',component:accessManage_Client_Add}, //新增客户信息
         {path:'/accessManage/project',component:accessManageProject},
         {path:'/accessManage/project/add',component:accessManage_Project_add},
-        
         {path:'/accessManage/gateway',component:accessManageGateway},
+        {path:'/accessManage/gateway/add',component:accessManage_Gateway_add},
         {path:'/accessManage/device',component:accessManageDevice},
         {path:'/accessManage/deviceType',component:accessManageDeviceType},
         

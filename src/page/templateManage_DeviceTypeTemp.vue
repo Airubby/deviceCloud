@@ -18,22 +18,20 @@
                 <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
                 @selection-change="handleSelectionChange" >                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="vaild">
-                        <div>
-                            <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
-                            <span v-else>无效</span>
-                        </div>
-                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
                     <div class="loncom_table_btn">
+                    <!--
+                        <el-button type="info" plain size="mini" @click="start">启用</el-button>
+                        <el-button type="info" plain size="mini" @click="stop">停用</el-button>
+                        -->
                         <el-button type="info" plain size="mini" @click="del">删除</el-button>
                     </div>
                 </el-search-table-pagination>
@@ -46,27 +44,21 @@
 
 export default {
     created () {
-        //获取设备类型模板
-        this.$api.post('', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
+        this.getList();
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {
            search_info:'',
            table_data:[
-                {name:'123',code:'123',vaild:true}
+                // {name:'123',code:'123',vaild:true}
            ],
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
+            //   { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选的信息
@@ -76,6 +68,15 @@ export default {
        }
    },
     methods:{
+        //获取设备类型模板
+        getList:function(){
+            this.$api.post('/typeTemplate/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
         //勾选框角色
         handleSelectionChange:function(val){
             for(var i=0;i<val.length;i++){
@@ -83,7 +84,7 @@ export default {
             }
         },
        //删除
-       del:function(){
+       del:function(row){
             var ids=[];
             if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
                ids.push(row.id);
@@ -103,9 +104,10 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/typeTemplate/batchUpdateState', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -114,13 +116,57 @@ export default {
 	      });
        },
        //启用
-       start:function(){
-
-       },
-       //停用
-       stop:function(){
-
-       },
+    //    start:function(){
+    //        var ids=[];
+    //         if(this.multipleSelection.length>0){
+    //             ids=this.multipleSelection;
+    //         }else{
+    //             this.$message.warning("请勾选需要启用的项");
+    //             return;
+    //         }
+    //         this.$confirm("确定启用?", '提示', {
+	//         confirmButtonText: '确定',
+	//         cancelButtonText: '取消',
+    //         type:'warning',
+	//         }).then(() => {
+    //             var thisID=ids.toString();
+	// 	    	 this.$api.post('/typeTemplate/batchUpdateState', {"ids":thisID,"action":1}, r => {
+	// 	       		if(r.success){
+    //                     this.$message.success(r.msg);
+    //                     this.getList();
+	// 	       		}else{
+    //                     this.$message.warning(r.msg);
+    //                 }
+	// 	       	});
+	          
+	//       });
+    //    },
+    //    //停用
+    //    stop:function(){
+    //         var ids=[];
+    //         if(this.multipleSelection.length>0){
+    //             ids=this.multipleSelection;
+    //         }else{
+    //             this.$message.warning("请勾选需要停用的项");
+    //             return;
+    //         }
+    //         this.$confirm("确定停用?", '提示', {
+	//         confirmButtonText: '确定',
+	//         cancelButtonText: '取消',
+    //         type:'warning',
+	//         }).then(() => {
+    //             var thisID=ids.toString();
+	// 	    	 this.$api.post('/typeTemplate/batchUpdateState', {"ids":thisID,"action":0}, r => {
+	// 	       		if(r.success){
+    //                     this.$message.success(r.msg);
+    //                     this.getList();
+	// 	       		}else{
+    //                     this.$message.warning(r.msg);
+    //                 }
+	// 	       	});
+	          
+	//       });
+    //    },
        //编辑
        edit:function(row){
             this.$router.push({path:'/templateManage/deviceTypeTemp/add',query:{id:row.id}});

@@ -32,21 +32,10 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>是否有效：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.vaild">
-                                    <el-radio :label="true">有效</el-radio>
-                                    <el-radio :label="false">无效</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
                                 &nbsp;
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-button type="primary" size="small" @click="save">保存</el-button>
+                                <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
                             </div>
                         </div>
                         <div class="">
@@ -103,10 +92,12 @@ export default {
             this.topInfo="编辑设备类型模板";
             this.dialogInfo.typeTempId=obj.id;
             //获取设备类型模板
-            this.$api.post('', {}, r => {
+            this.$api.post('/typeTemplate/getById', {id:obj.id}, r => {
                 console.log(r)
                 if(r.success){
-                    this.form_info=r.data[0];
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]; 
+                    }
                 }
             }); 
             //获取设备类型测点信息
@@ -142,7 +133,7 @@ export default {
            },
 
            table_data:[
-                {id:'1',serialNO:'1',name:'321',code:'2342'}
+                // {id:'1',serialNO:'1',name:'321',code:'2342'}
            ],
            table_columns:[
               { prop: 'serialNO', label: '序号',minWidth:100},
@@ -186,11 +177,11 @@ export default {
             }
         },
         //保存设备类型模板项列表信息
-        save:function(){
+        save:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     //form_info.id为空为新增
-                    this.$api.post('', this.form_info , r => {
+                    this.$api.post('/typeTemplate/saveOrUpdateEntity', this.form_info , r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

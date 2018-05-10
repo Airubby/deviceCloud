@@ -10,9 +10,19 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" @selection-change="handleSelectionChange">                                           
+                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns"
+                 @selection-change="handleSelectionChange">                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="vaild">
+                    
+                     <template slot-scope="scope" slot="preview-roles">
+                        <div>
+                            <span v-for="(item,index) in scope.row.roles">
+                                <em v-if="index=='0'">{{item.name}}</em>
+                                <em v-else>，{{item.name}}</em>
+                            </span>
+                        </div>
+                    </template>
+                    <template slot-scope="scope" slot="preview-vaild">
                         <div>
                             <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">启用</span>
                             <span v-else>停用</span>
@@ -42,29 +52,24 @@
 
 export default {
     created () {
-        this.$api.post('/user/list', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
+        this.getList();
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {
            table_data:[
-                {id:'1',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'},
-                {id:'2',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'}
+                // {id:'1',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'},
+                // {id:'2',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'}
            ],
            table_columns:[
               { prop: 'name', label: '用户名',minWidth:100},
               { prop: 'email', label: '邮箱',minWidth:100},
               { prop: 'phoneNo', label: '电话',minWidth:100},
               { prop: 'custName', label: '所属客户',minWidth:100},
-              { prop: 'roleNames', label: '角色',minWidth:100},
-              { prop: 'vaild', label: '状态',minWidth:100},
+              { prop: 'roles', label: '角色',minWidth:100,slotName:'preview-roles'},
+              { prop: 'vaild', label: '状态',minWidth:100,slotName:'preview-vaild'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //存勾选的id
@@ -73,6 +78,15 @@ export default {
        }
    },
     methods:{
+        //获取列表信息
+        getList:function(){
+            this.$api.post('/user/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
         //勾选框
         handleSelectionChange:function(val){
             console.log(val)
@@ -82,6 +96,7 @@ export default {
         },
        //删除
        del:function(row){
+           console.log(row)
            var ids=[];
             if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
                ids.push(row.id);
@@ -101,9 +116,10 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -127,9 +143,10 @@ export default {
             type:'warning',
 	        }).then(() => {
                 var thisID=ids.toString();
-		    	 this.$api.post('', {"ids":thisID,"action":1}, r => {
+		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":true}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -152,9 +169,10 @@ export default {
             type:'warning',
 	        }).then(() => {
                 var thisID=ids.toString();
-		    	 this.$api.post('', {"ids":thisID,"action":0}, r => {
+		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":false}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }

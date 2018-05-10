@@ -44,7 +44,7 @@
                 </div>
             </el-form>
         </div>
-        <dialogBtnInfo v-bind:dialogInfo="dialogInfo" v-on:dialogSure="dialogSure('formInfo')"></dialogBtnInfo>
+        <dialogBtnInfo v-bind:dialogInfobtn="dialogInfo" v-on:dialogSure="dialogSure('formInfo')"></dialogBtnInfo>
     </el-dialog>
 </template>
 
@@ -65,7 +65,7 @@ export default {
                code:'',
                remark:'',
                vaild:true,
-               dicId:dialogInfo.dicId,
+               dicId:this.dialogInfo.dicId,
            },
            formRules:{
                 label:[
@@ -78,17 +78,12 @@ export default {
         }
     },
     methods:{
-      
         //保存的操作
         dialogSure:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.dialogInfo.add){  //新增
-
-                    }else{  //编辑
-
-                    }
-                    this.$api.post('', form_info, r => {
+                    this.$api.post('/sysDicItem/saveOrUpdateEntity', this.form_info, r => {
+                        console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);
                             this.dialogInfo.visible=false;

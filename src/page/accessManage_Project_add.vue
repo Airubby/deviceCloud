@@ -63,7 +63,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
+                <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>

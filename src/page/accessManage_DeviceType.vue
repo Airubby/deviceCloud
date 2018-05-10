@@ -90,7 +90,12 @@
 
 export default {
     created () {
-        
+        this.$api.post('/devType/list', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.tree_data=r.data;
+            }
+        }); 
     },
     mounted() {
         numScroll(0);

@@ -46,13 +46,13 @@
                                 备注：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.remark" style="height:150px;"></el-input>
+                                <el-input type="textarea" v-model="form_info.remark"></el-input>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">&nbsp;</div>
                             <div class="loncom_list_box_right">
-                                <el-button type="primary" size="small" @click="save">保存</el-button>
+                                <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
                             </div>
                         </div>
                         <div class="">
@@ -92,7 +92,7 @@
                 <noSubmitBtnInfo></noSubmitBtnInfo>
             </div>
         </div>
-        <dialogDatadic v-bind:dialogInfo="dialogInfo" v-if="dialogInfo.visible"></dialogDatadic>
+        <dialogDatadic v-bind:dialogInfo="dialog_info" v-if="dialog_info.visible"></dialogDatadic>
     </div>
 </template>
 
@@ -108,9 +108,11 @@ export default {
             this.topInfo="新增数据字典信息";
         }else{
             this.topInfo="编辑数据字典信息"
-            this.$api.get('', {id:obj.id}, r => {
+            this.$api.post('/sysDic/getById', {id:obj.id}, r => {
+                console.log(r)
                 if(r.success){
-                    this.form_info=r.data[0];
+                    this.form_info=r.data;
+                    this.dialog_info.dicId=r.data.id;
                 }
             }); 
         }
@@ -139,10 +141,10 @@ export default {
            },
 
            table_data:[
-                {id:'1',label:'321',code:'2342',remark:'12313123',vaild:true}
+                // {id:'1',label:'321',code:'2342',remark:'12313123',vaild:true}
            ],
            table_columns:[
-              { prop: 'label', label: '名称',minWidth:100},
+              { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
               { prop: 'remark', label: '备注',minWidth:100},
               { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
@@ -150,7 +152,7 @@ export default {
           ],
 
           //新增字典项列表信息
-          dialogInfo:{
+          dialog_info:{
                 title:'新增字典项信息',
                 visible:false,
                 width:"600px",
@@ -173,14 +175,24 @@ export default {
         },
         //新增字典项列表信息
         add:function(){
-            if(this.dialogInfo.dicId!=""){
-                this.dialogInfo.visible=true;
+            if(this.dialog_info.dicId!=""){
+                console.log(this.dialog_info)
+                this.dialog_info.visible=true;
             }else{
                 this.$message.warning("请先保存字典信息");
             }
         },
+        //字典列表信息
+        getList:function(){
+            this.$api.post('/sysDicItem/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
         //保存字典信息，保存了才能增加字典列表
-        save:function(){
+        save:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     //form_info.id为空为新增
@@ -188,7 +200,7 @@ export default {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);
-                            this.dialogInfo.dicId=r.id;
+                            this.dialog_info.dicId=r.data.id;
                         }else{
                             this.$message.warning(r.msg);
                         }
@@ -280,9 +292,9 @@ export default {
        },
        //编辑字典项列表信息
        edit:function(row){
-            this.dialogInfo.visible=true;
-            this.dialogInfo.add=false;
-            this.dialogInfo.title="编辑字典项信息"
+            this.dialog_info.visible=true;
+            this.dialog_info.add=false;
+            this.dialog_info.title="编辑字典项信息"
        },
        
 

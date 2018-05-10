@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="loncom_list_box_right">
                                             <el-form-item prop="title">
-                                                <el-input size="small" placeholder="请输入账号" v-model="form_info.title"></el-input>
+                                                <el-input size="small" placeholder="请输入标题" v-model="form_info.title"></el-input>
                                             </el-form-item>
                                         </div>
                                     </div>
@@ -99,17 +99,6 @@
                                             </el-form-item>
                                         </div>
                                     </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>状态：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-radio-group v-model="form_info.vaild">
-                                                <el-radio label="true">启用</el-radio>
-                                                <el-radio label="false">停用</el-radio>
-                                            </el-radio-group>
-                                        </div>
-                                    </div>
                                 </el-form>
                             </div>
                             <div class="templateManage_inform_info">
@@ -149,7 +138,13 @@
 
 export default {
     created () {
-        
+        //获项目
+        this.$api.post('', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.project_data=r.data;
+            }
+        }); 
     },
     mounted() {
         numScroll(0);
@@ -167,12 +162,29 @@ export default {
                downContent:'',
                removeContent:'',
                confirmContent:'',
-               vaild:'true',
 
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
+                ],
+                title:[
+                    { required: true, message: '请输入标题', trigger: 'blur' },
+                ],
+                occurContent:[
+                    { required: true, message: '请输入发生告警', trigger: 'blur' },
+                ],
+                upContent:[
+                    { required: true, message: '请输入告警升级', trigger: 'blur' },
+                ],
+                downContent:[
+                    { required: true, message: '请输入告警降级', trigger: 'blur' },
+                ],
+                removeContent:[
+                    { required: true, message: '请输入解除告警', trigger: 'blur' },
+                ],
+                confirmContent:[
+                    { required: true, message: '请输入确认告警', trigger: 'blur' },
                 ],
            },
        }
@@ -181,6 +193,7 @@ export default {
         //点击项目
        proclick:function(item){
             this.project_id=item.id;
+
        },
        //编辑
        edit:function(row){

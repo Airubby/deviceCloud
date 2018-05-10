@@ -232,7 +232,7 @@
                 </div>
             </el-form>
         </div>
-        <dialogBtnInfo v-bind:dialogInfo="dialogInfo" v-on:dialogSure="dialogSure('formInfo')"></dialogBtnInfo>
+        <dialogBtnInfo v-bind:dialogInfobtn="dialogInfo" v-on:dialogSure="dialogSure('formInfo')"></dialogBtnInfo>
     </el-dialog>
 </template>
 

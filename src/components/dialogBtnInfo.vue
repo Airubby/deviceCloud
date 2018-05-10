@@ -27,11 +27,11 @@ export default {
         },
         //取消操作
         dialogCancel:function(){
-            this.dialogInfo.visible=false;   
+            this.dialogInfobtn.visible=false;   
         },
 
     },
-    props:["dialogInfo"]  
+    props:["dialogInfobtn"]  
 }
 </script>
 

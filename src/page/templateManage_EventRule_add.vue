@@ -153,7 +153,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -168,11 +168,10 @@ export default {
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增事件规则模板信息";
         }else{
-            this.topInfo="编辑事件规则模板信息"
-            this.activeBtn=false;
+            this.topInfo="编辑事件规则模板信息";
             this.$api.get('', {id:obj.id}, r => {
                 if(r.success){
-                    this.form_info=r.data[0];
+                    
                 }
             }); 
         }
@@ -184,8 +183,8 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
-           activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                useFel:false,
                vara1:'',
@@ -242,12 +241,7 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
-                    this.$api.post('', this.form_info, r => {
+                    this.$api.post('/eventRuleTemplate/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

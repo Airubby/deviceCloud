@@ -45,8 +45,8 @@
                                 <em>*</em>所属客户：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="custId">
-                                    <el-select v-model="form_info.custId" placeholder="请选择">
+                                <el-form-item prop="customerId">
+                                    <el-select v-model="form_info.customerId" placeholder="请选择">
                                         <el-option v-for="item in custNameList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -57,8 +57,8 @@
                                 <em>*</em>角色：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="roleIDs">
-                                    <el-select v-model="form_info.roleIDs" placeholder="请选择">
+                                <el-form-item prop="roles">
+                                    <el-select v-model="form_info.roles" multiple collapse-tags placeholder="请选择">
                                         <el-option v-for="item in roleNamesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -77,7 +77,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
+                <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -90,6 +90,7 @@ export default {
     created () {
         //获取角色信息
         this.$api.post('/role/roleList', {}, r => {
+            console.log(r)
             if(r.success){
                 this.roleNamesList=r.data;
             }
@@ -101,50 +102,58 @@ export default {
                 this.custNameList=r.data;
             }
         }); 
-
+    },
+    mounted() {
+        scrollCon();
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增用户信息";
         }else{
             this.topInfo="编辑用户信息"
-            this.activeBtn=false;
-            this.$api.get('', {id:obj.id}, r => {
+            this.$api.post('/user/getById', {id:obj.id}, r => {
+                console.log(r)
                 if(r.success){
-                    this.form_info=r.list[0];
+                    for(var item in this.form_info){
+                        if(item=='roles'){
+                            for(var i=0;i<r.data[item].length;i++){
+                                this.form_info.roles.push(r.data[item][i].id);
+                            }
+                        }else{
+                            this.form_info[item]=r.data[item]; 
+                        }
+                    } 
                 }
             }); 
         }
-    },
-    mounted() {
-        scrollCon();
     },
     data() {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
-           activeBtn:true,  //默认新增
            form_info:{
                id:'',
                name:'',
-               fullName:'',
-               contacts:'',
+               email:'',
                phoneNo:'',
+               customerId:'',
+               roles:[],
                vaild:true,
-               roleIDs:'',
-               custId:'',
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
-                fullName:[
-                    { required: true, message: '请输入账号', trigger: 'blur' },
-                ],
-                contacts:[
-                    { required: true, message: '请输入联系人', trigger: 'blur' },
+                email:[
+                    { required: true, message: '请输入邮箱', trigger: 'blur' },
                 ],
                 phoneNo:[
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
+                ],
+                roles:[
+                    { required: true, message: '请选择角色', trigger: 'change' },
+                ],
+                customerId:[
+                    { required: true, message: '请选择客户', trigger: 'change' },
                 ],
            },
            //客户信息
@@ -158,12 +167,10 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-                        
-                    }else{  //编辑
-
-                    }
-                    this.$api.post('', form_info, r => {
+                    
+                    this.form_info.roles=this.form_info.roles.toString();
+                    console.log(this.form_info)
+                    this.$api.post('/user/saveOrUpdateEntity', this.form_info, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                             this.$refs.goBack.giveUp();

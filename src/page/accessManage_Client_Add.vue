@@ -79,7 +79,14 @@ export default {
             this.topInfo="新增客户信息";
         }else{
             this.topInfo="编辑客户信息"
-            this.activeBtn=false;
+            this.$api.post('/customer/getById', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item];    
+                    } 
+                }
+            }); 
         }
     },
     mounted() {
@@ -119,12 +126,8 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
-                    this.$api.post('/customer/saveEntity', this.form_info, r => {
+                    console.log(this.form_info)
+                    this.$api.post('/customer/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

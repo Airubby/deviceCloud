@@ -46,13 +46,13 @@
                                 备注：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.remark" style="height:150px;"></el-input>
+                                <el-input type="textarea" v-model="form_info.remark"></el-input>
                             </div>
                            
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -68,7 +68,14 @@ export default {
             this.topInfo="新增事件库";
         }else{
             this.topInfo="编辑事件库"
-            this.activeBtn=false;
+            this.$api.post('/eventLib/getById', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]; 
+                    } 
+                }
+            }); 
         }
     },
     mounted() {
@@ -78,8 +85,8 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
-           activeBtn:true,  //默认新增
            form_info:{
+               id:'',
                name:'',
                code:'',
                vaild:true,
@@ -99,11 +106,14 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
+                    this.$api.post('/eventLib/saveOrUpdateEntity', this.form_info, r => {
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.$refs.goBack.giveUp();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },

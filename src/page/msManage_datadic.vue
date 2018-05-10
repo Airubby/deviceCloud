@@ -15,7 +15,8 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" >                                           
+                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                 @selection-change="handleSelectionChange">                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                      <template slot-scope="scope" slot="vaild">
                         <div>
@@ -28,7 +29,7 @@
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
@@ -47,21 +48,16 @@
 
 export default {
     created () {
-        //获取字典列表
-        this.$api.get('', {}, r => {
-            if(r.success){
-                this.tree_data=r.data;
-            }
-        }); 
+        this.getList();
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {
            search_info:'',
            table_data:[
-                {id:'1',name:'小张',code:'编码',remark:'12313123',vaild:true}
+                // {id:'1',name:'小张',code:'编码',remark:'12313123',vaild:true}
            ],
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
@@ -70,10 +66,29 @@ export default {
               { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
+          //勾选框
+          multipleSelection:[],
 
        }
    },
     methods:{
+        //获取列表
+        getList:function(){
+            //获取字典列表
+            this.$api.post('/sysDic/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
+         //勾选框
+        handleSelectionChange:function(val){
+            console.log(val)
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
        //删除
        del:function(row){
             var ids=[];
@@ -95,9 +110,10 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/sysDic/batchUpdateState', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -120,9 +136,10 @@ export default {
             type:'warning',
 	        }).then(() => {
                 var thisID=ids.toString();
-		    	 this.$api.post('', {"ids":thisID,"action":1}, r => {
+		    	 this.$api.post('/sysDic/batchUpdateState', {"ids":thisID,"action":1}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -145,9 +162,10 @@ export default {
             type:'warning',
 	        }).then(() => {
                 var thisID=ids.toString();
-		    	 this.$api.post('', {"ids":thisID,"action":0}, r => {
+		    	 this.$api.post('/sysDic/batchUpdateState', {"ids":thisID,"action":0}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }

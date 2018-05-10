@@ -21,10 +21,20 @@
 
 <script>
 export default {
-  
+  created () {
+        this.$api.post('/login/getSalt', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.salt1=r.salt1;
+                this.salt2=r.salt2;
+            }
+        });
+ },
  data(){
   
   	return {
+        salt1:'',
+        salt2:'',
         user:{
             userid:"",
             psword:""
@@ -48,19 +58,22 @@ export default {
       loginIn:function(formName){
         this.$refs[formName].validate((valid) => {
             if (valid) {
-                this.$message({
-                    message: '恭喜你，登录成功！',
-                    type: 'success'
+                var md5pwd= b64_md5(b64_md5(this.user.userid+ this.salt1 + b64_md5(this.user.psword)) + this.salt2);
+                this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, r => {
+                    console.log(r)
+                    if(r.success){
+                    }
                 });
-                var loginInfo = {};
-                //这里保存一些用户信息，后面需要
-                if (localStorage.loginInfo) {
-                    loginInfo = JSON.parse(localStorage.loginInfo);
-                }
-                loginInfo.userid = this.user.userid;
-                loginInfo.psword = this.user.psword;
-                localStorage.loginInfo = JSON.stringify(loginInfo);
-                this.$router.push({path:'/'});
+                // this.$message.success('恭喜你，登录成功！');
+                // var loginInfo = {};
+                // //这里保存一些用户信息，后面需要
+                // if (localStorage.loginInfo) {
+                //     loginInfo = JSON.parse(localStorage.loginInfo);
+                // }
+                // loginInfo.userid = this.user.userid;
+                // loginInfo.psword = this.user.psword;
+                // localStorage.loginInfo = JSON.stringify(loginInfo);
+                // this.$router.push({path:'/'});
             } 
         });
           

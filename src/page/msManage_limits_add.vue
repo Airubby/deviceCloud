@@ -74,7 +74,7 @@
                         </div>
                     </el-form>
                 </div>
-                <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')"></SubmitBtnInfo>
+                <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
     </div>
@@ -86,14 +86,17 @@ export default {
 
     created () {
         var obj = this.$route.query;
-        if(JSON.stringify(obj) == "{}"){
-            this.topInfo="新增角色信息";
-        }else{
-            this.topInfo="编辑角色信息"
-            this.activeBtn=false;
-            this.$api.get('', {id:obj.id}, r => {
+        if(obj.treeId){  //新增
+            this.topInfo="新增权限信息";
+            this.form_info.parentId=obj.treeId;
+        }else if(obj.id){
+            this.topInfo="编辑权限信息"
+            this.$api.post('/menu/getById', {id:obj.id}, r => {
+                console.log(r)
                 if(r.success){
-                    this.form_info=r.data[0];
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]; 
+                    }
                 }
             }); 
         }
@@ -105,11 +108,11 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
-           activeBtn:true,  //默认新增
            form_info:{
                id:'',
                name:'',
                code:'',
+               parentId:'',
                menuType:'module',
                icon:'',
                url:'',
@@ -136,12 +139,8 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
-                    this.$api.post('', form_info, r => {
+                    console.log(this.form_info);
+                    this.$api.post('/menu/saveEntity', this.form_info, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                             this.$refs.goBack.giveUp();

@@ -36,13 +36,7 @@
 
 export default {
     created () {
-        //获取模板列表
-        this.$api.get('', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
+        this.getList();
     },
     mounted() {
 
@@ -50,7 +44,7 @@ export default {
     data() {
        return {
            table_data:[
-                {id:'1',name:'小张',collectCycle:'12',transferCode:'123',transferCycle:'12321',clientHBeat:'124',devHBeat:'123'}
+                // {id:'1',name:'小张',collectCycle:'12',transferCode:'123',transferCycle:'12321',clientHBeat:'124',devHBeat:'123'}
            ],
            table_columns:[
               { prop: 'name', label: '模板名称',minWidth:100},
@@ -67,6 +61,15 @@ export default {
        }
    },
     methods:{
+         //获取模板列表
+        getList:function(){
+            this.$api.post('/accessConfigTemplate/list', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
         //勾选框角色
         handleSelectionChange:function(val){
             for(var i=0;i<val.length;i++){

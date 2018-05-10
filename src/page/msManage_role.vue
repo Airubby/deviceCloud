@@ -43,6 +43,7 @@
                     <div class="msManage_tree_con numScroll0">
                         <el-tree
                         ref="tree"
+                        :props="defaultProps"
                         :data="tree_data"
                         show-checkbox
                         node-key="id"
@@ -62,19 +63,8 @@
 
 export default {
     created () {
-        //获取角色列表信息
-        this.$api.post('/role/roleList', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
-        //获取权限树
-        this.$api.get('', {}, r => {
-            if(r.success){
-                this.tree_data=r.data;
-            }
-        }); 
+        this.getList();
+        this.getTree();
 
     },
     mounted() {
@@ -84,8 +74,8 @@ export default {
     data() {
        return {
            table_data:[
-                {id:'1',code:'234',name:'234',remark:'小明'},
-                {id:'2',code:'234',name:'34',remark:'小明'},
+                // {id:'1',code:'234',name:'234',remark:'小明'},
+                // {id:'2',code:'234',name:'34',remark:'小明'},
            ],
            table_columns:[
               { prop: 'code', label: '编码',minWidth:100},
@@ -95,48 +85,36 @@ export default {
           ],
           //存角色勾选的id
           multipleSelection:[],
-          tree_data: [{
-            id: 1,
-            label: '一级 1',
-            children: [{
-                id: 4,
-                label: '二级 1-1',
-                children: [{
-                id: 9,
-                label: '三级 1-1-1'
-                }, {
-                id: 10,
-                label: '三级 1-1-2'
-                }]
-            }]
-            }, {
-            id: 2,
-            label: '一级 2',
-            children: [{
-                id: 5,
-                label: '二级 2-1'
-            }, {
-                id: 6,
-                label: '二级 2-2'
-            }]
-            }, 
-            {
-                id: 3,
-                label: '一级 3',
-                children: [{
-                    id: 7,
-                    label: '二级 3-1'
-                }, {
-                    id: 8,
-                    label: '二级 3-2'
-                }]
-            }],
+          tree_data: [],
+          defaultProps: {
+                children: 'subMenu',
+                label: 'name'
+            },
 
        }
    },
     methods:{
+         //获取角色列表信息
+        getList:function(){
+            this.$api.post('/role/roleList', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_data=r.data;
+                }
+            }); 
+        },
+        //获取权限树
+        getTree:function(){
+            this.tree_data=[];
+            this.$api.post('/menu/getById', {id:1}, r => {
+                if(r.success){
+                    this.tree_data.push(r.data);
+                }
+            }); 
+        },
         //勾选框角色
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
@@ -144,11 +122,14 @@ export default {
         //点击单元行，获取角色拥有的权限
         handleCellChange:function(row){
             console.log(row)
-            this.$api.post('', {"id":row.id}, r => {
-                var ids=[7,8];
+            this.$api.post('/role/getById', {"id":row.id}, r => {
+                console.log(r)
+                var ids=[];
+                for(var i=0;i<r.data.menus.length;i++){
+                    ids.push(r.data.menus[i].id);
+                }
                 if(r.success){
-                    this.$refs.tree.setCheckedKeys([7])
-                    this.$message.success(r.msg);
+                    this.$refs.tree.setCheckedKeys(ids)
                 }else{
                     this.$message.warning(r.msg);
                 }
@@ -175,9 +156,11 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/role/batchDelete', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
+                        this.getTree();
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -205,7 +188,9 @@ export default {
                     treeID.push(treeSelect[i].id);
                 }
                 if(treeSelect.length>0){
-                    this.$api.post('', {"id":this.multipleSelection.toString(),"funcIds":treeID.toString()}, r => {
+                    console.log(this.multipleSelection.toString())
+                    console.log(treeID.toString())
+                    this.$api.post('/role/batchUpdateRoleMenu', {"ids":this.multipleSelection.toString(),"menuIds":treeID.toString()}, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                         }else{

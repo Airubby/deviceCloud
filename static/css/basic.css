@@ -331,7 +331,7 @@ em{
 }
 .loncom_tpadding{
   padding: 0 15px;
-  height: 100%;
+  height: calc(100% - 60px);
   width: 100%;
 }
 .loncom_public_filter{
