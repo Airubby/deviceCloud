@@ -331,7 +331,7 @@ em{
 }
 .loncom_tpadding{
   padding: 15px;
-  height: calc(100% - 60px);
+  height: 100%;
   width: 100%;
 }
 .loncom_public_filter{
@@ -348,7 +348,7 @@ em{
 }
 .loncom_public_table{
   width: 100%;
-  height: calc(100% - 75px);
+  height: calc(100% - 40px);
   background: #fff;
 }
 .loncom_public_filter .el-select{
@@ -548,7 +548,7 @@ em{
 }
 .msManage_tree_con{
   width: 100%;
-  height: calc(100% - 75px);
+  height: calc(100% - 40px);
   background: #fff;
   border: 1px solid #e0e0e0;
   padding: 20px 10px 0 10px;

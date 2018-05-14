@@ -7,22 +7,6 @@
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
                 <div class="msManage_table">
-                <!--
-                    <div class="loncom_public_filter loncom_mtb20">
-                        <div class="loncom_filter_group">
-                            <el-input placeholder="编号/名称" v-model="search_info" size="small">
-                                <el-button slot="append" icon="el-icon-search"></el-button>
-                            </el-input>
-                        </div>
-                        <div class="loncom_fr">
-                            <el-button type="primary" size="small" @click="save">保存</el-button>
-                            <el-button type="primary" size="small" @click="add">新增</el-button>
-                        </div>
-                        <div class="loncom_fr loncom_color_main">
-                            提示：给角色赋权限时，需要同时勾选角色和权限点击保存！
-                        </div>
-                    </div>
-                    -->
                     <div class="loncom_public_table numScroll1">
                         <div class="numScrollCon1">
                         <el-search-table-pagination  type="remote"
@@ -31,7 +15,7 @@
                 total-field="total"
                 method='post' 
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                            @selection-change="handleSelectionChange" @cell-click="handleCellChange">   
+                            @selection-change="handleSelectionChange" @cell-click="handleCellChange" ref="thisRef">   
                             <div class="form_add">
                                 <span class="loncom_color_main">提示：给角色赋权限时，需要同时勾选角色和权限点击保存！</span>
                                 <el-button type="primary" size="small" @click="save">保存</el-button>
@@ -98,11 +82,9 @@ export default {
            table_forms: {
             inline: true,
             size:'small',
-            inline:true,
-            placeholder:'名称',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey', label: '' },
+                    { prop: 'queryKey', label: '', placeholder:'名称/编号'},
                 ]
             },
            table_columns:[
@@ -187,7 +169,7 @@ export default {
 		    	 this.$api.post('/role/batchDelete', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false)
                         this.getTree();
 		       		}else{
                         this.$message.warning(r.msg);

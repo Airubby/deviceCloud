@@ -18,6 +18,28 @@
                         </div>
                     </router-link>
                 </li>
+                <li v-for="item in navList">
+                    <router-link :to="item.url">
+                        <div class="loncom_nav">
+                            <em><img :src="item.icon"></em><span class="loncm_menu">{{item.name}}</span>
+                        </div>
+                        <dl class="loncom_morenav" v-if="item.children.length>0">
+                            <dd v-for="initem in item.children">
+                                <router-link :to="initem.url">
+                                <em><img :src="initem.icon"></em><span>{{initem.name}}</span>
+                                </router-link>
+                            </dd>
+                        </dl>
+                    </router-link>
+                </li>
+                <!--
+                <li>
+                    <router-link to="/" exact>
+                        <div class="loncom_nav">
+                            <em><img src="static/images/home.svg"></em><span class="loncm_menu">首页</span>
+                        </div>
+                    </router-link>
+                </li>
                 <li>
                     <router-link to="/realControl">
                         <div class="loncom_nav">
@@ -173,6 +195,7 @@
                         </dl>
                     </router-link>
                 </li>
+                -->
             </ul>
         </div>
     </div>
@@ -203,14 +226,39 @@ export default {
        return {
            navbtn:'',
            navList:[
-               {url:'/',name:'首页',icon:'',children:[]},
+            //    {url:'/',name:'首页',icon:'',children:[]},
                {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',children:[
                    {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.png'},
                    {url:'/realControl/listView',name:'当前告警',icon:'static/images/morenav.png'},
                    {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.png'},
                    {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.png'},
                ]},
-               {url:'/msConfig',name:'系统配置',children:[]},
+               {url:'/accessManage',name:'接入管理',icon:'static/images/realControl.svg',children:[
+                    {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.png'},
+                    {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.png'},
+                    {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.png'},
+                    {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.png'},
+                    {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.png'},
+               ]},
+               {url:'/operationManage',name:'运维管理',icon:'static/images/realControl.svg',children:[
+                    {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.png'},
+                    {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.png'},
+                    {url:'/operationManage/control',name:'队列监控',icon:'static/images/morenav.png'},
+                    {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.png'},
+               ]},
+               {url:'/templateManage',name:'模板管理',icon:'static/images/realControl.svg',children:[
+                    {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.png'},
+                    {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.png'},
+                    {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.png'},
+                    {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.png'},
+                    {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.png'},
+               ]},
+               {url:'/msManage',name:'系统管理',icon:'static/images/realControl.svg',children:[
+                   {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.png'},
+                   {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.png'},
+                   {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.png'},
+                   {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.png'},
+               ]},
            ]
        }
    },

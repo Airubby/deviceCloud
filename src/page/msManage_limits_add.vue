@@ -43,27 +43,38 @@
                                 </el-radio-group>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform" v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>图标：
+                        <div v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>图标：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="icon">
+                                        <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="icon">
-                                    <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>链接：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="url">
+                                        <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </div>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    排序：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="idx">
+                                        <el-input size="small" placeholder="排序号又小到大依次显示" v-model="form_info.idx"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform" v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>链接：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="url">
-                                    <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 备注：
@@ -92,7 +103,7 @@ export default {
             this.form_info.parentId=obj.treeId;
         }else if(obj.id){
             this.topInfo="编辑权限信息"
-            this.$api.post('/menu/getById', {id:obj.id,parentOrSub:subMenu}, r => {
+            this.$api.post('/menu/getById', {id:obj.id,parentOrSub:'subMenu'}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -117,6 +128,7 @@ export default {
                menuType:'module',
                icon:'',
                url:'',
+               idx:'',
                remark:'',
            },
            formRules:{

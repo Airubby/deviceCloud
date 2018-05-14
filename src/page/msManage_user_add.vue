@@ -58,8 +58,8 @@
                                 <em>*</em>角色：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="roles">
-                                    <el-select v-model="form_info.roles" multiple collapse-tags placeholder="请选择">
+                                <el-form-item prop="roleIds">
+                                    <el-select v-model="form_info.roleIds" multiple collapse-tags placeholder="请选择">
                                         <el-option v-for="item in roleNamesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -115,12 +115,10 @@ export default {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
-                        if(item=='roles'){
-                            for(var i=0;i<r.data[item].length;i++){
-                                this.form_info.roles.push(r.data[item][i].id);
+                        if(item=='roleIds'){
+                            for(var i=0;i<r.data['roles'].length;i++){
+                                this.form_info.roleIds.push(r.data['roles'][i].id);
                             }
-                        }else if(item==""){
-
                         }else{
                             this.form_info[item]=r.data[item]; 
                         }
@@ -171,7 +169,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     
-                    this.form_info.roles=this.form_info.roles.toString();
+                    this.form_info.roleIds=this.form_info.roleIds.toString();
                     console.log(this.form_info)
                     this.$api.post('/user/saveOrUpdateEntity', this.form_info, r => {
                         if(r.success){

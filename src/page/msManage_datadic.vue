@@ -12,7 +12,7 @@
                 total-field="total"
                 method='post' 
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                 @selection-change="handleSelectionChange">    
+                 @selection-change="handleSelectionChange" ref="thisRef">    
                     <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                          
@@ -61,11 +61,9 @@ export default {
            table_forms: {
             inline: true,
             size:'small',
-            inline:true,
-            placeholder:'名称',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey', label: '' },
+                    { prop: 'queryKey', label: '' ,placeholder:'名称/编码'},
                 ]
             },
            table_columns:[
@@ -122,7 +120,7 @@ export default {
 		    	 this.$api.post('/sysDic/batchUpdateState', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false)
 		       		}else{
                         this.$message.warning(r.msg);
                     }

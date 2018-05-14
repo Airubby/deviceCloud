@@ -6,21 +6,16 @@
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <!--
-                    <div class="loncom_filter_group">
-                        <el-input placeholder="名称" v-model="search_info" size="small">
-                            <el-button slot="append" icon="el-icon-search"></el-button>
-                        </el-input>
-                    </div>
-                    -->
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote"
+                 url="/accessConfigTemplate/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange" ref="thisRef">                                           
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                
-                @selection-change="handleSelectionChange" >                                           
+                    </div>      
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                      
                     <template slot-scope="scope" slot="preview-handle">
@@ -45,7 +40,7 @@
 
 export default {
     created () {
-        this.getList();
+        
     },
     mounted() {
 
@@ -58,11 +53,9 @@ export default {
            table_forms: {
             inline: true,
             size:'small',
-            inline:true,
-            placeholder:'名称',
-            submitBtnText: 'Search',
+            submitBtnText: '搜索',
             forms: [
-                    { prop: 'name', label: '' },
+                    { prop: 'name', label: '',placeholder:'名称' },
                 ]
             },
            table_columns:[
@@ -82,12 +75,12 @@ export default {
     methods:{
          //获取模板列表
         getList:function(){
-            this.$api.post('/accessConfigTemplate/list', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            // this.$api.post('/accessConfigTemplate/list', {}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.table_data=r.data;
+            //     }
+            // }); 
         },
         //勾选框角色
         handleSelectionChange:function(val){
@@ -120,7 +113,7 @@ export default {
 		    	 this.$api.post('/accessConfigTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false)
 		       		}else{
                         this.$message.warning(r.msg);
                     }

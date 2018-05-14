@@ -35,7 +35,12 @@
                             <el-table-column slot="prepend" type="selection"></el-table-column>
                             <template slot-scope="scope" slot="preview-handle">
                                 <div>
-                                    <p>
+                                    <p v-if="treeId=='1'">
+                                        <a href="javascript:;" style="color:#999">编辑</a> 
+                                        <em>|</em> 
+                                        <a href="javascript:;" style="color:#999">删除</a>
+                                    </p>
+                                    <p v-else>
                                         <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                         <em>|</em> 
                                         <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
@@ -88,7 +93,7 @@ export default {
     methods:{
         //获取权限树
         getTree:function(){
-            this.$api.post('/menu/getById', {id:1,parentOrSub:parent}, r => {
+            this.$api.post('/menu/getById', {id:1,parentOrSub:'parent'}, r => {
                 console.log(r)
                 if(r.success){
                     this.tree_data.push(r.data);

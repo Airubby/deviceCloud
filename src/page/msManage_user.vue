@@ -12,7 +12,7 @@
                 total-field="total"
                 method='post' 
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns"
-                 @selection-change="handleSelectionChange">      
+                 @selection-change="handleSelectionChange" ref="thisRef">      
                     <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                              
@@ -64,26 +64,24 @@ export default {
     data() {
        return {
            table_data:[
-                // {id:'1',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'},
-                // {id:'2',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'}
+                // {id:'1',name:'小张',email:'admin.qq.com',phoneNo:'小明',customerName:'xiaoxiao',roleNames:'管理员',vaild:'123'},
+                // {id:'2',name:'小张',email:'admin.qq.com',phoneNo:'小明',customerName:'xiaoxiao',roleNames:'管理员',vaild:'123'}
            ],
            table_forms: {
             inline: true,
             size:'small',
-            inline:true,
-            placeholder:'名称',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey', label: '' },
+                    { prop: 'queryKey', label: '',placeholder:'名称' },
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '用户名',minWidth:100},
-              { prop: 'email', label: '邮箱',minWidth:100},
-              { prop: 'phoneNo', label: '电话',minWidth:100},
-              { prop: 'custName', label: '所属客户',minWidth:100},
-              { prop: 'roles', label: '角色',minWidth:100,slotName:'preview-roles'},
-              { prop: 'vaild', label: '状态',minWidth:100,slotName:'preview-vaild'},
+              { prop: 'name', label: '用户名'},
+              { prop: 'email', label: '邮箱'},
+              { prop: 'phoneNo', label: '电话'},
+              { prop: 'customerName', label: '所属客户'},
+              { prop: 'roles', label: '角色',slotName:'preview-roles'},
+              { prop: 'vaild', label: '状态',slotName:'preview-vaild'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //存勾选的id
@@ -134,7 +132,7 @@ export default {
 		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false)
 		       		}else{
                         this.$message.warning(r.msg);
                     }
