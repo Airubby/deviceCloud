@@ -2,16 +2,20 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">用户管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote"
+                url="/user/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns"
+                 @selection-change="handleSelectionChange">      
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns"
-                 @selection-change="handleSelectionChange">                                           
+                    </div>                                              
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     
                      <template slot-scope="scope" slot="preview-roles">
@@ -52,7 +56,7 @@
 
 export default {
     created () {
-        this.getList();
+        //this.getList();
     },
     mounted() {
         scrollCon();
@@ -63,6 +67,16 @@ export default {
                 // {id:'1',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'},
                 // {id:'2',name:'小张',email:'admin.qq.com',phoneNo:'小明',custName:'xiaoxiao',roleNames:'管理员',vaild:'123'}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '用户名',minWidth:100},
               { prop: 'email', label: '邮箱',minWidth:100},
@@ -80,16 +94,17 @@ export default {
     methods:{
         //获取列表信息
         getList:function(){
-            this.$api.post('/user/list', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            // this.$api.post('/user/list', {}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.table_data=r.data;
+            //     }
+            // }); 
         },
         //勾选框
         handleSelectionChange:function(val){
             console.log(val)
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }

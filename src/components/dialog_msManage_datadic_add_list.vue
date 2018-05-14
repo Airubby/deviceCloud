@@ -24,17 +24,6 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>是否有效：
-                    </div>
-                    <div class="loncom_list_box_right">
-                        <el-radio-group v-model="form_info.vaild">
-                            <el-radio :label="true">有效</el-radio>
-                            <el-radio :label="false">无效</el-radio>
-                        </el-radio-group>
-                    </div>
-                </div>
-                <div class="loncom_list_boxform">
-                    <div class="loncom_list_box_left">
                         备注：
                     </div>
                     <div class="loncom_list_box_right">
@@ -52,7 +41,18 @@
 import dialogBtnInfo from './dialogBtnInfo.vue'
 export default {
     created () {
-        
+        if(!this.dialogInfo.add){ //编辑
+            this.$api.post('/sysDicItem/getById', {"id":this.dialogInfo.data.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        if(r.data[item]){
+                            this.form_info[item]=r.data[item];
+                        }
+                    }
+                }
+            });
+        }
     },
     mounted() {
         
@@ -60,11 +60,10 @@ export default {
     data() {
         return {
             form_info:{
-                id:'',
+               id:'',
                label:'',
                code:'',
                remark:'',
-               vaild:true,
                dicId:this.dialogInfo.dicId,
            },
            formRules:{
@@ -82,11 +81,13 @@ export default {
         dialogSure:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
+                    console.log(this.form_info)
                     this.$api.post('/sysDicItem/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);
                             this.dialogInfo.visible=false;
+                            this.$parent.getList();
                         }else{
                             this.$message.warning(r.msg);
                         }

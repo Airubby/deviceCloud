@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">设备类型模板管理 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -60,7 +61,7 @@
                                         <p>
                                             <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                             <em>|</em> 
-                                            <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                            <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                                         </p>
                                     </div>
                                 </template>
@@ -90,23 +91,9 @@ export default {
             this.topInfo="新增设备类型模板";
         }else{
             this.topInfo="编辑设备类型模板";
-            this.dialogInfo.typeTempId=obj.id;
             //获取设备类型模板
-            this.$api.post('/typeTemplate/getById', {id:obj.id}, r => {
-                console.log(r)
-                if(r.success){
-                    for(var item in this.form_info){
-                        this.form_info[item]=r.data[item]; 
-                    }
-                }
-            }); 
-            //获取设备类型测点信息
-            this.$api.post('', {id:obj.id}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            this.dialogInfo.typeTempId=obj.id;
+            this.getList();
 
         }
     },
@@ -153,7 +140,7 @@ export default {
                 visible:false,
                 width:"650px",
                 add:true,  //默认新增
-                typeTempId:'1',
+                typeTempId:'',
                 data:{},
             },
             //勾选的测点信息
@@ -162,16 +149,32 @@ export default {
        }
    },
     methods:{
+        getList:function(){
+            //获取设备类型测点信息
+            this.$api.post('/typeTemplate/getById', {id:this.dialogInfo.typeTempId}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]; 
+                    }
+                    this.table_data=r.data.points;
+                }
+            }); 
+        },
         //勾选测点信息
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
         },
         //新增设备类型模板项列表信息
         add:function(){
+            console.log(this.dialogInfo.typeTempId)
             if(this.dialogInfo.typeTempId!=""){
                 this.dialogInfo.visible=true;
+                this.dialogInfo.add=true;
+                this.dialogInfo.title="新增测点信息";
             }else{
                 this.$message.warning("请先保存设备类型模板信息");
             }
@@ -214,7 +217,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/pointTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
 		       		}else{
@@ -229,7 +232,8 @@ export default {
        edit:function(row){
             this.dialogInfo.visible=true;
             this.dialogInfo.add=false;
-            this.dialogInfo.title="编辑测点信息"
+            this.dialogInfo.title="编辑测点信息";
+            this.dialogInfo.data=row;
        },
        
     },

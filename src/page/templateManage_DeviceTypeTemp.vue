@@ -2,21 +2,20 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">设备类型模板管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <div class="loncom_filter_group">
-                        <el-input placeholder="编号/名称" v-model="search_info" size="small">
-                            <el-button slot="append" icon="el-icon-search"></el-button>
-                        </el-input>
-                    </div>
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote"
+                url="/eventLib/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange" >      
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                @selection-change="handleSelectionChange" >                                           
+                    </div>                                             
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
@@ -28,10 +27,6 @@
                         </div>
                     </template>
                     <div class="loncom_table_btn">
-                    <!--
-                        <el-button type="info" plain size="mini" @click="start">启用</el-button>
-                        <el-button type="info" plain size="mini" @click="stop">停用</el-button>
-                        -->
                         <el-button type="info" plain size="mini" @click="del">删除</el-button>
                     </div>
                 </el-search-table-pagination>
@@ -55,6 +50,16 @@ export default {
            table_data:[
                 // {name:'123',code:'123',vaild:true}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
@@ -79,6 +84,7 @@ export default {
         },
         //勾选框角色
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
@@ -104,7 +110,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('/typeTemplate/batchUpdateState', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/typeTemplate/deleteEntity', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
                         this.getList();

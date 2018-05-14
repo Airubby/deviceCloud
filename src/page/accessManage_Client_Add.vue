@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">客户管理 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -50,17 +51,6 @@
                                 </el-form-item>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>是否有效：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.vaild">
-                                    <el-radio :label="true">有效</el-radio>
-                                    <el-radio :label="false">无效</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-bind:submitBtnInfo="activeBtn" v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -79,7 +69,7 @@ export default {
             this.topInfo="新增客户信息";
         }else{
             this.topInfo="编辑客户信息"
-            this.$api.post('/customer/getById', {id:obj.id}, r => {
+            this.$api.post('/cust/get', {id:obj.id}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -103,7 +93,6 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
-               vaild:true,
            },
            formRules:{
                 name:[
@@ -127,7 +116,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    this.$api.post('/customer/saveOrUpdateEntity', this.form_info, r => {
+                    this.$api.post('/cust/save', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

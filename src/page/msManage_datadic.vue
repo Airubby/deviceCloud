@@ -2,21 +2,20 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">数据字典管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <div class="loncom_filter_group">
-                        <el-input placeholder="编号/名称" v-model="search_info" size="small">
-                            <el-button slot="append" icon="el-icon-search"></el-button>
-                        </el-input>
-                    </div>
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote"
+                url="/sysDic/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                 @selection-change="handleSelectionChange">    
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                 @selection-change="handleSelectionChange">                                           
+                    </div>                                          
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                      <template slot-scope="scope" slot="vaild">
                         <div>
@@ -48,7 +47,7 @@
 
 export default {
     created () {
-        this.getList();
+        //this.getList();
     },
     mounted() {
         scrollCon();
@@ -59,6 +58,16 @@ export default {
            table_data:[
                 // {id:'1',name:'小张',code:'编码',remark:'12313123',vaild:true}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
@@ -75,16 +84,16 @@ export default {
         //获取列表
         getList:function(){
             //获取字典列表
-            this.$api.post('/sysDic/list', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            // this.$api.post('/sysDic/list', {}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.table_data=r.data;
+            //     }
+            // }); 
         },
          //勾选框
         handleSelectionChange:function(val){
-            console.log(val)
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }

@@ -7,6 +7,7 @@ import ElSearchTablePagination from 'el-table-pagination'
 import App from './App'
 import router from './router'
 import navInfo from './components/navInfo'
+import loginInfo from './components/loginInfo'
 
 
 // 引用API文件
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(ElSearchTablePagination)
 Vue.use(navInfo)
+Vue.use(loginInfo)
 
 /* eslint-disable no-new */
 new Vue({

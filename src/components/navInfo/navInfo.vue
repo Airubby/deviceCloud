@@ -182,7 +182,12 @@
 <script>
 export default {
     created () {
-        
+        var loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
+        if(JSON.stringify(loginInfo) == "{}"){
+            this.$message.warning("请登录系统");
+            this.$router.push({path:'/login'});
+            return;
+        }
     },
     mounted() {
         if(JSON.stringify(localStorage.navInfo) == undefined){
@@ -198,10 +203,12 @@ export default {
        return {
            navbtn:'',
            navList:[
-               {url:'/',name:'首页',children:[]},
-               {url:'/realControl',name:'实时监控',children:[
-                   {url:'/realControl/gis',name:'Gis视图'},
-                   {url:'/realControl/listView',name:'列表视图'}
+               {url:'/',name:'首页',icon:'',children:[]},
+               {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',children:[
+                   {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.png'},
+                   {url:'/realControl/listView',name:'当前告警',icon:'static/images/morenav.png'},
+                   {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.png'},
+                   {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.png'},
                ]},
                {url:'/msConfig',name:'系统配置',children:[]},
            ]

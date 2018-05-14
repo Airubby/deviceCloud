@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">项目管理 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -50,17 +51,6 @@
                                 </el-form-item>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>是否有效：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.vaild">
-                                    <el-radio :label="true">有效</el-radio>
-                                    <el-radio :label="false">无效</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -78,7 +68,15 @@ export default {
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增项目信息";
         }else{
-            this.topInfo="编辑项目信息"
+            this.topInfo="编辑项目信息";
+            this.$api.post('/project/get', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item];    
+                    } 
+                }
+            }); 
         }
     },
     mounted() {
@@ -94,7 +92,6 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
-               vaild:true,
            },
            formRules:{
                 name:[
@@ -118,7 +115,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     //form_info.id为空表示新增
-                    this.$api.post('', this.form_info, r => {
+                    this.$api.post('/project/save', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

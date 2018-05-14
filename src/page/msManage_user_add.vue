@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">用户管理 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -92,14 +93,14 @@ export default {
         this.$api.post('/role/roleList', {}, r => {
             console.log(r)
             if(r.success){
-                this.roleNamesList=r.data;
+                this.roleNamesList=r.list;
             }
         }); 
         //获取客户信息
-        this.$api.post('/customer/customerList', {}, r => {
+        this.$api.post('/cust/list', {}, r => {
             console.log(r)
             if(r.success){
-                this.custNameList=r.data;
+                this.custNameList=r.list;
             }
         }); 
     },
@@ -118,6 +119,8 @@ export default {
                             for(var i=0;i<r.data[item].length;i++){
                                 this.form_info.roles.push(r.data[item][i].id);
                             }
+                        }else if(item==""){
+
                         }else{
                             this.form_info[item]=r.data[item]; 
                         }
@@ -136,7 +139,7 @@ export default {
                email:'',
                phoneNo:'',
                customerId:'',
-               roles:[],
+               roleIds:[],
                vaild:true,
            },
            formRules:{
@@ -149,7 +152,7 @@ export default {
                 phoneNo:[
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
                 ],
-                roles:[
+                roleIds:[
                     { required: true, message: '请选择角色', trigger: 'change' },
                 ],
                 customerId:[

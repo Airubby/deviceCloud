@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">权限管理 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -91,7 +92,7 @@ export default {
             this.form_info.parentId=obj.treeId;
         }else if(obj.id){
             this.topInfo="编辑权限信息"
-            this.$api.post('/menu/getById', {id:obj.id}, r => {
+            this.$api.post('/menu/getById', {id:obj.id,parentOrSub:subMenu}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){

@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">采集控制模板 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -46,7 +47,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="transferCycle">
-                                    <el-input size="small" placeholder="请输入传输规则" v-model="form_info.transferCycle"></el-input>
+                                    <el-input size="small" placeholder="请输入传输周期" v-model="form_info.transferCycle"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -88,9 +89,12 @@ export default {
             this.topInfo="新增采集控制模板信息";
         }else{
             this.topInfo="编辑采集控制模板信息"
-            this.$api.get('', {id:obj.id}, r => {
+            this.$api.post('/accessConfigTemplate/getById', {id:obj.id}, r => {
+                console.log(r)
                 if(r.success){
-                    this.form_info=r.data;
+                    for (var item in this.form_info){
+                        this.form_info[item]=r.data[item]; 
+                    }
                 }
             }); 
         }
@@ -117,18 +121,23 @@ export default {
                 ],
                 collectCycle:[
                     { required: true, message: '请输入采集周期', trigger: 'blur' },
+                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 transferCode:[
                     { required: true, message: '请输入传输规则', trigger: 'blur' },
+                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 transferCycle:[
                     { required: true, message: '请输入传输周期', trigger: 'blur' },
+                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 clientHBeat:[
                     { required: true, message: '请输入模块心跳', trigger: 'blur' },
+                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 devHBeat:[
                     { required: true, message: '请输入设备心跳', trigger: 'blur' },
+                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
            },
        }

@@ -2,29 +2,27 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">项目管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote"
+                url="/project/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange">          
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                @selection-change="handleSelectionChange">                                           
+                    </div>                                      
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="vaild">
-                        <div>
-                            <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
-                            <span v-else>无效</span>
-                        </div>
-                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
@@ -41,12 +39,12 @@
 
 export default {
     created () {
-        this.$api.post('', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_data=r.data;
-            }
-        }); 
+        // this.$api.post('', {}, r => {
+        //     console.log(r)
+        //     if(r.success){
+        //         this.table_data=r.data;
+        //     }
+        // }); 
     },
     mounted() {
 
@@ -54,14 +52,23 @@ export default {
     data() {
        return {
            table_data:[
-                {id:'1',name:'小微产品',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
+                // {id:'1',name:'小微产品',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'fullName', label: '单位',minWidth:100},
               { prop: 'contacts', label: '联系人',minWidth:100},
               { prop: 'phoneNo', label: '联系电话',minWidth:100},
-              { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选项
@@ -72,6 +79,7 @@ export default {
     methods:{
         //勾选框
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
@@ -97,7 +105,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/project/delete', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
 		       		}else{

@@ -2,18 +2,27 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">事件规则模板</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="loncom_public_filter loncom_mtb20">
-                    <div class="loncom_fr">
+                <el-search-table-pagination type="remote" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                url="/eventrule/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms"
+                @selection-change="handleSelectionChange" > 
+                    <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
-                    </div>
-                </div>
-                <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                @selection-change="handleSelectionChange" >                                           
+                    </div>                                          
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     
+                     <template slot-scope="scope" slot="preview-useFel">
+                        <div>
+                            <span v-if="scope.row.useFel">是</span>
+                            <span v-else>否</span>
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
@@ -36,7 +45,7 @@
 
 export default {
     created () {
-        this.getList();
+        //this.getList();
     },
     mounted() {
         scrollCon();
@@ -46,6 +55,16 @@ export default {
            table_data:[
                 // {id:'1',name:'小张',vara1:'12',opta:'true'}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '模板名称',minWidth:100},
               { prop: 'vara1', label: '值',minWidth:100},
@@ -55,11 +74,11 @@ export default {
               { prop: 'varb1', label: '值',minWidth:100},
               { prop: 'optb', label: '运算符',minWidth:100},
               { prop: 'varb2', label: '值',minWidth:100},
-              { prop: 'action', label: '',minWidth:100},
-              { prop: 'useFel', label: '是否使用自定义',minWidth:100},
+              { prop: 'action', label: '告警条件',minWidth:100},
+              { prop: 'useFel', label: '是否使用自定义',minWidth:100,slotName:'preview-useFel'},
               { prop: 'fel', label: '自定义',minWidth:100},
-              { prop: 'eventLibId', label: '事件库id',minWidth:100},
-              { prop: 'eventLevel', label: '事件等级',minWidth:100},
+              { prop: 'eventLibName', label: '事件库',minWidth:100},
+              { prop: 'eventLevelName', label: '事件等级',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选信息
@@ -69,15 +88,16 @@ export default {
    },
     methods:{
         getList:function(){
-            this.$api.post('/eventRuleTemplate/list', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            // this.$api.post('/eventRuleTemplate/list', {}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.table_data=r.data;
+            //     }
+            // }); 
         },
          //勾选框
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
@@ -103,7 +123,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('/eventRuleTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/eventrule/delete', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
 		       		}else{

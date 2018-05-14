@@ -2,15 +2,24 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">采集控制模板</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
                 <div class="loncom_public_filter loncom_mtb20">
+                    <!--
+                    <div class="loncom_filter_group">
+                        <el-input placeholder="名称" v-model="search_info" size="small">
+                            <el-button slot="append" icon="el-icon-search"></el-button>
+                        </el-input>
+                    </div>
+                    -->
                     <div class="loncom_fr">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>
                 </div>
                 <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                
                 @selection-change="handleSelectionChange" >                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                      
@@ -19,7 +28,7 @@
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="remove(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
@@ -46,6 +55,16 @@ export default {
            table_data:[
                 // {id:'1',name:'小张',collectCycle:'12',transferCode:'123',transferCycle:'12321',clientHBeat:'124',devHBeat:'123'}
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: 'Search',
+            forms: [
+                    { prop: 'name', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'name', label: '模板名称',minWidth:100},
               { prop: 'collectCycle', label: '采集周期',minWidth:100},
@@ -72,6 +91,7 @@ export default {
         },
         //勾选框角色
         handleSelectionChange:function(val){
+            this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
                 this.multipleSelection.push(val[i].id);
             }
@@ -85,7 +105,7 @@ export default {
                 if(this.multipleSelection.length>0){
                     ids=this.multipleSelection;
                 }else{
-                    this.$message.warning("请勾选需要删除的角色");
+                    this.$message.warning("请勾选需要删除的项");
                     return;
                 }
            }
@@ -97,9 +117,10 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/accessConfigTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }

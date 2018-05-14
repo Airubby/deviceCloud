@@ -2,23 +2,41 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">角色管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
                 <div class="msManage_table">
+                <!--
                     <div class="loncom_public_filter loncom_mtb20">
-                        <div class="loncom_fl loncom_color_main">
-                            提示：给角色赋权限时，需要同时勾选角色和权限点击保存！
+                        <div class="loncom_filter_group">
+                            <el-input placeholder="编号/名称" v-model="search_info" size="small">
+                                <el-button slot="append" icon="el-icon-search"></el-button>
+                            </el-input>
                         </div>
                         <div class="loncom_fr">
                             <el-button type="primary" size="small" @click="save">保存</el-button>
                             <el-button type="primary" size="small" @click="add">新增</el-button>
                         </div>
+                        <div class="loncom_fr loncom_color_main">
+                            提示：给角色赋权限时，需要同时勾选角色和权限点击保存！
+                        </div>
                     </div>
+                    -->
                     <div class="loncom_public_table numScroll1">
                         <div class="numScrollCon1">
-                        <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                            @selection-change="handleSelectionChange" @cell-click="handleCellChange">                                           
+                        <el-search-table-pagination  type="remote"
+                url="/role/roleList"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                            @selection-change="handleSelectionChange" @cell-click="handleCellChange">   
+                            <div class="form_add">
+                                <span class="loncom_color_main">提示：给角色赋权限时，需要同时勾选角色和权限点击保存！</span>
+                                <el-button type="primary" size="small" @click="save">保存</el-button>
+                                <el-button type="primary" size="small" @click="add">新增</el-button>
+                            </div>                                        
                             <el-table-column slot="prepend" type="selection"></el-table-column>
                             <template slot-scope="scope" slot="preview-handle">
                                 <div>
@@ -63,7 +81,7 @@
 
 export default {
     created () {
-        this.getList();
+        //this.getList();
         this.getTree();
 
     },
@@ -77,6 +95,16 @@ export default {
                 // {id:'1',code:'234',name:'234',remark:'小明'},
                 // {id:'2',code:'234',name:'34',remark:'小明'},
            ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            inline:true,
+            placeholder:'名称',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '' },
+                ]
+            },
            table_columns:[
               { prop: 'code', label: '编码',minWidth:100},
               { prop: 'name', label: '名称',minWidth:100},
@@ -96,12 +124,12 @@ export default {
     methods:{
          //获取角色列表信息
         getList:function(){
-            this.$api.post('/role/roleList', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.table_data=r.data;
-                }
-            }); 
+            // this.$api.post('/role/roleList', {}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.table_data=r.data;
+            //     }
+            // }); 
         },
         //获取权限树
         getTree:function(){

@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">权限管理</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
@@ -23,7 +24,7 @@
                     </div>
                 </div>
                 <div class="msManage_table">
-                    <div class="loncom_public_filter loncom_mtb20">
+                    <div class="loncom_public_filter">
                         <div class="loncom_fr">
                             <el-button type="primary" size="small" @click="add">新增</el-button>
                         </div>
@@ -87,7 +88,7 @@ export default {
     methods:{
         //获取权限树
         getTree:function(){
-            this.$api.post('/menu/getById', {id:1}, r => {
+            this.$api.post('/menu/getById', {id:1,parentOrSub:parent}, r => {
                 console.log(r)
                 if(r.success){
                     this.tree_data.push(r.data);

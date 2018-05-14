@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">消息模板</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
@@ -12,7 +13,7 @@
                     <div class="msManage_tree_con numScroll0">
                         <div class="numScrollCon0">
                             <div v-for="item in project_data" class="templateManage_inform_probox">
-                                <div class="el-collapse-item__header" :class="{'active':item.id==project_id}" @click="proclick(item)">
+                                <div class="el-collapse-item__header" :class="{'active':item.id==projectId}" @click="proclick(item)">
                                     <i class="el-collapse-item__arrow el-icon-arrow-right"></i>{{item.name}}
                                 </div>
                             </div>
@@ -22,7 +23,7 @@
                 <div class="msManage_table">
                     <div class="loncom_public_filter loncom_mtb20">
                         <div class="loncom_fr">
-                            <el-button type="primary" size="small" @click="save">保存</el-button>
+                            <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
                         </div>
                     </div>
                     <div class="loncom_public_table numScroll1">
@@ -139,10 +140,10 @@
 export default {
     created () {
         //获项目
-        this.$api.post('', {}, r => {
+        this.$api.post('/project/list', {}, r => {
             console.log(r)
             if(r.success){
-                this.project_data=r.data;
+                this.project_data=r.list;
             }
         }); 
     },
@@ -152,9 +153,12 @@ export default {
     },
     data() {
        return {
-           project_id:'',
-           project_data:[{name:'项目一',id:'1'},{name:'项目2',id:'2'},{name:'项目3',id:'3'}],
+           projectId:'',
+           project_data:[
+            //    {name:'项目一',id:'1'},{name:'项目2',id:'2'},{name:'项目3',id:'3'}
+            ],
            form_info:{
+               id:'',
                name:'',
                title:'',
                occurContent:'',
@@ -192,16 +196,45 @@ export default {
     methods:{
         //点击项目
        proclick:function(item){
-            this.project_id=item.id;
-
+           console.log(item)
+            this.projectId=item.id;
+            this.$api.post('/msgTemplate/getByProjectId', {id:item.id}, r => {
+                console.log(r)
+                if(r.success){
+                    if(r.data!=null&&r.data!=""){
+                        for(var item in this.form_info){
+                            this.form_info[item]=r.data[item];
+                        }
+                    }else{
+                        for(var item in this.form_info){
+                            this.form_info[item]="";
+                        }
+                    }
+                    
+                }
+            }); 
        },
-       //编辑
-       edit:function(row){
-            var id='1';
-            this.$router.push({path:'/templateManage/deviceType/add',query:{id:id}});
-       },
-       //新增
-       save:function(){
+       
+       //保存
+       save:function(formName){
+           if(this.projectId!=""){
+                this.$refs[formName].validate((valid) => {
+                    if(valid){
+                        this.form_info.projectId=this.projectId;
+                        this.$api.post('/msgTemplate/save', this.form_info, r => {
+                            console.log(r)
+                            if(r.success){
+                                this.$message.success(r.msg);
+                            }else{
+                                this.$message.warning(r.msg);
+                            }
+                        });
+                    }
+                })
+                 
+           }else{
+               this.$message.warning("请点击需要保存到的项目");
+           }
             
        },
 

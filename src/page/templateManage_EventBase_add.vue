@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">事件库 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -68,7 +69,7 @@ export default {
             this.topInfo="新增事件库";
         }else{
             this.topInfo="编辑事件库"
-            this.$api.post('/eventLib/getById', {id:obj.id}, r => {
+            this.$api.post('/eventLib/get', {id:obj.id}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -90,6 +91,7 @@ export default {
                name:'',
                code:'',
                vaild:true,
+               remark:'',
            },
            formRules:{
                 name:[
@@ -106,7 +108,7 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    this.$api.post('/eventLib/saveOrUpdateEntity', this.form_info, r => {
+                    this.$api.post('/eventLib/save', this.form_info, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                             this.$refs.goBack.giveUp();

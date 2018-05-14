@@ -9,7 +9,7 @@
                         <el-input v-model.trim="user.userid" placeholder="请输入用户名称"></el-input>
                     </el-form-item>
                     <el-form-item prop="psword" class="loncom_pass">
-                        <el-input v-model.trim="user.psword" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
+                        <el-input v-model.trim="user.psword" type="password" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
                     </el-form-item>
                     <el-button type="warning" @click="loginIn('userName')" @keydown="keyLogin($event,'userName')">登录</el-button>
                 </el-form>
@@ -22,19 +22,11 @@
 <script>
 export default {
   created () {
-        this.$api.post('/login/getSalt', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.salt1=r.salt1;
-                this.salt2=r.salt2;
-            }
-        });
+        
  },
  data(){
   
   	return {
-        salt1:'',
-        salt2:'',
         user:{
             userid:"",
             psword:""
@@ -58,22 +50,27 @@ export default {
       loginIn:function(formName){
         this.$refs[formName].validate((valid) => {
             if (valid) {
-                var md5pwd= b64_md5(b64_md5(this.user.userid+ this.salt1 + b64_md5(this.user.psword)) + this.salt2);
-                this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, r => {
+                this.$api.post('/login/getSalt', {}, r => {
                     console.log(r)
                     if(r.success){
+                        var md5pwd= b64_md5(b64_md5(this.user.userid+ r.salt1 + b64_md5(this.user.psword)) + r.salt2);
+                        this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, re => {
+                            console.log(re)
+                            if(re.success){
+                                this.$message.success('登录成功！');
+                                var loginInfo={};
+                                if(localStorage.loginInfo){
+                                    loginInfo=JSON.parse(localStorage.loginInfo);
+                                }
+                                loginInfo.username=this.user.userid;
+                                localStorage.loginInfo = JSON.stringify(loginInfo);
+                                this.$router.push({path:'/'});
+                            }else{
+                                this.$message.warning(re.msg);
+                            }
+                        });
                     }
                 });
-                // this.$message.success('恭喜你，登录成功！');
-                // var loginInfo = {};
-                // //这里保存一些用户信息，后面需要
-                // if (localStorage.loginInfo) {
-                //     loginInfo = JSON.parse(localStorage.loginInfo);
-                // }
-                // loginInfo.userid = this.user.userid;
-                // loginInfo.psword = this.user.psword;
-                // localStorage.loginInfo = JSON.stringify(loginInfo);
-                // this.$router.push({path:'/'});
             } 
         });
           
