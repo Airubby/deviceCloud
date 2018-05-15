@@ -19,6 +19,7 @@ import accessManageProject from '@/page/accessManage_Project'  //项目管理
 import accessManage_Project_add from '@/page/accessManage_Project_add'  //项目管理新增
 import accessManageGateway from '@/page/accessManage_Gateway'  //接入网关
 import accessManage_Gateway_add from '@/page/accessManage_Gateway_add'  //接入网关
+import accessManage_Gateway_address from '@/page/accessManage_Gateway_address'  //地点信息
 import accessManageDevice from '@/page/accessManage_Device'  //接入设备
 import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备类型管理
 
@@ -92,6 +93,7 @@ export default new Router({
         {path:'/accessManage/project/add',component:accessManage_Project_add},
         {path:'/accessManage/gateway',component:accessManageGateway},
         {path:'/accessManage/gateway/add',component:accessManage_Gateway_add},
+        {path:'/accessManage/gateway/address',component:accessManage_Gateway_address},
         {path:'/accessManage/device',component:accessManageDevice},
         {path:'/accessManage/deviceType',component:accessManageDeviceType},
         

@@ -31,7 +31,13 @@ export default {
    },
     methods:{
        logout:function(){
-
+            this.$api.post('/logout', {}, r => {
+                if(r.success){
+                    this.$message.success(r.msg);
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
        }
     },
     components:{}

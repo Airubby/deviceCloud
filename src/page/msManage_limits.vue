@@ -18,20 +18,18 @@
                         node-key="id"
                         @node-click="nodeClick"
                         class="numScrollCon0"
-                        default-expand-all
                         >
                         </el-tree>
                     </div>
                 </div>
                 <div class="msManage_table">
-                    <div class="loncom_public_filter">
-                        <div class="loncom_fr">
-                            <el-button type="primary" size="small" @click="add">新增</el-button>
-                        </div>
-                    </div>
                     <div class="loncom_public_table numScroll1">
                         <div class="numScrollCon1">
-                        <el-search-table-pagination type="local" :show-pagination="false" border :data="table_data" :columns="table_columns" >                                           
+                        <el-search-table-pagination type="local" 
+                        :formOptions="table_forms" :show-pagination="false" border :data="table_data" :columns="table_columns" >     
+                            <div class="form_add">
+                                <el-button type="primary" size="small" @click="add">新增</el-button>
+                            </div>                                                   
                             <el-table-column slot="prepend" type="selection"></el-table-column>
                             <template slot-scope="scope" slot="preview-handle">
                                 <div>
@@ -55,7 +53,14 @@
         </div>
     </div>
 </template>
-
+<style>
+.el-form-item{
+    height:40px;
+}
+.el-form-item__content{
+    display:none;
+}
+</style>
 <script>
 
 export default {
@@ -72,6 +77,9 @@ export default {
            table_data:[
                 // {id:'1',code:'12',url:'11232131',name:'小明'},
            ],
+           table_forms: {
+            forms: []
+           },
            table_columns:[
               { prop: 'code', label: 'code',minWidth:100},
               { prop: 'name', label: '名称',minWidth:100},

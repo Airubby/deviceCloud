@@ -211,6 +211,15 @@ export default {
             this.$router.push({path:'/login'});
             return;
         }
+
+        this.$api.post('/getUserRoleMenu', {}, r => {
+            if(r.success){
+                this.$message.success(r.msg);
+            }else{
+                this.$message.warning(r.msg);
+            }
+        }); 
+
     },
     mounted() {
         if(JSON.stringify(localStorage.navInfo) == undefined){

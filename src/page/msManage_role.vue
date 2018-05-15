@@ -50,7 +50,6 @@
                         show-checkbox
                         node-key="id"
                         class="numScrollCon0"
-                        default-expand-all
                         >
                         </el-tree>
                     </div>

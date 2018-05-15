@@ -348,7 +348,7 @@ em{
 }
 .loncom_public_table{
   width: 100%;
-  height: calc(100% - 40px);
+  height:100%;
   background: #fff;
 }
 .loncom_public_filter .el-select{
@@ -517,6 +517,7 @@ em{
   text-align: center;
   display: inline-block;
   border-left: 1px solid #ddd;
+  cursor: pointer;
 }
 .realControl_search_box{
   position: absolute;

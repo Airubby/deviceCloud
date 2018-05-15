@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">接入网关 &gt; {{topInfo}}</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_public_add">
@@ -15,8 +16,8 @@
                                 <em>*</em>序列号：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                <el-form-item prop="sno">
+                                    <el-input size="small" placeholder="请输入序列号" v-model="form_info.sno"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                传输控制逻辑：
+                                采集控制模板：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="configId">
@@ -62,17 +63,6 @@
                                         <el-option v-for="item in configList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                是否有效：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.vaild">
-                                    <el-radio :label="true">有效</el-radio>
-                                    <el-radio :label="false">无效</el-radio>
-                                </el-radio-group>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
@@ -138,12 +128,27 @@ import SubmitBtnInfo from '../components/submitBtnInfo.vue'
 export default {
 
     created () {
+        //获项目
+        this.$api.post('/project/list', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.projectList=r.list;
+            }
+        }); 
+        //采集控制模板：
+        this.$api.post('/accessConfigTemplate/list', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.configList=r.list;
+            }
+        }); 
+        
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
-            this.topInfo="新增客户信息";
+            this.topInfo="新增网关信息";
         }else{
-            this.topInfo="编辑客户信息"
-            this.$api.post('/customer/getById', {id:obj.id}, r => {
+            this.topInfo="编辑网关信息"
+            this.$api.post('', {id:obj.id}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -166,24 +171,19 @@ export default {
            configList:[],
            form_info:{
                id:'',
+               sno:'',
                name:'',
-               fullName:'',
-               contacts:'',
-               phoneNo:'',
-               vaild:true,
+               code:'',
+               projectId:'',
+               configId:'',
+               state:'1',
+               isDirect:'',
+               handleShake:'',
+               handleEvent:'',
            },
            formRules:{
-                name:[
-                    { required: true, message: '请输入名称', trigger: 'blur' },
-                ],
-                fullName:[
-                    { required: true, message: '请输入单位', trigger: 'blur' },
-                ],
-                contacts:[
-                    { required: true, message: '请输入联系人', trigger: 'blur' },
-                ],
-                phoneNo:[
-                    { required: true, message: '请输入联系电话', trigger: 'blur' },
+                sno:[
+                    { required: true, message: '请输入序列号', trigger: 'blur' },
                 ],
            },
        }
@@ -194,7 +194,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    this.$api.post('/customer/saveOrUpdateEntity', this.form_info, r => {
+                    this.$api.post('', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

@@ -76,12 +76,12 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '用户名'},
-              { prop: 'email', label: '邮箱'},
-              { prop: 'phoneNo', label: '电话'},
-              { prop: 'customerName', label: '所属客户'},
-              { prop: 'roles', label: '角色',slotName:'preview-roles'},
-              { prop: 'vaild', label: '状态',slotName:'preview-vaild'},
+              { prop: 'name', label: '用户名',minWidth:100},
+              { prop: 'email', label: '邮箱',minWidth:100},
+              { prop: 'phoneNo', label: '电话',minWidth:100},
+              { prop: 'customerName', label: '所属客户',minWidth:100},
+              { prop: 'roles', label: '角色',slotName:'preview-roles',minWidth:100},
+              { prop: 'vaild', label: '状态',slotName:'preview-vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //存勾选的id
