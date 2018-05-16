@@ -56,7 +56,6 @@ import msManage_user_add from '@/page/msManage_user_add'
 import msManageRole from '@/page/msManage_Role'
 import msManage_role_add from '@/page/msManage_role_add'
 import msManageLimits from '@/page/msManage_Limits'
-import msManage_limits_add from '@/page/msManage_limits_add'
 import msManageDatadic from '@/page/msManage_Datadic'
 import msManage_datadic_add from '@/page/msManage_datadic_add'
 
@@ -141,7 +140,6 @@ export default new Router({
         {path:'/msManage/roleManage',component:msManageRole },
         {path:'/msManage/roleManage/add',component:msManage_role_add},  //新增角色信息
         {path:'/msManage/limitsManage',component:msManageLimits },
-        {path:'/msManage/limitsManage/add',component:msManage_limits_add }, //新增权限
         
         {path:'/msManage/datadicManage',component:msManageDatadic },
         {path:'/msManage/datadicManage/add',component:msManage_datadic_add },  //数据字典新增

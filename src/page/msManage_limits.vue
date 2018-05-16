@@ -25,27 +25,89 @@
                 <div class="msManage_table">
                     <div class="loncom_public_table numScroll1">
                         <div class="numScrollCon1">
-                        <el-search-table-pagination type="local" 
-                        :formOptions="table_forms" :show-pagination="false" border :data="table_data" :columns="table_columns" >     
-                            <div class="form_add">
-                                <el-button type="primary" size="small" @click="add">新增</el-button>
-                            </div>                                                   
-                            <el-table-column slot="prepend" type="selection"></el-table-column>
-                            <template slot-scope="scope" slot="preview-handle">
-                                <div>
-                                    <p v-if="treeId=='1'">
-                                        <a href="javascript:;" style="color:#999">编辑</a> 
-                                        <em>|</em> 
-                                        <a href="javascript:;" style="color:#999">删除</a>
-                                    </p>
-                                    <p v-else>
-                                        <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
-                                        <em>|</em> 
-                                        <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
-                                    </p>
+                            <div class="loncom_public_filter loncom_mb20">
+                                <div class="loncom_fr">
+                                    <el-button type="primary" size="small" @click="add">新增</el-button>
+                                    <el-button type="primary" size="small" @click="del">删除</el-button>
+                                    <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
                                 </div>
-                            </template>
-                        </el-search-table-pagination>
+                            </div>
+                            <el-form :model="form_info" :rules="formRules" ref="formInfo">
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        <em>*</em>名称：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-form-item prop="name">
+                                            <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                </div>
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        <em>*</em>编码：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-form-item prop="code">
+                                            <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                </div>
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        <em>*</em>权限类型：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-radio-group v-model="form_info.menuType">
+                                            <el-radio label="module">模块</el-radio>
+                                            <el-radio label="menu">菜单</el-radio>
+                                            <el-radio label="func">功能</el-radio>
+                                        </el-radio-group>
+                                    </div>
+                                </div>
+                                <div v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
+                                    <div class="loncom_list_boxform">
+                                        <div class="loncom_list_box_left">
+                                            <em>*</em>图标：
+                                        </div>
+                                        <div class="loncom_list_box_right">
+                                            <el-form-item prop="icon">
+                                                <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
+                                            </el-form-item>
+                                        </div>
+                                    </div>
+                                    <div class="loncom_list_boxform">
+                                        <div class="loncom_list_box_left">
+                                            <em>*</em>链接：
+                                        </div>
+                                        <div class="loncom_list_box_right">
+                                            <el-form-item prop="url">
+                                                <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
+                                            </el-form-item>
+                                        </div>
+                                    </div>
+                                    <div class="loncom_list_boxform">
+                                        <div class="loncom_list_box_left">
+                                            排序：
+                                        </div>
+                                        <div class="loncom_list_box_right">
+                                            <el-form-item prop="idx">
+                                                <el-input size="small" placeholder="排序号又小到大依次显示" v-model="form_info.idx"></el-input>
+                                            </el-form-item>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        备注：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-input type="textarea" v-model="form_info.remark"></el-input>
+                                    </div>
+                                
+                                </div>
+                            </el-form>
+
                         </div>
                     </div>
                 </div>
@@ -53,14 +115,7 @@
         </div>
     </div>
 </template>
-<style>
-.el-form-item{
-    height:40px;
-}
-.el-form-item__content{
-    display:none;
-}
-</style>
+
 <script>
 
 export default {
@@ -74,18 +129,31 @@ export default {
     },
     data() {
        return {
-           table_data:[
-                // {id:'1',code:'12',url:'11232131',name:'小明'},
-           ],
-           table_forms: {
-            forms: []
+           form_info:{
+               parentId:'',
+               id:'',
+               name:'',
+               code:'',
+               menuType:'module',
+               icon:'',
+               url:'',
+               idx:'',
+               remark:'',
            },
-           table_columns:[
-              { prop: 'code', label: 'code',minWidth:100},
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'url', label: 'url',minWidth:100},
-              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
-            ],
+           formRules:{
+                name:[
+                    { required: true, message: '请输入名称', trigger: 'blur' },
+                ],
+                code:[
+                    { required: true, message: '请输入编码', trigger: 'blur' },
+                ],
+                icon:[
+                    { required: true, message: '请输入图片地址', trigger: 'blur' },
+                ],
+                url:[
+                    { required: true, message: '请输入链接', trigger: 'blur' },
+                ],
+           },
 
             tree_data: [],
             defaultProps: {
@@ -93,14 +161,13 @@ export default {
                 label: 'name'
             },
 
-            //存树形id，新增用
-            treeId:'',
 
        }
    },
     methods:{
         //获取权限树
         getTree:function(){
+            this.tree_data=[];
             this.$api.post('/menu/getById', {id:1,parentOrSub:'parent'}, r => {
                 console.log(r)
                 if(r.success){
@@ -116,29 +183,34 @@ export default {
             this.$api.post('/menu/getById', {"id":node.id,parentOrSub:'subMenu'}, r => {
                 console.log(r)
                 if(r.success){
-                    this.table_data.push(r.data);
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]
+                    }
                 }
             }); 
         },
-       //删除
-       del:function(row){
-            var ids=[];
-            if(row!=undefined){ //单条删除
-               ids.push(row.id);
+        //删除
+       del:function(){
+           if(this.form_info.id==""){
+               this.$message.warning("点击需要删除的节点");
+               return false;
            }
-           this.$confirm("确定删除?", '提示', {
+           if(this.form_info.parentId==null||this.form_info.parentId==""){
+               this.$message.warning("根节点不让删除");
+               return false;
+           }
+            this.$confirm("确定删除 "+this.form_info.name+" 节点？", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',
             type:'warning',
 	        }).then(() => {
-                var thisID=ids.toString();
-                console.log(thisID);
-		    	 this.$api.post('/menu/batchUpdateUserState', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/menu/batchUpdateUserState', {"ids":this.form_info.id}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        for(var item in this.form_info){
+                            this.form_info[item]='';
+                        }
                         this.getTree();
-                        this.table_data=[];
-                        this.treeId="";
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -146,19 +218,46 @@ export default {
 	          
 	      });
        },
-       //编辑
-       edit:function(row){
-            this.$router.push({path:'/msManage/limitsManage/add',query:{id:row.id}});
+       //保存
+       save:function(formName){
+           if(this.form_info.parentId==""||this.form_info.parentId==null){
+               this.$message.warning("根节点不让修改");
+               return false;
+           }
+            this.$refs[formName].validate((valid) => {
+                if(valid){
+                    this.$api.post('/menu/saveEntity', this.form_info, r => {
+                        console.log(r)
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.getTree();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
+                }
+            })
        },
        //新增
        add:function(){
-           if(this.treeId!=""){
-                this.$router.push({path:'/msManage/limitsManage/add',query:{treeId:this.treeId}});
+            if(this.form_info.id!=""&&this.form_info.id!=null){
+                var _info=Object.assign({}, this.form_info);
+                console.log(_info)
+                for(var item in this.form_info){
+                    if(item=="parentId"){
+                        this.form_info[item]=_info.id;
+                    }else if(item=="menuType"){
+                        this.form_info[item]='module';
+                    }else{
+                        this.form_info[item]="";
+                    }
+                }
+                console.log(this.form_info)
            }else{
                 this.$message.warning("请选择需要添加的到的树形节点");
            }
-            
        },
+    
 
     },
     components:{}

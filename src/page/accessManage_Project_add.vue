@@ -51,6 +51,7 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <getAddress v-bind:addressInfo="form_info"></getAddress>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -61,6 +62,7 @@
 
 <script>
 import SubmitBtnInfo from '../components/submitBtnInfo.vue'
+import getAddress from '../components/getAddress.vue'
 export default {
 
     created () {
@@ -92,6 +94,19 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
+
+               nationId:'',
+                nationName:'',
+                provinceId:'',
+                provinceName:'',
+                cityId:'',
+                cityName:'',
+                areaId:'',
+                areaName:'',
+                address:'',
+                fullAddress:'',
+                lng:'',
+                latl:'',
            },
            formRules:{
                 name:[
@@ -105,6 +120,18 @@ export default {
                 ],
                 phoneNo:[
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
+                ],
+                address:[
+                    { required: true, message: '请输入地址', trigger: 'blur' },
+                ],
+                fullAddress:[
+                    { required: true, message: '请输入全地址', trigger: 'blur' },
+                ],
+                lng:[
+                    { required: true, message: '请输入地址搜索经度', trigger: 'blur' },
+                ],
+                latl:[
+                    { required: true, message: '请输入地址搜索纬度', trigger: 'blur' },
                 ],
            },
        }
@@ -129,6 +156,6 @@ export default {
        },
 
     },
-    components:{SubmitBtnInfo}
+    components:{SubmitBtnInfo,getAddress}
 }
 </script>

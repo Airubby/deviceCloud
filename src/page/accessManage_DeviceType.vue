@@ -2,6 +2,7 @@
     <div class="loncom_content">
         <div class="loncom_public_top">
             <span class="loncom_public_topinfo">设备类型</span>
+            <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
@@ -99,8 +100,8 @@ export default {
     data() {
        return {
            form_info:{
-                parentId:'',
-                id:'',
+               parentId:'',
+               id:'',
                name:'',
                code:'',
                templId:'',
