@@ -111,7 +111,7 @@ export default {
        del:function(row){
            console.log(row)
            var ids=[];
-            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+            if(row!=undefined){ //单条删除
                ids.push(row.id);
            }else{  //多条删除
                 if(this.multipleSelection.length>0){

@@ -6,16 +6,20 @@
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding accessManage">
-                <el-search-table-pagination type="local"  
-                url=""
+                <el-search-table-pagination type="remote"  
+                url="/module/list"
                 list-field="list" 
                 total-field="total"
                 method='post' 
+                 @selection-change="handleSelectionChange"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef">     
                 <div class="form_add">
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                           
                     <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-loca">
+                        <span v-if="scope.row.loca!=null&&scope.row.loca!=''">{{scope.row.loca.fullAddress}}</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-state">
                         <span v-if="scope.row.state==1||scope.row.state=='1'">启用</span>
                         <span v-else>停用</span>
@@ -54,27 +58,12 @@ export default {
         
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {
-           //筛选信息
-        //    type:'全部',
-        //    status:'全部',
-        //    judge:'全部',
-        //    code:'',
-        //    type_options: [
-        //         {value: '1',label: '空调'}
-        //    ],
-        //    status_options: [
-        //         {value: '1',label: '空调'}
-        //    ],
-        //    judge_options: [
-        //         {value: '1',label: '启用'},
-        //         {value: '2',label: '停用'},
-        //    ],
            table_data:[
-                {name:'物联网关',code:'123',state:1,devNum:20,loca:'四川省，成都市，武侯区，科园南二路2号'}
+                // {name:'物联网关',code:'123',state:1,devNum:20,loca:'四川省，成都市，武侯区，科园南二路2号'}
            ],
            table_forms: {
             inline: true,
@@ -88,30 +77,127 @@ export default {
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
               { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
-              { prop: 'devNum', label: '接入设备',minWidth:100},
-              { prop: 'loca', label: '位置',minWidth:100},
+              { prop: 'loca', label: '位置',minWidth:100,slotName:'preview-loca'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:140},
           ],
-          
+          multipleSelection:[],
 
        }
    },
     methods:{
+        //勾选框
+        handleSelectionChange:function(val){
+            console.log(val)
+            this.multipleSelection=[];
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
         //位置
         addr:function(row){
-            this.$router.push({path:'/accessManage/gateway/address'});
+            console.log(row)
+            if(row.locaId!=null&&row.locaId!=""){  //编辑
+                this.$router.push({path:'/accessManage/gateway/address',query:{id:row.id,locaId:row.locaId}});
+            }else{
+                this.$router.push({path:'/accessManage/gateway/address',query:{id:row.id}});
+            }
+            
         },
        //启用
-       start:function(){
+       start:function(row){
+            var ids=[];
+            if(row!=undefined){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要启用的项");
+                    return;
+                }
+           }
 
+           this.$confirm("确定启用?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/module/updateState', {"ids":thisID,"state":1}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //停用
-       stop:function(){
-
+       stop:function(row){
+            var ids=[];
+            if(row!=undefined){
+                ids.push(row.id);
+            }else{
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要停用的项");
+                    return;
+                }
+            }
+           console.log(123123)
+           this.$confirm("确定停用?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/module/updateState', {"ids":thisID,"state":0}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //删除
-       del:function(){
+       del:function(row){
+            var ids=[];
+            if(row!=undefined){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的项");
+                    return;
+                }
+           }
 
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/module/delete', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        //编辑
        edit:function(row){

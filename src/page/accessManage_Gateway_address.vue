@@ -14,7 +14,7 @@
                         <div class="loncom_list_boxform">
                             <el-form-item prop="address">
                                 <el-input placeholder="请输入地址搜索" v-model="form_info.address" size="small" class="input-with-select">
-                                    <el-button slot="append" icon="el-icon-search" ref="search"></el-button>
+                                    <el-button slot="append" icon="el-icon-search" id="search"></el-button>
                                 </el-input>
                             </el-form-item>
                         </div>
@@ -68,11 +68,21 @@ export default {
 
     created () {
         var obj = this.$route.query;
-        if(JSON.stringify(obj) == "{}"){
-            this.topInfo="地点信息";
+        if(obj.locaId!=undefined){
+            this.topInfo="编辑地点信息";
+            this.$api.post('/module/get', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data.loca[item];
+                    }
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
         }else{
-            this.topInfo="地点信息"
-            
+            this.form_info.clientId=obj.id;
+            this.topInfo="配置地点信息";
         }
     },
     mounted() {
@@ -86,8 +96,8 @@ export default {
             setPoint(e.point)
 		});  
 
-        $(this.$refs.search).on('click', function () {  
-            var searchTxt = this.form_info.address;  
+        $("#search").on('click', function () {  
+            var searchTxt = _this.form_info.address;  
             myGeo.getPoint(searchTxt, function (point) {  
                 console.log(point)
                 setPoint(point);  
@@ -100,7 +110,7 @@ export default {
                 _this.form_info.latl=point.lat;
                 Geocoder(point);  
 
-                map.centerAndZoom(point, 13);  
+                map.centerAndZoom(point, 17);  
                 var marker = new BMap.Marker(point);  
                 map.addOverlay(marker);  
                 marker.enableDragging();//可以拖动   
@@ -133,6 +143,7 @@ export default {
            topInfo:'',
             form_info:{
                 id:'',
+                clientId:'',  //网关模块id
                 nationId:'',
                 nationName:'',
                 provinceId:'',
@@ -148,8 +159,18 @@ export default {
            },
            formRules:{
                 address:[
-                    { required: true, message: '请输入名称', trigger: 'blur' },
+                    { required: true, message: '请输入地址', trigger: 'blur' },
                 ],
+                fullAddress:[
+                    { required: true, message: '请输入全地址', trigger: 'blur' },
+                ],
+                lng:[
+                    { required: true, message: '请输入地址搜索经度', trigger: 'blur' },
+                ],
+                latl:[
+                    { required: true, message: '请输入地址搜索纬度', trigger: 'blur' },
+                ],
+
            },
        }
    },
@@ -159,7 +180,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    this.$api.post('', this.form_info, r => {
+                    this.$api.post('/module/saveLoca', this.form_info, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                             this.$refs.goBack.giveUp();

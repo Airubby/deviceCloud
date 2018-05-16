@@ -11,23 +11,26 @@
                     </div>
                     <div class="msManage_tree_con numScroll0">
                         <el-tree
+                        ref="tree"
                         :data="tree_data"
                         node-key="id"
+                        :props="defaultProps"
+                        @node-click="nodeClick"
                         class="numScrollCon0"
                         >
                         </el-tree>
                     </div>
                 </div>
                 <div class="msManage_table">
-                    <div class="loncom_public_filter loncom_mtb20">
-                        <div class="loncom_fr">
-                            <el-button type="primary" size="small" @click="add">新增</el-button>
-                            <el-button type="primary" size="small" @click="del">删除</el-button>
-                            <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
-                        </div>
-                    </div>
                     <div class="loncom_public_table numScroll1">
-                        <div class="numScrollCon1 templateManage_informright">
+                        <div class="numScrollCon1">
+                            <div class="loncom_public_filter loncom_mb20">
+                                <div class="loncom_fr">
+                                    <el-button type="primary" size="small" @click="add">新增</el-button>
+                                    <el-button type="primary" size="small" @click="del">删除</el-button>
+                                    <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
+                                </div>
+                            </div>
                             <el-form :model="form_info" :rules="formRules" ref="formInfo">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
@@ -51,27 +54,16 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>是否可用：
-                                    </div>
-                                    <div class="loncom_list_box_right">
-                                        <el-radio-group v-model="form_info.vaild">
-                                            <el-radio label="true">可用</el-radio>
-                                            <el-radio label="false">不可用</el-radio>
-                                        </el-radio-group>
-                                    </div>
-                                </div>
-                                <div class="loncom_list_boxform">
-                                    <div class="loncom_list_box_left">
                                         <em>*</em>设备类型模板：
                                     </div>
                                     <div class="loncom_list_box_right">
-                                        <el-form-item prop="tempId">
-                                            <el-select v-model="form_info.tempId" placeholder="请选择">
+                                        <el-form-item prop="templId">
+                                            <el-select v-model="form_info.templId" placeholder="请选择">
                                                 <el-option
                                                 v-for="item in templist"
-                                                :key="item.tempId"
+                                                :key="item.id"
                                                 :label="item.name"
-                                                :value="item.tempId">
+                                                :value="item.id">
                                                 </el-option>
                                             </el-select>
                                         </el-form-item>
@@ -90,12 +82,15 @@
 
 export default {
     created () {
-        this.$api.post('/devType/list', {}, r => {
+        //获取设备类型模板
+        this.$api.post('/typeTemplate/list', {}, r => {
             console.log(r)
             if(r.success){
-                this.tree_data=r.data;
+                this.templist=r.list;
             }
         }); 
+         //获取权限树
+        this.getTree(); 
     },
     mounted() {
         numScroll(0);
@@ -104,89 +99,122 @@ export default {
     data() {
        return {
            form_info:{
+                parentId:'',
+                id:'',
                name:'',
                code:'',
-               vaild:'true',
-               tempId:'',
+               templId:'',
            },
            formRules:{
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
                 code:[
-                    { required: true, message: '请输入采集周期', trigger: 'blur' },
+                    { required: true, message: '请输入编码', trigger: 'blur' },
                 ],
-                tempId:[
+                templId:[
                     { required: true, message: '请选择设备模板', trigger: 'change' },
                 ],
            },
 
-          tree_data: [{
-            id: 1,
-            label: '一级 1',
-            children: [{
-                id: 4,
-                label: '二级 1-1',
-                children: [{
-                id: 9,
-                label: '三级 1-1-1'
-                }, {
-                id: 10,
-                label: '三级 1-1-2'
-                }]
-            }]
-            }, {
-            id: 2,
-            label: '一级 2',
-            children: [{
-                id: 5,
-                label: '二级 2-1'
-            }, {
-                id: 6,
-                label: '二级 2-2'
-            }]
-            }, 
-            {
-                id: 3,
-                label: '一级 3',
-                children: [{
-                    id: 7,
-                    label: '二级 3-1'
-                }, {
-                    id: 8,
-                    label: '二级 3-2'
-                }]
-            }],
-
+          tree_data: [],
+          defaultProps: {
+                children: 'subTypes',
+                label: 'name'
+            },
             //设备类型模板
-            templist:[{tempId:'123',name:'模板已'}],
+            templist:[],
 
        }
    },
     methods:{
+        //获取权限树
+        getTree:function(){
+            this.tree_data=[];
+            this.$api.post('/devType/tree', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.tree_data.push(r.data);
+                }
+            });
+        },
+        //点击树形节点
+        nodeClick:function(node){
+            console.log(node)
+            this.$api.post('/devType/get', {"id":node.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        this.form_info[item]=r.data[item]
+                    }
+                }
+            }); 
+        },
        //删除
        del:function(){
-
+           if(this.form_info.id==""){
+               this.$message.warning("点击需要删除的节点");
+               return false;
+           }
+           if(this.form_info.parentId==null||this.form_info.parentId==""){
+               this.$message.warning("根节点不让删除");
+               return false;
+           }
+            this.$confirm("确定删除 "+this.form_info.name+" 节点？", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+		    	 this.$api.post('/devType/delete', {"ids":this.form_info.id}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        for(var item in this.form_info){
+                            this.form_info[item]='';
+                        }
+                        this.getTree();
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
-       //启用
+       //保存
        save:function(formName){
+           if(this.form_info.parentId==""||this.form_info.parentId==null){
+               this.$message.warning("根节点不让修改");
+               return false;
+           }
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    if(this.activeBtn){  //新增
-
-                    }else{  //编辑
-
-                    }
+                    this.$api.post('/devType/save', this.form_info, r => {
+                        console.log(r)
+                        if(r.success){
+                            this.$message.success(r.msg);
+                            this.getTree();
+                        }else{
+                            this.$message.warning(r.msg);
+                        }
+                    }); 
                 }
             })
        },
-       //编辑
-       edit:function(){
-
-       },
        //新增
        add:function(){
-
+            if(this.form_info.id!=""&&this.form_info.id!=null){
+                var _info=Object.assign({}, this.form_info);
+                console.log(_info)
+                for(var item in this.form_info){
+                    if(item=="parentId"){
+                        this.form_info[item]=_info.id;
+                    }else{
+                        this.form_info[item]="";
+                    }
+                }
+                console.log(this.form_info)
+           }else{
+                this.$message.warning("请选择需要添加的到的树形节点");
+           }
        },
 
     },

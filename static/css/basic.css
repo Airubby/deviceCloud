@@ -415,6 +415,7 @@ em{
 }
 .loncom_login_input .el-form-item{
   margin-bottom: 20px !important;
+  height: auto !important;
 }
 .loncom_list_boxform textarea{
   min-height: 120px !important;
@@ -491,6 +492,7 @@ em{
 }
 .loncom_login_input .el-form-item__content{
   margin-left:0 !important; 
+  display: block !important;
 }
 .loncom_login_input button {
   width: 100%;

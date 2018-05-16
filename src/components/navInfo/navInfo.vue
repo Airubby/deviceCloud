@@ -23,8 +23,8 @@
                         <div class="loncom_nav">
                             <em><img :src="item.icon"></em><span class="loncm_menu">{{item.name}}</span>
                         </div>
-                        <dl class="loncom_morenav" v-if="item.children.length>0">
-                            <dd v-for="initem in item.children">
+                        <dl class="loncom_morenav" v-if="item.subMenu.length>0">
+                            <dd v-for="initem in item.subMenu">
                                 <router-link :to="initem.url">
                                 <em><img :src="initem.icon"></em><span>{{initem.name}}</span>
                                 </router-link>
@@ -211,13 +211,24 @@ export default {
             this.$router.push({path:'/login'});
             return;
         }
-
-        this.$api.post('/getUserRoleMenu', {}, r => {
-            if(r.success){
-                this.$message.success(r.msg);
+        var loginInfo={};
+        if(localStorage.loginInfo){
+            loginInfo=JSON.parse(localStorage.loginInfo);
+        }
+        console.log(loginInfo)
+        this.$api.post('/menu/getUserRoleMenu', {userId:loginInfo.id}, r => {
+            console.log(r)
+            if(r.code=='-1'){
+                this.$message.warning("请登录系统");
+                this.$router.push({path:'/login'});
             }else{
-                this.$message.warning(r.msg);
+                if(r.success){
+                    this.navList=r.data.subMenu
+                }else{
+                    this.$message.warning("菜单获取异常");
+                }
             }
+            
         }); 
 
     },
@@ -235,34 +246,34 @@ export default {
        return {
            navbtn:'',
            navList:[
-            //    {url:'/',name:'首页',icon:'',children:[]},
-               {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',children:[
+            //    {url:'/',name:'首页',icon:'',subMenu:[]},
+               {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
                    {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.png'},
                    {url:'/realControl/listView',name:'当前告警',icon:'static/images/morenav.png'},
                    {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.png'},
                    {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.png'},
                ]},
-               {url:'/accessManage',name:'接入管理',icon:'static/images/realControl.svg',children:[
+               {url:'/accessManage',name:'接入管理',icon:'static/images/realControl.svg',subMenu:[
                     {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.png'},
                     {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.png'},
                     {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.png'},
                     {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.png'},
                     {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.png'},
                ]},
-               {url:'/operationManage',name:'运维管理',icon:'static/images/realControl.svg',children:[
+               {url:'/operationManage',name:'运维管理',icon:'static/images/realControl.svg',subMenu:[
                     {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.png'},
                     {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.png'},
                     {url:'/operationManage/control',name:'队列监控',icon:'static/images/morenav.png'},
                     {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.png'},
                ]},
-               {url:'/templateManage',name:'模板管理',icon:'static/images/realControl.svg',children:[
+               {url:'/templateManage',name:'模板管理',icon:'static/images/realControl.svg',subMenu:[
                     {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.png'},
                     {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.png'},
                     {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.png'},
                     {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.png'},
                     {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.png'},
                ]},
-               {url:'/msManage',name:'系统管理',icon:'static/images/realControl.svg',children:[
+               {url:'/msManage',name:'系统管理',icon:'static/images/realControl.svg',subMenu:[
                    {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.png'},
                    {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.png'},
                    {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.png'},

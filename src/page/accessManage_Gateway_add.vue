@@ -71,8 +71,8 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-radio-group v-model="form_info.state">
-                                    <el-radio label="1">启用</el-radio>
-                                    <el-radio label="0">停用</el-radio>
+                                    <el-radio :label="1">启用</el-radio>
+                                    <el-radio :label="0">停用</el-radio>
                                 </el-radio-group>
                             </div>
                         </div>
@@ -81,8 +81,8 @@
                                 采集模块直连：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="isDirect">
-                                    <el-select v-model="form_info.isDirect" placeholder="请选择">
+                                <el-form-item prop="directConnect">
+                                    <el-select v-model="form_info.directConnect" placeholder="请选择">
                                         <el-option label="是" :value="true"></el-option>
                                         <el-option label="否" :value="false"></el-option>
                                     </el-select>
@@ -115,6 +115,13 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <el-search-table-pagination type="local"  
+                        :show-pagination="true" border :data="table_data" :columns="table_columns">    
+                            <template slot-scope="scope" slot="preview-state">
+                                <span v-if="scope.row.state==1||scope.row.state=='1'">启用</span>
+                                <span v-else>停用</span>
+                            </template>
+                        </el-search-table-pagination>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -148,9 +155,10 @@ export default {
             this.topInfo="新增网关信息";
         }else{
             this.topInfo="编辑网关信息"
-            this.$api.post('', {id:obj.id}, r => {
+            this.$api.post('/module/get', {id:obj.id}, r => {
                 console.log(r)
                 if(r.success){
+                    this.table_data=r.data.devList;  //接入设备 
                     for(var item in this.form_info){
                         this.form_info[item]=r.data[item];    
                     } 
@@ -176,8 +184,8 @@ export default {
                code:'',
                projectId:'',
                configId:'',
-               state:'1',
-               isDirect:'',
+               state:1,
+               directConnect:'',
                handleShake:'',
                handleEvent:'',
            },
@@ -186,6 +194,15 @@ export default {
                     { required: true, message: '请输入序列号', trigger: 'blur' },
                 ],
            },
+
+           table_data:[],
+           table_columns:[
+              { prop: 'name', label: '名称',minWidth:100},
+              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
+          ],
+
+
        }
    },
     methods:{
@@ -194,7 +211,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    this.$api.post('', this.form_info, r => {
+                    this.$api.post('/module/save', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);

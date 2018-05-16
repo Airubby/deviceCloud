@@ -113,7 +113,7 @@ export default {
             console.log(node)
             this.table_data=[];
             this.treeId=node.id;
-            this.$api.post('/menu/getById', {"id":node.id}, r => {
+            this.$api.post('/menu/getById', {"id":node.id,parentOrSub:'subMenu'}, r => {
                 console.log(r)
                 if(r.success){
                     this.table_data.push(r.data);
@@ -123,7 +123,7 @@ export default {
        //删除
        del:function(row){
             var ids=[];
-            if(JSON.stringify(row)!='{}'&&row.id){ //单条删除
+            if(row!=undefined){ //单条删除
                ids.push(row.id);
            }
            this.$confirm("确定删除?", '提示', {

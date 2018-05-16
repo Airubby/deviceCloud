@@ -11,7 +11,6 @@ export default {
     created () {
         var loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
         if(JSON.stringify(loginInfo) != "{}"){
-            console.log(loginInfo)
             this.username=loginInfo.username
         }
     },
@@ -31,13 +30,22 @@ export default {
    },
     methods:{
        logout:function(){
-            this.$api.post('/logout', {}, r => {
+           this.$confirm("确定注销登录?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+		    	 this.$api.post('/login/logout', {}, r => {
+                console.log(r)
                 if(r.success){
                     this.$message.success(r.msg);
+                    this.$router.push({path:'/login'});
                 }else{
                     this.$message.warning(r.msg);
                 }
             }); 
+	          
+	      });
        }
     },
     components:{}

@@ -53,7 +53,9 @@ export default {
                 this.$api.post('/login/getSalt', {}, r => {
                     console.log(r)
                     if(r.success){
+                        console.log(this.user.userid)
                         var md5pwd= b64_md5(b64_md5(this.user.userid+ r.salt1 + b64_md5(this.user.psword)) + r.salt2);
+                        console.log(md5pwd)
                         this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, re => {
                             console.log(re)
                             if(re.success){
@@ -63,6 +65,7 @@ export default {
                                     loginInfo=JSON.parse(localStorage.loginInfo);
                                 }
                                 loginInfo.username=this.user.userid;
+                                loginInfo.id=re.data.id;
                                 localStorage.loginInfo = JSON.stringify(loginInfo);
                                 this.$router.push({path:'/'});
                             }else{

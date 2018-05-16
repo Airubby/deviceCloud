@@ -21,6 +21,7 @@ import accessManageGateway from '@/page/accessManage_Gateway'  //接入网关
 import accessManage_Gateway_add from '@/page/accessManage_Gateway_add'  //接入网关
 import accessManage_Gateway_address from '@/page/accessManage_Gateway_address'  //地点信息
 import accessManageDevice from '@/page/accessManage_Device'  //接入设备
+import accessManageDevice_add from '@/page/accessManage_Device_add'  //接入设备
 import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备类型管理
 
 
@@ -29,9 +30,12 @@ import accessManageDeviceType from '@/page/accessManage_DeviceType'   //设备�
 //运维管理
 import operationManage from '@/page/operationManage'
 import operationManageAbnormalLog from '@/page/operationManage_AbnormalLog'  //系统异常日志
+import operationManageAbnormalLog_detail from '@/page/operationManage_AbnormalLog_detail'
 import operationManageOperationLog from '@/page/operationManage_OperationLog'  //系统操作日志
+import operationManageOperationLog_detail from '@/page/operationManage_OperationLog_detail'  //系统操作日志
 import operationManageControl from '@/page/operationManage_Control'  //队列监控
 import operationManageInformLog from '@/page/operationManage_InformLog'  //通知消息日志
+import operationManageInformLog_detail from '@/page/operationManage_InformLog_detail'  //通知消息日志
 
 //模板管理
 import templateManage from '@/page/templateManage'
@@ -95,6 +99,7 @@ export default new Router({
         {path:'/accessManage/gateway/add',component:accessManage_Gateway_add},
         {path:'/accessManage/gateway/address',component:accessManage_Gateway_address},
         {path:'/accessManage/device',component:accessManageDevice},
+        {path:'/accessManage/device/detail',component:accessManageDevice_add},
         {path:'/accessManage/deviceType',component:accessManageDeviceType},
         
       ]
@@ -104,9 +109,12 @@ export default new Router({
       redirect:'/operationManage/abnormalLog',
       children:[
         {path:'/operationManage/abnormalLog',component:operationManageAbnormalLog},
+        {path:'/operationManage/abnormalLog/detail',component:operationManageAbnormalLog_detail},
         {path:'/operationManage/operationLog',component:operationManageOperationLog},
+        {path:'/operationManage/operationLog/detail',component:operationManageOperationLog_detail},
         {path:'/operationManage/control',component:operationManageControl},
         {path:'/operationManage/informLog',component:operationManageInformLog},
+        {path:'/operationManage/informLog/detail',component:operationManageInformLog_detail},
       ]
     },{
       path:'/templateManage',  //模板管理
