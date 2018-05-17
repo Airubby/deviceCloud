@@ -169,6 +169,29 @@ function wsConnection(port, type, callback) {
 //     console.log(r)
 // })
 
-function Reload(){
-    
+
+
+//echarts 图
+function echartLine(ID,xData,yData){
+    console.log(123)
+    var myChart = echarts.init(document.getElementById(ID));
+    option = {
+        color:["#DA632A","#33C466"],
+        xAxis: {
+            type: 'category',
+            data: xData
+        },
+        yAxis: {
+            axisLabel:{
+                formatter: '{value}'
+            }
+        },
+        series: [{
+            data: yData,
+            type: 'line',
+            smooth: true
+        }]
+    };
+    myChart.setOption(option, true);
+    return myChart;
 }

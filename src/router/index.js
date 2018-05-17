@@ -7,7 +7,9 @@ import realControl from '@/page/realControl'
 import realControlGis from '@/page/realControl_GIS'  //设备监控
 import realControlListView from '@/page/realControl_ListView'  //当前告警
 import realControlHisData from '@/page/realControl_HisData'  //设备历史数据
+import realControlHisData_detail from '@/page/realControl_HisData_detail'
 import realControlHisAlarm from '@/page/realControl_HisAlarm'  //设备历史告警
+import realControlHisAlarm_detail from '@/page/realControl_HisAlarm_detail'  //设备历史告警
 
 
 
@@ -83,7 +85,9 @@ export default new Router({
         {path:'/realControl/gis',component:realControlGis},
         {path:'/realControl/listView',component:realControlListView},
         {path:'/realControl/hisData',component:realControlHisData},
+        {path:'/realControl/hisData/detail',component:realControlHisData_detail},
         {path:'/realControl/hisAlarm',component:realControlHisAlarm},
+        {path:'/realControl/hisAlarm/detail',component:realControlHisAlarm_detail},
       ]
     },{ //接入管理
       path:'/accessManage',

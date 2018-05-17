@@ -401,30 +401,31 @@ export default {
         
         //获取类型
         getType:function(){
-            this.$api.post('/sysDic/list', {} ,r => {
-                 console.log(r)
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_VALUETYPE'},r => { //值类型
+                console.log(r)
                 if(r.success){
-                    for(var i=0;i<r.data.length;i++){
-                        if(r.data[i].code=="POINT_VALUETYPE"){  //值类型
-                            this.valueType_data=r.data[i].itemSet;
-                        }
-                        if(r.data[i].code=="POINT_SHAKETYPE"){  //抖动类型
-                            this.shakeType_data=r.data[i].itemSet;
-                        }
-                        if(r.data[i].code=="POINT_WRITETYPE"){  //写类型
-                            this.writeType_data=r.data[i].itemSet;
-                        }
-                        if(r.data[i].code=="POINT_READTYPE"){  //读类型
-                            this.readType_data=r.data[i].itemSet;
-                        }
-                        if(r.data[i].code=="POINT_UNIT"){  //单位
-                            this.unit_data=r.data[i].itemSet;
-                        }
-                    }
-                    
-                }else{
-                    this.$message.warning(r.msg);
-                }
+                    this.valueType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_SHAKETYPE'},r => { //抖动类型
+                if(r.success){
+                    this.shakeType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_WRITETYPE'},r => { //写类型
+                if(r.success){
+                    this.writeType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //读类型
+                if(r.success){
+                    this.readType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //单位
+                if(r.success){
+                    this.unit_data=r.data;
+                }else{this.$message.warning(r.msg);}
             });
         },
         //获取触发告警条件

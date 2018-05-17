@@ -1,20 +1,27 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">客户管理</span>
+            <span class="loncom_public_topinfo">设备历史数据</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
                 <el-search-table-pagination 
                 type="remote"
-                url=""
+                url="/hisdata/pointList"
                 list-field="list" 
                 total-field="total"
                 method='post' 
-                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                @selection-change="handleSelectionChange" ref="thisRef" >                                                   
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                   
                     <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-readFlag">
+                        <span v-if="scope.row.readFlag==1||scope.row.readFlag=='1'">是</span>
+                        <span v-else>否</span>
+                    </template>
+                    <template slot-scope="scope" slot="preview-writeFlag">
+                        <span v-if="scope.row.writeFlag==1||scope.row.writeFlag=='1'">是</span>
+                        <span v-else>否</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a>
                     </template>
@@ -35,6 +42,14 @@ export default {
                 this.table_forms.forms[0].options=r.list;
             }
         }); 
+        //获取设备
+        this.$api.post('/device/list', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.table_forms.forms[1].options=r.list;
+            }
+        }); 
+
     },
     mounted() {
 
@@ -42,78 +57,36 @@ export default {
     data() {
        return {
            table_data:[
-                // {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
+                 {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
            table_forms: {
             inline: true,
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey1', label: '',placeholder:'项目ID',itemType: 'select',
-                        options:[],valueKey:'id',labelKey:'name' },
+                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name' },
+                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name'},
+                    {prop:'queryKey3',placeholder:'测点'},
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'fullName', label: '单位',minWidth:100},
-              { prop: 'contacts', label: '联系人',minWidth:100},
-              { prop: 'phoneNo', label: '联系电话',minWidth:100},
+               { prop: 'serialNO', label: '序号',minWidth:100},
+               { prop: 'name', label: '名称',minWidth:100},
+               { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'valueType', label: '值类型',minWidth:100},
+              { prop: 'offSet', label: '偏移量',minWidth:100},
+              { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-readFlag'},
+              { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-writeFlag'},
+              { prop: 'unit', label: '单位',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
-
-          //勾选的
-          multipleSelection:[],
 
        }
    },
     methods:{
-        //勾选框
-        handleSelectionChange:function(val){
-            this.multipleSelection=[];
-            for(var i=0;i<val.length;i++){
-                this.multipleSelection.push(val[i].id);
-            }
-        },
-       //删除
-       del:function(row){
-            var ids=[];
-            if(row!=undefined){ //单条删除
-               ids.push(row.id);
-           }else{  //多条删除
-                if(this.multipleSelection.length>0){
-                    ids=this.multipleSelection;
-                }else{
-                    this.$message.warning("请勾选需要删除的项");
-                    return;
-                }
-           }
-
-           this.$confirm("确定删除?", '提示', {
-	        confirmButtonText: '确定',
-	        cancelButtonText: '取消',
-            type:'warning',
-	        }).then(() => {
-                var thisID=ids.toString();
-                console.log(thisID);
-		    	 this.$api.post('/cust/delete', {"ids":thisID}, r => {
-		       		if(r.success){
-                        this.$message.success(r.msg);
-                        this.$refs['thisRef'].searchHandler(false)
-		       		}else{
-                        this.$message.warning(r.msg);
-                    }
-		       	});
-	          
-	      });
-       },
-       //编辑
-       edit:function(row){
-            this.$router.push({path:'/accessManage/client/add',query:{id:row.id}});
-       },
-       //新增
-       add:function(){
-           //,query:{id:data.id}
-            this.$router.push({path:'/accessManage/client/add'});
+       //详情
+       detail:function(row){
+            this.$router.push({path:'/realControl/hisData/detail',query:{id:row.id}});
        },
 
     },

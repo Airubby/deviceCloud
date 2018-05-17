@@ -428,6 +428,20 @@ em{
   right: 0;
   top: 5px;
 }
+.top_loginInfo{
+  float: right;
+}
+.top_loginInfo span{
+  margin-left: 20px;
+}
+.top_logout{
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+  border-left: 1px solid #ddd;
+  cursor: pointer;
+}
 
 /*登录页面*/
 
@@ -507,24 +521,136 @@ em{
 
 
 /*realControl实时监控*/
-.realControl_loginInfo{
-  float: right;
-}
-.realControl_loginInfo span{
-  margin-left: 20px;
-}
-.top_logout{
-  width: 60px;
-  height: 40px;
-  text-align: center;
-  display: inline-block;
-  border-left: 1px solid #ddd;
-  cursor: pointer;
-}
-.realControl_search_box{
+.gis_left{
+  width: 150px;
   position: absolute;
   top: 20px;
+  left: 20px;
+}
+.gis_left .gis_left_box{
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  background: #E27C78;
+  color: #fff;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+.gis_left .gis_left_box span{
+  font-size: 26px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+.gis_left .gis_left_box:nth-of-type(2){
+  background: #469AD6;
+}
+.gis_right{
+  position: absolute;
   right: 20px;
+  top: 20px;
+  width: 300px;
+    height: calc(100% - 100px);
+}
+.gis_right .searchbox{
+  width: 100%;
+  height: calc(100% - 40px);
+}
+.gis_right .searchbox .searchboxcon{
+  padding: 20px;
+  background: #F2F2F2;
+  width: 100%;
+}
+.gis_right .searchlist{
+  border-bottom: 1px solid #E4E4E4;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  color: #000;
+}
+.gis_right .searchlist h2{
+  margin-bottom: 10px;
+}
+.gis_right .searchlist h2 i{
+  color: #ce612e;
+  float: right;
+  font-size: 18px;
+}
+.gis_right .searchlist p{
+  height: 24px;
+  line-height: 24px;
+  font-size: 12px;
+  color: #333;
+}
+.gis_bottom{
+  width: 100%;
+  height: 345px;
+  position: absolute;
+  bottom: -300px;
+  border-top: 1px solid #E4E4E4;
+  background: #fff;
+  padding: 0 20px;
+}
+.gis_bottom_top{
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  border-bottom: 1px solid #E4E4E4;
+}
+.gis_bottom_top h2{
+  float: left;
+  font-size: 16px;
+  color: #ce612e;
+}
+.gis_bottom_top span{
+  float: right;
+  color: #ce612e;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 10px;
+  font-weight: bold;
+}
+.gis_bottom_con{
+  width: 100%;
+  height: 300px;
+  padding: 15px 0;
+}
+.gis_bottomlist{
+  height: 70px;
+  padding: 10px 0;
+    border-bottom: 1px solid #e4e4e4;
+}
+.gis_bottomlist_left{
+  line-height: 50px;
+  margin-right: 20px;
+}
+.gis_bottomlist_left span{
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: #fff;
+}
+.gis_bottomlist_left span.alarm{
+  background: #f00;
+}
+.gis_bottomlist .gis_bottomlist_center{
+  float: left
+}
+.gis_bottomlist_center h2{
+  color: #000;
+  line-height: 26px;
+}
+.gis_bottomlist_right i{
+     font-size: 20px;
+    color: #ce612e;
+    line-height: 50px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+.hisDataecharts{
+  width: 100%;
+  height: 480px;
 }
 
 /*接入管理accessManage*/

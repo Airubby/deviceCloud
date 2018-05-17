@@ -169,6 +169,7 @@ export default {
        },
        //删除
        del:function(row){
+           console.log(row)
             var ids=[];
             if(row!=undefined){ //单条删除
                ids.push(row.id);

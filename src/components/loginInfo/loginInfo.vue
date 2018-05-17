@@ -1,5 +1,5 @@
 <template>
-    <div class="realControl_loginInfo">
+    <div class="top_loginInfo">
         <span class="top_time">{{top_time}}</span>
         <span class="top_people"><img src="static/images/top_people.svg"><em>{{username}}</em></span>
         <span class="top_logout" @click="logout"><img src="static/images/top_logout.svg"></span>
