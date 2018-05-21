@@ -23,10 +23,10 @@
                 <div class="searchbox numScroll0">
                     <div class="searchboxcon numScrollCon0">
                         <div class="searchlist" v-for="item in devList">
-                            <h2><span @click="devInfo(item.id)">{{item.name}}</span><i class="el-icon-location-outline"></i></h2>
+                            <h2><span @click="devInfo(item.id)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>设备编码：{{item.code}}</p>
                             <p>启用状态：<span v-if="item.state==1">启用</span><span v-else>停用</span></p>
-                            <p>告警状态：<span>告警</span></p>
+                            <p>告警数量：<span>{{item.alarmNum}}</span></p>
                         </div>
                     </div>
                 </div>
@@ -137,20 +137,29 @@ export default {
             this.map.clearOverlays();
             for(var i=0;i<this.devList.length;i++){
                 if(this.devList[i].loca!=null&&this.devList[i].loca!=''){
-                    var iconurl='./static/images/index_normal.svg'
-                    if(this.devList[i].state==1){
-                        iconurl='./static/images/index_warning.svg'
-                    }
-                    var icon = new BMap.Icon(iconurl, new BMap.Size(14, 20));
-                    var point = new BMap.Point(this.devList[i].loca.lng, this.devList[i].loca.latl);
+                    var iconurl='./static/images/index_normal.svg';
                     var content = '<div class="loncom_map_box">'+
                                 '<div class="loncom_map_boxtop">'+this.devList[i].name+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>设备编码：'+this.devList[i].code+'</p>'+
-                                    '<p>启用状态：<span v-if="'+item.state+'==1">启用</span><span v-else>停用</span></p>'+
-                                    '<p>告警状态：告警</p>'+
+                                    '<p>启用状态：<span v-if="'+this.devList[i].state+'==1">启用</span><span v-else>停用</span></p>'+
+                                    '<p>告警数量：'+this.devList[i].alarmNum+'</p>'+
                                 '</div>' +
                             '</div>';
+                    if(this.devList[i].alarmNum>0){
+                        iconurl='./static/images/index_warning.svg'
+                        var content = '<div class="loncom_map_box">'+
+                                '<div class="loncom_map_boxtop loncom_map_boxtopalarm">'+this.devList[i].name+'</div>' +
+                                '<div class="loncom_map_boxcon">'+
+                                    '<p>设备编码：'+this.devList[i].code+'</p>'+
+                                    '<p>启用状态：<span v-if="'+this.devList[i].state+'==1">启用</span><span v-else>停用</span></p>'+
+                                    '<p>告警数量：'+this.devList[i].alarmNum+'</p>'+
+                                '</div>' +
+                            '</div>';
+                    }
+                    var icon = new BMap.Icon(iconurl, new BMap.Size(14, 20));
+                    var point = new BMap.Point(this.devList[i].loca.lng, this.devList[i].loca.latl);
+                    
                     var marker = new BMap.Marker(point,{icon:icon});
                     this.map.addOverlay(marker);
                     var infoBox = new BMapLib.InfoBox(this.map, content);
@@ -161,6 +170,19 @@ export default {
                 marker.addEventListener("mouseover", function () {
                     infoBox.open(this)
                 })
+            }
+        },
+        //项目列表右边的定位：
+        addrCenter:function(item){
+            console.log(item)
+            if(item.loca!=null&&item.loca!=''){
+                if(item.loca.lng!=null&&item.loca.lng!=''){
+                    this.map.centerAndZoom(new BMap.Point(item.loca.lng,item.loca.latl),16); 
+                }else{
+                    this.$message.warning("还没有设置经纬坐标，请到项目管理中设置经纬坐标");
+                }
+            }else{
+                this.$message.warning("还没有设置位置信息，请到项目管理中添加位置信息");
             }
         },
         //底部告警信息

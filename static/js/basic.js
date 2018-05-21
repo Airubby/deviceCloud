@@ -173,12 +173,17 @@ function wsConnection(port, type, callback) {
 
 //echarts 图
 function echartLine(ID,xData,yData){
-    console.log(123)
     var myChart = echarts.init(document.getElementById(ID));
     option = {
         color:["#DA632A","#33C466"],
+        tooltip : {
+            trigger: 'axis'
+        },
         xAxis: {
             type: 'category',
+            axisTick:{
+                    show:false
+                }, 
             data: xData
         },
         yAxis: {
@@ -189,7 +194,9 @@ function echartLine(ID,xData,yData){
         series: [{
             data: yData,
             type: 'line',
-            smooth: true
+            smooth: true,
+            symbol:"line", //不要圆圈
+            symbolSize:0, //平滑的时候设置为0
         }]
     };
     myChart.setOption(option, true);
@@ -197,22 +204,11 @@ function echartLine(ID,xData,yData){
 }
 
 // index的
-function barChar(ID){
-    var yData=['温湿度','电量仪','发电机','烟感','烟感1'];
-    var color=['#2f8fbe','#f00','#09c','#c98','#76f'];
+function barChar(ID,xData,yData){
+    var color=['#2f8fbe','#f00','#f00','#c98','#76f'];
     var myChart = echarts.init(document.getElementById(ID));
-    
     option = {
-        
-        color: ['#3398DB'],
-        title:{
-            text:"温度",  
-            x:'center',
-            top: 15,
-            textStyle:{
-                color:"#fff",
-            },
-        },
+        //color:['#2f8fbe','#f00','#09c','#c98','#76f'],
         tooltip : {
             trigger: 'axis',
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -230,7 +226,7 @@ function barChar(ID){
         xAxis : [
             {
                 type : 'category',
-                data : yData,
+                data : xData,
                 axisTick:{
                     show:false
                 },
@@ -242,8 +238,8 @@ function barChar(ID){
                 },
                 axisLine:{
                     lineStyle:{
-                        color:"#304a5d",
-                        width:2,
+                        color:"#333",
+                        width:1,
                     }
                 },
             }
@@ -262,8 +258,8 @@ function barChar(ID){
                 },
                 axisLine:{
                     lineStyle:{
-                        color:"#304a5d",
-                        width:2,
+                        color:"#333",
+                        width:1,
                     }
                 },
             }
@@ -275,31 +271,202 @@ function barChar(ID){
                 itemStyle:{
                     normal:{
                         color: function(params){
-                            console.log(params)
                             var index_color = params.name;
-                            for(var i=0;i<yData.length;i++){
-                                if(yData[i]==params.name){
-                                    return color[i];
-                                }
+                            if(index_color=="客户"){
+                                return '#2f8fbe';
+                            }else if(index_color=="项目") {
+                                return '#0dff00';
+                            }else if(index_color=="模块"){
+                                return '#09c';
+                            }else if(index_color=="设备"){
+                                return '#fd0000';
+                            }else{
+                                return '#ccc'
                             }
-                            // if(index_color==){
-                            //     return '#2f8fbe';
-                            // }else if(index_color>10&&index_color<=25) {
-                            //     return '#0dff00';
-                            // }else if(index_color>25&&index_color<=35){
-                            //     return '#fae70b';
-                            // }else if(index_color>35){
-                            //     return '#fd0000';
-                            // }
                         } 
                     }
                 },
-                data:[10, 28, 24, 34, 39, 33, 45,22,8]
+                data:yData
             }
         ]
     };
-
-
     myChart.setOption(option, true);
     return myChart; 
 }
+
+function piemoreChar(ID,xData,yData,allAlarm) {
+    var myChart = echarts.init(document.getElementById(ID));
+    var option = {
+        color:["#e92f0d","#fbf320","#ccc","#3ff504"],
+        title:{
+            text:"告警总数："+allAlarm,  
+            top: 15,
+            left:15,
+            textStyle:{
+                color:"#DA632A",
+            },
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+        },
+        legend: {
+            x: 'center',
+            bottom:'15px',
+            textStyle:{
+                color:'#000'
+            },
+            data:xData
+        },
+        series: [
+            {
+                type:'pie',
+                radius: ['40%', '60%'],
+                avoidLabelOverlap: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: false,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:yData
+            }
+        ]
+    };
+    myChart.setOption(option, true);
+    return myChart; 
+}
+
+function twoLineChar(ID,xData,yData1,yData2,name){
+    // var xData=['23','234','54'];
+    // var yData1=[123,124,323]
+    // var yData2=[173,324,323]
+    // var name=['大大','xia']
+    var myChart = echarts.init(document.getElementById(ID));
+    var option = {
+        color:["#5df5f4","#277ace"],
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            bottom: 10,
+            textStyle:{
+                color:"#000"
+            },
+            data:name
+        },
+        grid: {
+            left: '15px',
+            right: '45px',
+            top:'15%',
+            bottom: '15%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : false,
+                axisLine:{
+                    lineStyle:{
+                        color:"#333",
+                        width:1,
+                    }
+                },
+                axisTick:{
+                    show:false
+                },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                data :xData
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                splitLine:{
+                    show:true,
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:"#333",
+                        width:1,
+                    }
+                },
+                 splitLine:{
+                    show:true,
+                    lineStyle:{
+                        color:"#ccc",
+                        width:1,
+                        type:"dashed",
+                    }
+                },
+                axisTick:{
+                    show:false
+                },
+                axisLabel:{
+                    color:"#000",
+					formatter: '{value}'
+                }
+            }
+        ],
+        series : [
+         {
+            name:name[0],
+            type:'line',
+            smooth:"true", 
+            symbol:"line",
+            symbolSize:0,
+            data:yData1
+        },
+        {
+            name:name[1],
+            type:'line',
+            smooth:"true", //平滑
+            symbol:"line", //不要圆圈
+            symbolSize:0, //平滑的时候设置为0
+            data:yData2
+        },
+    ]
+    };
+    myChart.setOption(option, true);
+    return myChart; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,14 +25,15 @@
                         <div class="searchlist" v-for="item in projectList">
                             <h2><span @click="projectInfo(item.id)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>单位：{{item.fullName}}</p>
-                            <p>位置：<span v-if="item.loca!=null&&item.loca!=''">{{item.loca.fullAddress}}</span></p>
+                            <p>项目位置：<span v-if="item.loca!=null&&item.loca!=''">{{item.loca.fullAddress}}</span></p>
+                            <p>告警数量：<span>{{item.alarmNum}}</span></p>
                             <p>接入：
                                 <span v-for="(initem,index) in item.devTypeCount">
                                     <em v-if="index==0">{{initem.name}}[{{initem.count}}]</em>
                                     <em v-else-if="index<3">，{{initem.name}}[{{initem.count}}]</em>
                                 </span>
                             </p>
-                            <p><span class="loncom_color_main" @click="custInfo(item.id)">[单位档案]</span></p>
+                            <p><span class="loncom_color_main dangan" @click="custInfo(item.id)">[单位档案]</span></p>
                         </div>
                     </div>
                 </div>
@@ -150,16 +151,31 @@ export default {
             this.map.clearOverlays();
             for(var i=0;i<this.projectList.length;i++){
                 if(this.projectList[i].loca!=null&&this.projectList[i].loca!=''){
-                    var point = new BMap.Point(this.projectList[i].loca.lng, this.projectList[i].loca.latl);
+                    var iconurl='./static/images/index_normal.svg';
                     var content = '<div class="loncom_map_box">'+
                                 '<div class="loncom_map_boxtop">'+this.projectList[i].name+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>公司：'+this.projectList[i].fullName+'</p>'+
                                     '<p>联系人：'+this.projectList[i].contacts+'</p>'+
                                     '<p>联系电话：'+this.projectList[i].phoneNo+'</p>'+
+                                    '<p>告警数量：'+this.projectList[i].alarmNum+'</p>'+
                                 '</div>' +
                             '</div>';
-                    var marker = new BMap.Marker(point);
+                    if(this.projectList[i].alarmNum>0){
+                        iconurl='./static/images/index_warning.svg'
+                         var content = '<div class="loncom_map_box">'+
+                                '<div class="loncom_map_boxtop loncom_map_boxtopalarm">'+this.projectList[i].name+'</div>' +
+                                '<div class="loncom_map_boxcon">'+
+                                    '<p>公司：'+this.projectList[i].fullName+'</p>'+
+                                    '<p>联系人：'+this.projectList[i].contacts+'</p>'+
+                                    '<p>联系电话：'+this.projectList[i].phoneNo+'</p>'+
+                                    '<p>告警数量：'+this.projectList[i].alarmNum+'</p>'+
+                                '</div>' +
+                            '</div>';
+                    }
+                    var icon = new BMap.Icon(iconurl, new BMap.Size(14, 20));
+                    var point = new BMap.Point(this.projectList[i].loca.lng, this.projectList[i].loca.latl);
+                    var marker = new BMap.Marker(point,{icon:icon});
                     this.map.addOverlay(marker);
                     var infoBox = new BMapLib.InfoBox(this.map, content);
                     addClickHandler(marker, infoBox)
