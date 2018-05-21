@@ -195,3 +195,111 @@ function echartLine(ID,xData,yData){
     myChart.setOption(option, true);
     return myChart;
 }
+
+// index的
+function barChar(ID){
+    var yData=['温湿度','电量仪','发电机','烟感','烟感1'];
+    var color=['#2f8fbe','#f00','#09c','#c98','#76f'];
+    var myChart = echarts.init(document.getElementById(ID));
+    
+    option = {
+        
+        color: ['#3398DB'],
+        title:{
+            text:"温度",  
+            x:'center',
+            top: 15,
+            textStyle:{
+                color:"#fff",
+            },
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            },
+            formatter:'{b}：{c}'
+        },
+        grid: {
+            top:'40px',
+            bottom: '15px',
+            left:'15px',
+            right:'15px',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : yData,
+                axisTick:{
+                    show:false
+                },
+                axisLabel:{
+                    color:"#000"
+                },
+                splitLine:{
+                    show:false,
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:"#304a5d",
+                        width:2,
+                    }
+                },
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLabel:{
+                    color:"#000"
+                },
+                axisTick:{
+                    show:false
+                },
+                splitLine:{
+                    show:false,
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:"#304a5d",
+                        width:2,
+                    }
+                },
+            }
+        ],
+        series : [
+            {
+                type:'bar',
+                barWidth: '50%',
+                itemStyle:{
+                    normal:{
+                        color: function(params){
+                            console.log(params)
+                            var index_color = params.name;
+                            for(var i=0;i<yData.length;i++){
+                                if(yData[i]==params.name){
+                                    return color[i];
+                                }
+                            }
+                            // if(index_color==){
+                            //     return '#2f8fbe';
+                            // }else if(index_color>10&&index_color<=25) {
+                            //     return '#0dff00';
+                            // }else if(index_color>25&&index_color<=35){
+                            //     return '#fae70b';
+                            // }else if(index_color>35){
+                            //     return '#fd0000';
+                            // }
+                        } 
+                    }
+                },
+                data:[10, 28, 24, 34, 39, 33, 45,22,8]
+            }
+        ]
+    };
+
+
+    myChart.setOption(option, true);
+    return myChart; 
+}

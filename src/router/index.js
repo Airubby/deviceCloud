@@ -5,6 +5,7 @@ import Index from '@/page/index'
 //实时监控
 import realControl from '@/page/realControl'
 import realControlGis from '@/page/realControl_GIS'  //设备监控
+import realControlGis_info from '@/page/realControl_GIS_info'
 import realControlListView from '@/page/realControl_ListView'  //当前告警
 import realControlHisData from '@/page/realControl_HisData'  //设备历史数据
 import realControlHisData_detail from '@/page/realControl_HisData_detail'
@@ -83,6 +84,7 @@ export default new Router({
       redirect:'/realControl/gis',
       children:[
         {path:'/realControl/gis',component:realControlGis},
+        {path:'/realControl/gis/info',component:realControlGis_info},
         {path:'/realControl/listView',component:realControlListView},
         {path:'/realControl/hisData',component:realControlHisData},
         {path:'/realControl/hisData/detail',component:realControlHisData_detail},

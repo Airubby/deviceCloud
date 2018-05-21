@@ -199,7 +199,7 @@ export default {
         //删除设备类型模板项测点信息
        del:function(row){
             var ids=[];
-            if(row!=undefined){ //单条删除
+            if(row!=undefined&&row.id!=undefined){ //单条删除
                ids.push(row.id);
            }else{  //多条删除
                 if(this.multipleSelection.length>0){

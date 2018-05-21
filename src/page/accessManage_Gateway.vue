@@ -106,7 +106,7 @@ export default {
        //启用
        start:function(row){
             var ids=[];
-            if(row!=undefined){ //单条删除
+            if(row!=undefined&&row.id!=undefined){ //单条删除
                ids.push(row.id);
            }else{  //多条删除
                 if(this.multipleSelection.length>0){
@@ -138,7 +138,7 @@ export default {
        //停用
        stop:function(row){
             var ids=[];
-            if(row!=undefined){
+            if(row!=undefined&&row.id!=undefined){
                 ids.push(row.id);
             }else{
                 if(this.multipleSelection.length>0){
@@ -171,7 +171,7 @@ export default {
        del:function(row){
            console.log(row)
             var ids=[];
-            if(row!=undefined){ //单条删除
+            if(row!=undefined&&row.id!=undefined){ //单条删除
                ids.push(row.id);
            }else{  //多条删除
                 if(this.multipleSelection.length>0){

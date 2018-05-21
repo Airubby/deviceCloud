@@ -48,7 +48,7 @@
 <script>
 export default {
     created () {
-        
+        console.log(this.addressInfo)
     },
     mounted() {
         var _this=this;
@@ -64,6 +64,7 @@ export default {
             var searchTxt = _this.form_info.address;  
             myGeo.getPoint(searchTxt, function (point) {  
                 console.log(point)
+                map.centerAndZoom(point, 13); 
                 setPoint(point);  
             }, "全国");  
         }); 

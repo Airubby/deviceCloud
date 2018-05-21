@@ -51,7 +51,7 @@
                                 </el-form-item>
                             </div>
                         </div>
-                        <getAddress v-bind:addressInfo="form_info"></getAddress>
+                        <getAddress v-bind:addressInfo="addr_info"></getAddress>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -75,8 +75,13 @@ export default {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
-                        this.form_info[item]=r.data[item];    
+                        if(item=="loca"){
+                            this.addr_info=r.data[item];
+                        }else{
+                            this.form_info[item]=r.data[item];    
+                        }
                     } 
+                    console.log(this.addr_info)
                 }
             }); 
         }
@@ -94,8 +99,11 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
-
-               nationId:'',
+               loca:'',
+           },
+           addr_info:{
+                id:'',
+                nationId:'',
                 nationName:'',
                 provinceId:'',
                 provinceName:'',
@@ -121,18 +129,18 @@ export default {
                 phoneNo:[
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
                 ],
-                address:[
-                    { required: true, message: '请输入地址', trigger: 'blur' },
-                ],
-                fullAddress:[
-                    { required: true, message: '请输入全地址', trigger: 'blur' },
-                ],
-                lng:[
-                    { required: true, message: '请输入地址搜索经度', trigger: 'blur' },
-                ],
-                latl:[
-                    { required: true, message: '请输入地址搜索纬度', trigger: 'blur' },
-                ],
+                // address:[
+                //     { required: true, message: '请输入地址', trigger: 'blur' },
+                // ],
+                // fullAddress:[
+                //     { required: true, message: '请输入全地址', trigger: 'blur' },
+                // ],
+                // lng:[
+                //     { required: true, message: '请输入地址搜索经度', trigger: 'blur' },
+                // ],
+                // latl:[
+                //     { required: true, message: '请输入地址搜索纬度', trigger: 'blur' },
+                // ],
            },
        }
    },
@@ -142,6 +150,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     //form_info.id为空表示新增
+                    this.form_info.loca=this.addr_info;
                     this.$api.post('/project/save', this.form_info, r => {
                         console.log(r)
                         if(r.success){
