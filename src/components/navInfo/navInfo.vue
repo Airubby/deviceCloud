@@ -19,11 +19,11 @@
                     </router-link>
                 </li>
                 <li v-for="item in navList">
-                    <router-link :to="item.url">
+                    <router-link :to="item.url" class="alink">
                         <div class="loncom_nav">
                             <em><img :src="item.icon"></em><span class="loncm_menu">{{item.name}}</span>
                         </div>
-                        <dl class="loncom_morenav" v-if="item.subMenu.length>0">
+                        <dl class="loncom_morenav">
                             <dd v-for="initem in item.subMenu">
                                 <router-link :to="initem.url">
                                 <em><img :src="initem.icon"></em><span>{{initem.name}}</span>
@@ -216,7 +216,7 @@ export default {
             loginInfo=JSON.parse(localStorage.loginInfo);
         }
         console.log(loginInfo)
-        this.$api.post('/menu/getUserRoleMenu', {userId:loginInfo.id}, r => {
+        this.$api.post('/comm/getUserRoleMenu', {userId:loginInfo.id}, r => {
             console.log(r)
             if(r.code=='-1'){
                 this.$message.warning("请登录系统");
@@ -238,13 +238,13 @@ export default {
         }else{
             this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
             this.init();
-            this.alink() //初始化要判断用
+            this.alink();
         }
     },
     
     data() {
        return {
-           navbtn:'',
+           navbtn:'open',
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
                {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
@@ -283,6 +283,7 @@ export default {
        }
    },
     methods:{
+        //初始化
         init:function(){
             if(this.navbtn==='open'){
                 $(this.$refs.sidebar).css({
@@ -306,6 +307,7 @@ export default {
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
         },
+        //展开收缩
        navclick:function(){
             var navInfo = JSON.parse(localStorage.navInfo);
             var _this=this;
@@ -323,7 +325,6 @@ export default {
                     $(_this.$refs.sidebar).find(".loncom_logo").hide(300);
                     $(_this.$refs.sidebar).find(".loncom_logosmall").show(400);
                 },400)
-                
                 this.navbtn='close';
                 navInfo.navbtn='close';
             }else{
@@ -339,7 +340,6 @@ export default {
                         "transition":"all 0.4s ease-in"
                     });
                 },400)
-
                 this.navbtn='open';
                 navInfo.navbtn='open';
             }
@@ -348,115 +348,62 @@ export default {
         },
         //切换大小导航后用的
         navlink:function(){
+            console.log(this.navbtn)
             var _this=this;
             if(this.navbtn=='open'){ //展开的
-                $(this.$refs.sidebar_list).find(".loncom_morenav").css({
-                    'position':'relative',
-                    'left':'15px',
-                    'height':'auto',
-                    'display':'none',
-                    "transition":"all 0.4s ease-in"
-                })
-                $(this.$refs.sidebar_list).find("li").hover(function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'none'
-                        })
-                    }
-                },function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'none'
-                        })
-                    }
-                })
-                if($(this.$refs.sidebar_list).find(".router-link-active").find(".loncom_morenav").length>0){
+                if($(this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").length>0){
                     setTimeout(function(){
-                        $(_this.$refs.sidebar_list).find(".router-link-active").find(".loncom_morenav").css({
+                        $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
+                            'position':'relative',
+                            'left':'15px',
                             'display':'block',
-                            'padding-top':'15px',
+                            'padding-top':'10px',
+                            'padding-bottom':'10px',
+                            "transition":"all 0.6s ease-in"
                         })
                     },800)
-                    $(this.$refs.sidebar_list).find("li").hover(function(){
-                        if($(this).find(".loncom_morenav").length>0){
-                            $(this).find(".loncom_morenav").css({
-                                'display':'block'
-                            })
-                        }
-                    },function(){
-                        if($(this).find(".loncom_morenav").length>0){
-                            $(this).find(".loncom_morenav").css({
-                                'display':'block'
-                            })
-                        }
-                    })
                 }
-                
-                
             }else{
                 $(this.$refs.sidebar_list).find(".loncom_morenav").css({
                     'position':'absolute',
                     'left':'58px',
-                    'height':'auto',
-                    'padding-top':'15px',
-                    'background':'#285688',
+                    'padding-top':'10px',
+                    'padding-bottom':'10px',
                     'display':'none',
-                })
-                $(this.$refs.sidebar_list).find("li").hover(function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'block'
-                        })
-                    }
-                },function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'none'
-                        })
-                    }
+                    "transition":"all 0.4s ease-in"
                 })
             }
+            $(this.$refs.sidebar_list).find("li").hover(function(){
+                if(_this.navbtn=='open'){
+                     $(this).find(".loncom_morenav").css({'display':'none'})
+                    $(_this.$refs.sidebar_list).find('.alink.router-link-active').find(".loncom_morenav").css({'display':'block'})
+                }else{
+                    $(this).find(".loncom_morenav").css({'display':'block'})
+                }
+            },function(){
+                $(this).find(".loncom_morenav").css({'display':'none'})
+                if(_this.navbtn=='open'){
+                    $(_this.$refs.sidebar_list).find('.alink.router-link-active').find(".loncom_morenav").css({'display':'block'})
+                }
+            })
         },
         //初始化时候的用的
         alink:function(){
+            var _this=this;
             if(this.navbtn=='open'){ //展开的
-                $(this.$refs.sidebar_list).find(".loncom_morenav").css({
-                    'position':'relative',
-                    'left':'15px',
-                    'height':'0',
-                    'display':'none',
-                    'padding-top':'15px',
-                    "transition":"all 0.4s ease-in"
-                })
-                if($(this.$refs.sidebar_list).find(".router-link-active").find(".loncom_morenav").length>0){
-                    $(this.$refs.sidebar_list).find(".router-link-active").find(".loncom_morenav").css({
-                        'display':'block',
-                        'height':'auto',
-                    })
+                 if($(this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").length>0){
+                     $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
+                            'position':'relative',
+                            'left':'15px',
+                            'padding-top':'10px',
+                            'padding-bottom':'10px',
+                        })
+                    setTimeout(function(){
+                        $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
+                            'display':'block',
+                        })
+                    },600)
                 }
-            }else{
-                $(this.$refs.sidebar_list).find(".loncom_morenav").css({
-                    'position':'absolute',
-                    'left':'58px',
-                    'height':'auto',
-                    'padding-top':'15px',
-                    'background':'#285688',
-                    'display':'none',
-                    "transition":"all 0.4s ease-in"
-                })
-                $(this.$refs.sidebar_list).find("li").hover(function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'block'
-                        })
-                    }
-                },function(){
-                    if($(this).find(".loncom_morenav").length>0){
-                        $(this).find(".loncom_morenav").css({
-                            'display':'none'
-                        })
-                    }
-                })
             }
             
         },

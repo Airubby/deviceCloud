@@ -35,12 +35,12 @@
 
 export default {
     created () {
+        this.$message.info("请选择项目和设备查询信息");
         //获取项目
         this.$api.post('/project/list', {}, r => {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
-                this.table_forms.forms[0].options.unshift({'id':'',name:'全部'})
             }
         }); 
         //获取设备
@@ -48,9 +48,13 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[1].options=r.list;
-                this.table_forms.forms[1].options.unshift({'id':'',name:'全部'})
             }
         }); 
+        var _this=this;
+        setTimeout(function(){
+           console.log(_this.table_forms.forms[0].modelValue)
+
+        },1000)
 
     },
     mounted() {
@@ -65,9 +69,11 @@ export default {
             inline: true,
             size:'small',
             submitBtnText: '搜索',
+            queryKey1:'',
+            queryKey2:'',
             forms: [
-                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name' },
-                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name'},
+                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name',modelValue:'' },
+                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name',modelValue:''},
                     {prop:'queryKey3',placeholder:'测点'},
                 ]
             },
@@ -92,6 +98,11 @@ export default {
        },
 
     },
+     watch:{
+        'table_forms.forms.modelValue':function(val,oldval){
+            console.log('数据变化了')
+        },
+   },
     components:{}
 }
 </script>

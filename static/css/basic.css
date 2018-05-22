@@ -227,24 +227,28 @@ em{
 .loncom_sidebar_list .loncom_morenav{
   width: 140px;
   display: none;
-  height: 0;
+  height: auto;
   overflow: hidden;
   font-size: 14px;
   padding-left:20px;
+  background: #285688;
   top: 0;
   border-radius: 3px;
 }
 .loncom_sidebar_list .loncom_morenav dd{
-  height: 16px;
-  line-height: 16px;
-  margin-bottom: 20px;
+  height: 36px;
+  line-height: 36px;
+}
+.loncom_sidebar_list .loncom_morenav dd a{
+  display: block;
 }
 .loncom_sidebar_list .loncom_morenav em{
   height: 16px;
   display: block;
   float: left;
   overflow: hidden;
-  margin-right: 10px;
+  margin: 10px 10px 0 0;
+  line-height: normal;
 }
 .loncom_sidebar_list li>a.router-link-active{
   color: #fd743d;
@@ -252,7 +256,9 @@ em{
   display: block;
   background: #285688;
 }
-.loncom_sidebar_list .loncom_morenav .router-link-active{
+.loncom_sidebar_list .loncom_morenav .router-link-active,
+.loncom_sidebar_list li:hover>a,
+.loncom_sidebar_list .loncom_morenav dd:hover a{
   color: #fd743d;
 }
 .loncom_sidebar_list .router-link-active .loncom_nav em{
@@ -261,10 +267,12 @@ em{
 .loncom_sidebar_list .router-link-active .loncom_nav span{
   z-index: 1;
 }
-.loncom_sidebar_list .router-link-active .loncom_nav em img{
+.loncom_sidebar_list .router-link-active .loncom_nav em img,
+.loncom_sidebar_list li:hover>a .loncom_nav em img{
   margin-top: -24px;
 }
-.loncom_sidebar_list .loncom_morenav .router-link-active em img{
+.loncom_sidebar_list .loncom_morenav .router-link-active em img,
+.loncom_sidebar_list .loncom_morenav dd:hover em img{
   margin-top: -16px;
 }
 /*重置element*/
