@@ -33,6 +33,30 @@ function getQueryParams(url) {
     
     return urlParams;
 } 
+//生成树形JSON
+function getJsonTree(dataJson,parentId){
+    var itemArr=[];
+    for(var i=0;i<dataJson.length;i++){ 
+        var node=dataJson[i];
+        if(node.pid==parentId){ 
+            var newNode=node;
+            newNode.children=getJsonTree(dataJson,node.id);
+            itemArr.push(newNode);              
+        }
+    }
+    return itemArr;
+}
+//树形JSon生成list  自己定义个menuArr全局变量
+// function spread(menus) {
+//     for (var i=0; i < menus.length; i++ ) {
+//         menu = menus[i]
+//         if (menu.children) {
+//             spread(menu.children)
+//             delete menu.children
+//         }
+//         menuArr.push(menu)
+//     }
+// }
 
 //超出滚动
 function scrollCon(){
@@ -171,7 +195,7 @@ function wsConnection(port, type, callback) {
 
 
 
-//echarts 图
+//echarts 图 index也有用
 function echartLine(ID,xData,yData){
     var myChart = echarts.init(document.getElementById(ID));
     option = {

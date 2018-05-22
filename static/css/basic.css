@@ -301,6 +301,9 @@ em{
 .el-message-box__content {
     padding: 50px 15px !important;
 }
+.el-form-item__content{
+  display: block !important;
+}
 
 /*公共右边*/
 .loncom_sidebar_right{
@@ -327,7 +330,7 @@ em{
 }
 .loncom_public_right{
   width: 100%;
-  height: calc(100% - 60px);
+  height: calc(100% - 40px);
 }
 .loncom_tpadding{
   padding: 15px;
@@ -442,6 +445,9 @@ em{
   border-left: 1px solid #ddd;
   cursor: pointer;
 }
+.search_form_table form input{
+  width: 120px;
+}
 
 /*登录页面*/
 
@@ -504,10 +510,10 @@ em{
 .loncom_login_input .loncom_pass input {
   background: url(../images/login_pass.png) no-repeat 10px center;
 }
-.loncom_login_input .el-form-item__content{
+.loncom_login_input {
   margin-left:0 !important; 
-  display: block !important;
 }
+
 .loncom_login_input button {
   width: 100%;
   height: 50px;

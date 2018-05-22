@@ -43,7 +43,7 @@ export default {
         
     },
     mounted() {
-
+        scrollCon();
     },
     data() {
        return {

@@ -40,6 +40,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options.unshift({'id':'',name:'全部'})
             }
         }); 
         //获取设备
@@ -47,6 +48,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[1].options=r.list;
+                this.table_forms.forms[1].options.unshift({'id':'',name:'全部'})
             }
         }); 
 
@@ -57,7 +59,7 @@ export default {
     data() {
        return {
            table_data:[
-                 {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
+                //  {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
            table_forms: {
             inline: true,

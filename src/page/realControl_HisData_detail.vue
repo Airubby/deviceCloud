@@ -23,7 +23,7 @@
                                 </el-date-picker>
                             </el-form-item>
                             <el-form-item>
-                                <el-select v-model="form_info.type" size="small" placeholder="请选择">
+                                <el-select v-model="form_info.type" size="small" placeholder="请选择测点规整类型">
                                     <el-option
                                     v-for="item in typelist"
                                     :key="item.code"
@@ -50,6 +50,8 @@
 import noSubmitBtnInfo from '../components/nosubmitBtnInfo.vue'
 export default {
     created () {
+        var obj = this.$route.query;
+        this.forms.queryKey1=obj.id;
         this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_REGULARTYPE'},r => { //测点规整类型
             console.log(r)
             if(r.success){
@@ -59,13 +61,18 @@ export default {
     },
     mounted() {
         scrollCon();
-        var xData=["one",'two','three'];
-        var yData=['1','33','10'];
-        echartLine("echartLine",xData,yData)
+        this.getData();
+        
     },
     data() {
        return {
            typelist:[],
+           forms:{
+               queryKey1:'',
+               queryKey2:'',
+               t1:'',
+               t2:'',
+           },
            form_info:{
                 datetime:'',
                 type:'',
@@ -75,9 +82,32 @@ export default {
        }
    },
     methods:{
+        getData:function(){
+            this.$api.post('/hisdata/getPointHis',this.forms,r => { 
+                console.log(r)
+                if(r.success){
+                    var xData=[];
+                    var yData=[];
+                    for(var i=0;i<r.list.length;i++){
+                        xData.push(r.list[i][0])
+                        yData.push(r.list[i][1])
+                    }
+                    echartLine("echartLine",xData,yData)
+                }else{this.$message.warning(r.msg);}
+            });
+        },
        //
        onSubmit:function(){
-            
+           if(this.form_info.datetime!=''&&this.form_info.datetime!=null&&this.form_info.datetime.length>0){
+               this.forms.t1=this.form_info.datetime[0].Format("yyyy-MM-dd hh:mm:ss")
+               this.forms.t2=this.form_info.datetime[1].Format("yyyy-MM-dd hh:mm:ss")
+               this.forms.queryKey2=this.form_info.type
+           }else{
+               this.forms.t1='';
+               this.forms.t2='';
+               this.forms.queryKey2='';
+           }
+           this.getData();
        },
 
     },
