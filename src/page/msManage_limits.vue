@@ -16,6 +16,7 @@
                         :props="defaultProps"
                         :data="tree_data"
                         node-key="id"
+                        default-expand-all
                         @node-click="nodeClick"
                         class="numScrollCon0"
                         >

@@ -11,7 +11,7 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <getAddress v-bind:addressInfo="form_info"></getAddress>
+                        <getAddress v-bind:addressInfo="form_info" v-if="showAddr"></getAddress>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -34,6 +34,7 @@ export default {
                 if(r.success){
                     for(var item in this.form_info){
                         this.form_info[item]=r.data.loca[item];
+                        this.showAddr=true;
                     }
                 }else{
                     this.$message.warning(r.msg);
@@ -42,6 +43,7 @@ export default {
         }else{
             this.form_info.clientId=obj.id;
             this.topInfo="配置地点信息";
+            this.showAddr=true;
         }
     },
     mounted() {
@@ -49,6 +51,7 @@ export default {
     },
     data() {
        return {
+           showAddr:false,  //判断编辑时获取了信息才加载
            topInfo:'',
             form_info:{
                 id:'',

@@ -422,7 +422,7 @@ export default {
                     this.readType_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //单位
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
                 if(r.success){
                     this.unit_data=r.data;
                 }else{this.$message.warning(r.msg);}

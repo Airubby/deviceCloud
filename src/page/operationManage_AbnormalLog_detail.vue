@@ -53,7 +53,7 @@ export default {
 
     created () {
         var obj = this.$route.query;
-        this.$api.post('/log/getErrLog', {id:obj.id}, r => {
+        this.$api.post('/errLog/errLogList', {id:obj.id}, r => {
             console.log(r)
             if(r.success){
                 for(var item in this.form_info){

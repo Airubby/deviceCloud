@@ -51,7 +51,7 @@
                                 </el-form-item>
                             </div>
                         </div>
-                        <getAddress v-bind:addressInfo="addr_info"></getAddress>
+                        <getAddress v-bind:addressInfo="addr_info" v-if="showAddr"></getAddress>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -69,6 +69,7 @@ export default {
         var obj = this.$route.query;
         if(JSON.stringify(obj) == "{}"){
             this.topInfo="新增项目信息";
+            this.showAddr=true;
         }else{
             this.topInfo="编辑项目信息";
             this.$api.post('/project/get', {id:obj.id}, r => {
@@ -76,11 +77,14 @@ export default {
                 if(r.success){
                     for(var item in this.form_info){
                         if(item=="loca"){
-                            this.addr_info=r.data[item];
+                            for(var initem in this.addr_info){
+                                this.addr_info[initem]=r.data[item][initem];
+                            }
                         }else{
                             this.form_info[item]=r.data[item];    
                         }
                     } 
+                    this.showAddr=true;
                     console.log(this.addr_info)
                 }
             }); 
@@ -91,6 +95,7 @@ export default {
     },
     data() {
        return {
+           showAddr:false,  //判断编辑时获取了信息才加载
            //新增编辑控制器头部显示
            topInfo:'',
            form_info:{
@@ -151,6 +156,7 @@ export default {
                 if(valid){
                     //form_info.id为空表示新增
                     this.form_info.loca=this.addr_info;
+                    console.log(this.form_info)
                     this.$api.post('/project/save', this.form_info, r => {
                         console.log(r)
                         if(r.success){

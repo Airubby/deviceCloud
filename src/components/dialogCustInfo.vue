@@ -60,7 +60,13 @@ export default {
     },
     data() {
         return {
-           form_info:{}
+           form_info:{
+               name:'',
+               fullName:'',
+               code:'',
+               contacts:'',
+               phoneNo:'',
+           }
 
         }
     },

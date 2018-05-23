@@ -402,6 +402,20 @@ export default {
                         })
                     },600)
                 }
+            }else{
+                $(this.$refs.sidebar_list).find(".loncom_morenav").css({
+                    'position':'absolute',
+                    'left':'58px',
+                    'padding-top':'10px',
+                    'padding-bottom':'10px',
+                    'display':'none',
+                    "transition":"all 0.4s ease-in"
+                })
+                $(this.$refs.sidebar_list).find("li").hover(function(){
+                    $(this).find(".loncom_morenav").css({'display':'block'})
+                },function(){
+                    $(this).find(".loncom_morenav").css({'display':'none'})
+                })
             }
             
         },

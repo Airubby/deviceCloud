@@ -78,16 +78,17 @@ export default {
                 this.countDevAll=r.data.countDevAll;
                 this.countPointWarn=r.data.countPointWarn;
             }
+            //底部告警信息
+            this.$api.post('/gitMap/listPointWarn', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.alarmInfo=r.list;
+                }
+            }); 
         }); 
 
         
-        //底部告警信息
-        this.$api.post('/gitMap/listPointWarn', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.alarmInfo=r.list;
-            }
-        }); 
+        
 
 
 
@@ -107,7 +108,9 @@ export default {
                 _this.getProList()
             }
         }
-
+        $(this.$refs.showalarm).find(".gis_bottom_top").on("dblclick",function(){
+            _this.showalarm();
+        })
         numScroll(0)
         numScroll(1)
         
@@ -116,9 +119,9 @@ export default {
     data() {
        return {
             //设备总数
-            countDevAll:'',
+            countDevAll:'--',
             //告警总数
-            countPointWarn:'',
+            countPointWarn:'--',
            //项目信息
            projectList:[],
            map:'',

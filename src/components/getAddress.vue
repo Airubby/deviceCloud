@@ -54,12 +54,18 @@ export default {
         var _this=this;
         var map = new BMap.Map("container");
         var myGeo = new BMap.Geocoder();  
-        map.centerAndZoom("北京",13); 
+        //map.centerAndZoom("北京",13); 
+        if(this.addressInfo.lng!=""&&this.addressInfo.latl!=""){
+            map.centerAndZoom(new BMap.Point(this.addressInfo.lng, this.addressInfo.latl), 13); 
+            moveOverlay({lng:this.addressInfo.lng, lat:this.addressInfo.latl})
+        }else{
+            map.centerAndZoom("北京",13);   
+        }
         map.enableScrollWheelZoom();
         map.addEventListener("click",function(e){
             setPoint(e.point)
 		});  
-
+        
         $("#search").on('click', function () {  
             var searchTxt = _this.form_info.address;  
             myGeo.getPoint(searchTxt, function (point) {  
@@ -74,20 +80,22 @@ export default {
                 _this.form_info.lng=point.lng;
                 _this.form_info.latl=point.lat;
                 Geocoder(point);  
-
-                map.clearOverlays();
-                var marker = new BMap.Marker(point);  
-                map.addOverlay(marker);  
-                marker.enableDragging();//可以拖动   
-                //拖动监听  
-                marker.addEventListener("dragend", function (e) {  
-                    //坐标赋值  
-                    _this.form_info.lng=e.point.lng;
-                    _this.form_info.latl=e.point.lat;
-                    Geocoder(e.point);  
-                });  
+                moveOverlay(point);
                 
             }  
+        }
+        function moveOverlay(point){
+            map.clearOverlays();
+            var marker = new BMap.Marker(point);  
+            map.addOverlay(marker);  
+            marker.enableDragging();//可以拖动   
+            //拖动监听  
+            marker.addEventListener("dragend", function (e) {  
+                //坐标赋值  
+                _this.form_info.lng=e.point.lng;
+                _this.form_info.latl=e.point.lat;
+                Geocoder(e.point);  
+            });  
         }  
         function Geocoder(point) {  
             var gc = new BMap.Geocoder();  
@@ -102,6 +110,17 @@ export default {
                 _this.form_info.address=addComp.street+addComp.streetNumber;  
             });  
         } 
+        document.onkeyup = function (event) {
+            if (event.keyCode == 13) {
+               var searchTxt = _this.form_info.address;  
+                myGeo.getPoint(searchTxt, function (point) {  
+                    map.centerAndZoom(point, 13); 
+                    setPoint(point);  
+                }, "全国");  
+            }
+        }
+
+
     },
     data() {
         return {

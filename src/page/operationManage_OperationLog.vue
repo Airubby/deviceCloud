@@ -8,7 +8,7 @@
             <div class="loncom_tpadding">
                 <el-search-table-pagination 
                 type="remote"
-                url="/log/optLogList"
+                url="/optLog/getOptLog"
                 list-field="list" 
                 total-field="total"
                 method='post' 

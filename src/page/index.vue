@@ -9,22 +9,6 @@
                 </div>
                 <div class="loncom_public_right loncom_scroll_con">
                     <div class="index_content">
-                        <div class="index_box index_box1">
-                            <div class="boxcontent">
-                                <div class="index_box_title">
-                                    注册概况
-                                </div>
-                                <div class="index_box_con" id="indexbarChar"></div>
-                            </div>
-                        </div>
-                        <div class="index_box index_box2">
-                            <div class="boxcontent">
-                                <div class="index_box_title">
-                                    告警等级
-                                </div>
-                                <div class="index_box_con" id="indexpieChar"></div>
-                            </div>
-                        </div>
                         <div class="index_box index_box3">
                             <div class="boxcontent">
                                 <div class="index_box_title">
@@ -41,12 +25,28 @@
                                 <div class="index_box_con" id="pointPkgNum"></div>
                             </div>
                         </div>
-                        <div class="index_box index_box4">
+                        <div class="index_box index_box1">
                             <div class="boxcontent">
                                 <div class="index_box_title">
                                    活动趋势
                                 </div>
                                 <div class="index_box_con" id="alarmLine"></div>
+                            </div>
+                        </div>
+                        <div class="index_box index_box2">
+                            <div class="boxcontent">
+                                <div class="index_box_title">
+                                    告警等级
+                                </div>
+                                <div class="index_box_con" id="indexpieChar"></div>
+                            </div>
+                        </div>
+                        <div class="index_box index_box4">
+                            <div class="boxcontent">
+                                <div class="index_box_title">
+                                    注册概况
+                                </div>
+                                <div class="index_box_con" id="indexbarChar"></div>
                             </div>
                         </div>
                         <div style="clear:both;"></div>
@@ -91,29 +91,16 @@ export default {
             }
         }); 
         //告警等级;活动趋势
-        this.$api.post('/dash/getActiveAlarmInfo', {}, r => {
-            console.log(r)
-            if(r.success){
-                var xData=[];
-                var yData=[];
-                var allAlarm=r.data.alarmTotal;
-                for(var item in r.data.amap){
-                    xData.push("告警等级"+item);
-                    yData.push({value:r.data.amap[item],name:"告警等级"+item})
-                }
-                piemoreChar("indexpieChar",xData,yData,allAlarm)
-            }
-        });
         this.getAlarm();
         //接入数据
         this.getAccesInfo();
-        setInterval(function () {
+        var getacc=setInterval(function () {
             _this.getAccesInfo();
         },10000);
         //活动趋势
-        setInterval(function () {
+        var getal=setInterval(function () {
             _this.getAlarm();
-        },600000);
+        },60000);
 
     },
     data() {
@@ -134,6 +121,15 @@ export default {
             this.$api.post('/dash/getActiveAlarmInfo', {}, r => {
                 console.log(r)
                 if(r.success){
+                    var xData=[];
+                    var yData=[];
+                    var allAlarm=r.data.alarmTotal;
+                    for(var item in r.data.amap){
+                        xData.push("告警等级"+item);
+                        yData.push({value:r.data.amap[item],name:"告警等级"+item})
+                    }
+                    piemoreChar("indexpieChar",xData,yData,allAlarm)
+                    
                    this.alarmDate.push(new Date().Format('hh:mm:ss'));
                    this.yData1.push(r.data.nearNewAlarm);
                    this.yData2.push(r.data.nearEvictAlarm);

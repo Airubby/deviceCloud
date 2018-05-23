@@ -380,7 +380,7 @@ function twoLineChar(ID,xData,yData1,yData2,name){
     // var name=['大大','xia']
     var myChart = echarts.init(document.getElementById(ID));
     var option = {
-        color:["#5df5f4","#277ace"],
+        color:["#DA632A","#277ace"],
         tooltip : {
             trigger: 'axis'
         },

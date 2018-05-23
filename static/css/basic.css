@@ -556,6 +556,7 @@ em{
     font-weight: bold;
     margin-top: 10px;
     display: block;
+    text-align: center;
 }
 .gis_left .gis_left_box:nth-of-type(2){
  background: url(../images/index_devbg.svg) bottom right;

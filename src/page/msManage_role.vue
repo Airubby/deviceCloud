@@ -48,6 +48,7 @@
                         :props="defaultProps"
                         :data="tree_data"
                         show-checkbox
+                        default-expand-all
                         node-key="id"
                         class="numScrollCon0"
                         >

@@ -101,7 +101,7 @@ export default {
 
     created () {
         var obj = this.$route.query;
-        this.$api.post('/log/getMsgLog', {id:obj.id}, r => {
+        this.$api.post('/msgLog/getMsgLog', {id:obj.id}, r => {
             console.log(r)
             if(r.success){
                 for(var item in this.form_info){
