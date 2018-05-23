@@ -12,6 +12,7 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
+                class="hisalarm_table"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                   
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">

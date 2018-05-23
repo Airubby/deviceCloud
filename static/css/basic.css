@@ -338,7 +338,7 @@ em{
 }
 .loncom_public_right{
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 60px);
 }
 .loncom_tpadding{
   padding: 15px;
@@ -453,7 +453,7 @@ em{
   border-left: 1px solid #ddd;
   cursor: pointer;
 }
-.search_form_table form input{
+.hisalarm_table form input{
   width: 120px;
 }
 

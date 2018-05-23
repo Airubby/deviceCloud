@@ -4,7 +4,7 @@
             <span class="loncom_public_topinfo">GIS视图</span>
             <loginInfo></loginInfo>
         </div>
-        <div class="loncom_public_right loncom_scroll_con" style="position:relative;">
+        <div class="loncom_public_right" style="position:relative;">
             <div id="container" style="width:100%;height:100%;"></div>
             <div class="gis_left">
                 <div class="gis_left_box">

@@ -48,22 +48,22 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/realControl/gis">
-                                <em><img src="static/images/morenav.png"></em><span>设备监控</span>
+                                <em><img src="static/images/morenav.svg"></em><span>设备监控</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/realControl/listView">
-                                <em><img src="static/images/morenav.png"></em><span>当前告警</span>
+                                <em><img src="static/images/morenav.svg"></em><span>当前告警</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/realControl/hisData">
-                                <em><img src="static/images/morenav.png"></em><span>设备历史数据</span>
+                                <em><img src="static/images/morenav.svg"></em><span>设备历史数据</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/realControl/hisAlarm">
-                                <em><img src="static/images/morenav.png"></em><span>告警历史数据</span>
+                                <em><img src="static/images/morenav.svg"></em><span>告警历史数据</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -77,27 +77,27 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/accessManage/client">
-                                <em><img src="static/images/morenav.png"></em><span>客户管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>客户管理</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/accessManage/project">
-                                <em><img src="static/images/morenav.png"></em><span>项目管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>项目管理</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/accessManage/gateway">
-                                <em><img src="static/images/morenav.png"></em><span>接入网关</span>
+                                <em><img src="static/images/morenav.svg"></em><span>接入网关</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/accessManage/device">
-                                <em><img src="static/images/morenav.png"></em><span>接入设备</span>
+                                <em><img src="static/images/morenav.svg"></em><span>接入设备</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/accessManage/deviceType">
-                                <em><img src="static/images/morenav.png"></em><span>设备类型管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>设备类型管理</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -111,22 +111,22 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/operationManage/abnormalLog">
-                                <em><img src="static/images/morenav.png"></em><span>系统异常日志</span>
+                                <em><img src="static/images/morenav.svg"></em><span>系统异常日志</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/operationManage/operationLog">
-                                <em><img src="static/images/morenav.png"></em><span>系统操作日志</span>
+                                <em><img src="static/images/morenav.svg"></em><span>系统操作日志</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/operationManage/control">
-                                <em><img src="static/images/morenav.png"></em><span>队列监控</span>
+                                <em><img src="static/images/morenav.svg"></em><span>队列监控</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/operationManage/informLog">
-                                <em><img src="static/images/morenav.png"></em><span>通知消息日志</span>
+                                <em><img src="static/images/morenav.svg"></em><span>通知消息日志</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -140,27 +140,27 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/templateManage/collection">
-                                <em><img src="static/images/morenav.png"></em><span>采集控制模板</span>
+                                <em><img src="static/images/morenav.svg"></em><span>采集控制模板</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/templateManage/deviceTypeTemp">
-                                <em><img src="static/images/morenav.png"></em><span>设备类型模板</span>
+                                <em><img src="static/images/morenav.svg"></em><span>设备类型模板</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/templateManage/eventRule">
-                                <em><img src="static/images/morenav.png"></em><span>事件规则模板</span>
+                                <em><img src="static/images/morenav.svg"></em><span>事件规则模板</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/templateManage/inform">
-                                <em><img src="static/images/morenav.png"></em><span>消息模板</span>
+                                <em><img src="static/images/morenav.svg"></em><span>消息模板</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/templateManage/eventBase">
-                                <em><img src="static/images/morenav.png"></em><span>事件库</span>
+                                <em><img src="static/images/morenav.svg"></em><span>事件库</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -174,22 +174,22 @@
                         <dl class="loncom_morenav">
                             <dd>
                                 <router-link to="/msManage/userManage">
-                                <em><img src="static/images/morenav.png"></em><span>用户管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>用户管理</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/msManage/roleManage">
-                                <em><img src="static/images/morenav.png"></em><span>角色管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>角色管理</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/msManage/limitsManage">
-                                <em><img src="static/images/morenav.png"></em><span>权限管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>权限管理</span>
                                 </router-link>
                             </dd>
                             <dd>
                                 <router-link to="/msManage/datadicManage">
-                                <em><img src="static/images/morenav.png"></em><span>数据字典管理</span>
+                                <em><img src="static/images/morenav.svg"></em><span>数据字典管理</span>
                                 </router-link>
                             </dd>
                         </dl>
@@ -248,36 +248,34 @@ export default {
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
                {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
-                   {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.png'},
-                   {url:'/realControl/listView',name:'当前告警',icon:'static/images/morenav.png'},
-                   {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.png'},
-                   {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.png'},
+                   {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.svg'},
+                   {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.svg'},
+                   {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.svg'},
                ]},
-               {url:'/accessManage',name:'接入管理',icon:'static/images/realControl.svg',subMenu:[
-                    {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.png'},
-                    {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.png'},
-                    {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.png'},
-                    {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.png'},
-                    {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.png'},
+               {url:'/accessManage',name:'接入管理',icon:'static/images/access.svg',subMenu:[
+                    {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.svg'},
                ]},
-               {url:'/operationManage',name:'运维管理',icon:'static/images/realControl.svg',subMenu:[
-                    {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.png'},
-                    {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.png'},
-                    {url:'/operationManage/control',name:'队列监控',icon:'static/images/morenav.png'},
-                    {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.png'},
+               {url:'/operationManage',name:'运维管理',icon:'static/images/operation.svg',subMenu:[
+                    {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.svg'},
+                    {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.svg'},
+                    {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.svg'},
                ]},
-               {url:'/templateManage',name:'模板管理',icon:'static/images/realControl.svg',subMenu:[
-                    {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.png'},
-                    {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.png'},
-                    {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.png'},
-                    {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.png'},
-                    {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.png'},
+               {url:'/templateManage',name:'模板管理',icon:'static/images/template.svg',subMenu:[
+                    {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.svg'},
                ]},
-               {url:'/msManage',name:'系统管理',icon:'static/images/realControl.svg',subMenu:[
-                   {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.png'},
-                   {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.png'},
-                   {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.png'},
-                   {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.png'},
+               {url:'/msManage',name:'系统管理',icon:'static/images/sys.svg',subMenu:[
+                   {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.svg'},
                ]},
            ]
        }
