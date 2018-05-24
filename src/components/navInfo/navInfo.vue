@@ -302,6 +302,7 @@ export default {
                 $(this.$refs.sidebar).find(".loncom_logo").hide();
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
+            
 
         },
         //展开收缩

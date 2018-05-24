@@ -48,9 +48,10 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'typeName', label: '名称',minWidth:100},
-              { prop: 'typeCode', label: '编码',minWidth:100},
               { prop: 'sysCode', label: '系统编码',minWidth:100},
+              { prop: 'typeCode', label: '日志类型编码',minWidth:100},
+              { prop: 'typeName', label: '日志名称',minWidth:100},
+              { prop: 'createTime', label: '发生时间',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

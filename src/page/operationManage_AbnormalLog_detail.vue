@@ -35,6 +35,14 @@
                                 <el-input v-model="form_info.sysCode" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                发生时间：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-input v-model="form_info.createTime" :disabled="true" size="small"></el-input>
+                            </div>
+                        </div>
                         <div>
                             <h2 class="loncom_mb10">日志内容：</h2>
                             <el-input type="textarea" v-model="form_info.content" :disabled="true" size="small"></el-input>
@@ -53,7 +61,7 @@ export default {
 
     created () {
         var obj = this.$route.query;
-        this.$api.post('/errLog/errLogList', {id:obj.id}, r => {
+        this.$api.post('/errLog/getErrLog', {id:obj.id}, r => {
             console.log(r)
             if(r.success){
                 for(var item in this.form_info){
@@ -72,6 +80,7 @@ export default {
                typeName:'',
                typeCode:'',
                sysCode:'',
+               createTime:'',
                content:'',
            },
        }

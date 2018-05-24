@@ -13,7 +13,7 @@
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>序列号：
+                                <em>*</em>设备序列号：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="sno">
@@ -23,17 +23,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                名称：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name" :disabled="true"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                编码：
+                                设备编码：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="code">
@@ -41,6 +31,16 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                设备名称：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="name">
+                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name" :disabled="true"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>                        
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 接入模块：
@@ -134,14 +134,14 @@ export default {
 
            table_data:[],
            table_columns:[
-              { prop: 'serialNO', label: '序号',minWidth:100},
+              { prop: 'serialNO', label: '序号',minWidth:50},
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'valueType', label: '值类型',minWidth:100},
-              { prop: 'offSet', label: '偏移量',minWidth:100},
-              { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-readFlag'},
-              { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-writeFlag'},
-              { prop: 'unit', label: '单位',minWidth:100},
+              { prop: 'valueType', label: '值类型',minWidth:60},
+              { prop: 'offSet', label: '偏移量',minWidth:50},
+              { prop: 'readFlag', label: '可读',minWidth:50,slotName:'preview-readFlag'},
+              { prop: 'writeFlag', label: '可写',minWidth:50,slotName:'preview-writeFlag'},
+              { prop: 'unit', label: '单位',minWidth:50},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           dialogInfo:{

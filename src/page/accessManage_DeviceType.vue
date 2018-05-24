@@ -35,24 +35,24 @@
                             <el-form :model="form_info" :rules="formRules" ref="formInfo">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>名称：
+                                        <em>*</em>类型编码：
                                     </div>
                                     <div class="loncom_list_box_right">
-                                        <el-form-item prop="name">
-                                            <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                        <el-form-item prop="code">
+                                            <el-input size="small" placeholder="请输入类型编码" v-model="form_info.code"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>编码：
+                                        <em>*</em>类型名称：
                                     </div>
                                     <div class="loncom_list_box_right">
-                                        <el-form-item prop="code">
-                                            <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                        <el-form-item prop="name">
+                                            <el-input size="small" placeholder="请输入类型名称" v-model="form_info.name"></el-input>
                                         </el-form-item>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
                                         <em>*</em>设备类型模板：
@@ -108,10 +108,10 @@ export default {
            },
            formRules:{
                 name:[
-                    { required: true, message: '请输入名称', trigger: 'blur' },
+                    { required: true, message: '请输入类型名称', trigger: 'blur' },
                 ],
                 code:[
-                    { required: true, message: '请输入编码', trigger: 'blur' },
+                    { required: true, message: '请输入类型编码', trigger: 'blur' },
                 ],
                 templId:[
                     { required: true, message: '请选择设备模板', trigger: 'change' },

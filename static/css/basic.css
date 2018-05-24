@@ -145,7 +145,6 @@ em{
 
 /*sidebar侧边导航*/
 .loncom_sidebar{
-  width: 160px;
   height: 100%;
   display: block;
   background: #20436b;
@@ -163,6 +162,9 @@ em{
 }
 .loncom_sidebar_top>div{
   width: 100%;
+}
+.loncom_sidebar_top>div a{
+  display: none;
 }
 .loncom_sidebar_top>div a.loncom_logo{
   position: absolute;
@@ -651,6 +653,21 @@ em{
   color: #fff;
 }
 .gis_bottomlist_left span.alarm{
+  background: #ded941;
+}
+.gis_bottomlist_left span.alarm1{
+  background: #ded941;
+}
+.gis_bottomlist_left span.alarm2{
+  background: #e69836;
+}
+.gis_bottomlist_left span.alarm3{
+  background: #f38905;
+}
+.gis_bottomlist_left span.alarm4{
+  background: #ec4444;
+}
+.gis_bottomlist_left span.alarm5{
   background: #f00;
 }
 .gis_bottomlist .gis_bottomlist_center{

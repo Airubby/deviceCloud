@@ -4,7 +4,7 @@
           <el-button type="info" size="mini" plain @click="giveUp">返回</el-button>
       </span>
       <span>
-          <el-button type="primary" size="mini" @click="submitInfo">確定</el-button>
+          <el-button type="primary" size="mini" @click="submitInfo">确定</el-button>
       </span>
   </div>
 </template>

@@ -13,7 +13,7 @@
                     <div class="loncom_public_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                名称：
+                                用户ID：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.userId" :disabled="true" size="small"></el-input>
@@ -21,7 +21,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                编码：
+                                用户名：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.userName" :disabled="true" size="small"></el-input>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                系统编码：
+                                业务类：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.actionName" :disabled="true" size="small"></el-input>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                系统编码：
+                                业务方法：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.methodName" :disabled="true" size="small"></el-input>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                系统编码：
+                                业务逻辑：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.opName" :disabled="true" size="small"></el-input>
@@ -53,10 +53,18 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                系统编码：
+                                请求路径：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.requestUri" :disabled="true" size="small"></el-input>
+                            </div>
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                请求时间：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-input v-model="form_info.createTime" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
                         <div>
@@ -99,6 +107,7 @@ export default {
                methodName:'',
                opName:'',
                requestUri:'',
+               createTime:'',
                remark:'',
            },
        }

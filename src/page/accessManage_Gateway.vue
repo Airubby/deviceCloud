@@ -20,6 +20,9 @@
                     <template slot-scope="scope" slot="preview-loca">
                         <span v-if="scope.row.loca!=null&&scope.row.loca!=''">{{scope.row.loca.fullAddress}}</span>
                     </template>
+                    <template slot-scope="scope" slot="preview-project">
+                        <span v-if="scope.row.project!=null&&scope.row.project!=''">{{scope.row.project.name}}</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-state">
                         <span v-if="scope.row.state==1||scope.row.state=='1'">启用</span>
                         <span v-else>停用</span>
@@ -74,10 +77,12 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'code', label: '模块编码',minWidth:100},
+              { prop: 'name', label: '模块名称',minWidth:100},  
+              { prop: 'sno', label: '模块序列号',minWidth:100},            
               { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
-              { prop: 'loca', label: '位置',minWidth:100,slotName:'preview-loca'},
+              { prop: 'project', label: '所属项目',slotName:'preview-project',minWidth:100},
+              { prop: 'loca', label: '位置',minWidth:200,slotName:'preview-loca'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:140},
           ],
           multipleSelection:[],

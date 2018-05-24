@@ -13,34 +13,35 @@
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>序列号：
+                                <em>*</em>模块序列号：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="sno">
-                                    <el-input size="small" placeholder="请输入序列号" v-model="form_info.sno"></el-input>
+                                    <el-input size="small" placeholder="请输入模块序列号" v-model="form_info.sno"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                名称：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                编码：
+                                模块编码：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                    <el-input size="small" placeholder="请输入模块编码" v-model="form_info.code"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                模块名称：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="name">
+                                    <el-input size="small" placeholder="请输入模块名称" v-model="form_info.name"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>
+                        
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 所属项目：
@@ -191,7 +192,7 @@ export default {
            },
            formRules:{
                 sno:[
-                    { required: true, message: '请输入序列号', trigger: 'blur' },
+                    { required: true, message: '请输入模块序列号', trigger: 'blur' },
                 ],
            },
 

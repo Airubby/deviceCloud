@@ -23,7 +23,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>采集周期：
+                                <em>*</em>采集周期(秒)：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="collectCycle">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>传输周期：
+                                <em>*</em>传输周期(秒)：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="transferCycle">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>模块心跳：
+                                <em>*</em>模块心跳周期(秒)：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="clientHBeat">
@@ -63,7 +63,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>设备心跳：
+                                <em>*</em>设备心跳周期(秒)：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="devHBeat">
@@ -132,11 +132,11 @@ export default {
                     { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 clientHBeat:[
-                    { required: true, message: '请输入模块心跳', trigger: 'blur' },
+                    { required: true, message: '请输入模块心跳周期', trigger: 'blur' },
                     { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 devHBeat:[
-                    { required: true, message: '请输入设备心跳', trigger: 'blur' },
+                    { required: true, message: '请输入设备心跳周期', trigger: 'blur' },
                     { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
            },

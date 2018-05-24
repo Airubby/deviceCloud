@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">采集控制模板</span>
+            <span class="loncom_public_topinfo">采集控制策略模板</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
@@ -59,12 +59,12 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '模板名称',minWidth:100},
-              { prop: 'collectCycle', label: '采集周期',minWidth:100},
+              { prop: 'name', label: '策略模板名称',minWidth:100},
+              { prop: 'collectCycle', label: '采集周期(秒)',minWidth:100},
               { prop: 'transferCode', label: '传输规则',minWidth:100},
-              { prop: 'transferCycle', label: '传输周期',minWidth:100},
-              { prop: 'clientHBeat', label: '模块心跳',minWidth:100},
-              { prop: 'devHBeat', label: '设备心跳',minWidth:100},
+              { prop: 'transferCycle', label: '传输周期(秒)',minWidth:100},
+              { prop: 'clientHBeat', label: '模块心跳周期(秒)',minWidth:100},
+              { prop: 'devHBeat', label: '设备心跳周期(秒)',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选信息

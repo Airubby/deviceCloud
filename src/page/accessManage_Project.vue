@@ -26,6 +26,11 @@
                             </p>
                         </div>
                     </template>
+                    <template slot-scope="scope" slot="preview-loca">
+                        <div v-if="scope.row.loca!=null&&scope.row.loca!=''">
+                            {{scope.row.loca.fullAddress}}
+                        </div>
+                    </template>
                     <div class="loncom_table_btn">
                         <el-button type="info" plain size="mini" @click="del">删除</el-button>
                     </div>
@@ -63,10 +68,14 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'fullName', label: '单位',minWidth:100},
+              { prop: 'code', label: '项目编码',minWidth:60},
+              { prop: 'name', label: '项目名称',minWidth:100},
+              { prop: 'fullName', label: '项目全称',minWidth:100},
+              { prop: 'custName', label: '所属客户',minWidth:100},
               { prop: 'contacts', label: '联系人',minWidth:100},
               { prop: 'phoneNo', label: '联系电话',minWidth:100},
+              { prop: 'loca', label: '项目位置',slotName:'preview-loca',minWidth:100},
+              { prop: 'createTime', label: '创建时间',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选项

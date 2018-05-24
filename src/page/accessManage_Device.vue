@@ -67,11 +67,13 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'code', label: '设备编码',minWidth:100},
+              { prop: 'name', label: '设备名称',minWidth:100},
+              { prop: 'sno', label: '设备序列号',minWidth:100},              
               { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
               { prop: 'dtype', label: '设备类型',minWidth:100,slotName:'preview-dtype'},
               { prop: 'aclient', label: '接入模块',minWidth:100,slotName:'preview-aclient'},
+              { prop: 'createTime', label: '创建时间',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:140},
           ],
           multipleSelection:[],

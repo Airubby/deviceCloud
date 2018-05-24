@@ -8,7 +8,7 @@
             <div class="loncom_tpadding">
                 <el-search-table-pagination 
                 type="remote"
-                url="/msgLog/getMsgLog"
+                url="/msgLog/msgLogList"
                 list-field="list" 
                 total-field="total"
                 method='post' 

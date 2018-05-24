@@ -13,21 +13,31 @@
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>名称：
+                                <em>*</em>项目编码：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                <el-form-item prop="code">
+                                    <el-input size="small" placeholder="请输入项目编码" v-model="form_info.code"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>单位：
+                                <em>*</em>项目名称：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="name">
+                                    <el-input size="small" placeholder="请输入项目名称" v-model="form_info.name"></el-input>
+                                </el-form-item>
+                            </div>
+                        </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>项目全称：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="fullName">
-                                    <el-input size="small" placeholder="请输入单位" v-model="form_info.fullName"></el-input>
+                                    <el-input size="small" placeholder="请输入项目全称" v-model="form_info.fullName"></el-input>
                                 </el-form-item>
                             </div>
                         </div>
@@ -100,6 +110,7 @@ export default {
            topInfo:'',
            form_info:{
                id:'',
+               code:'',
                name:'',
                fullName:'',
                contacts:'',
@@ -122,11 +133,14 @@ export default {
                 latl:'',
            },
            formRules:{
+                code:[
+                    { required: true, message: '请输入项目编码', trigger: 'blur' },
+                ],
                 name:[
-                    { required: true, message: '请输入名称', trigger: 'blur' },
+                    { required: true, message: '请输入项目名称', trigger: 'blur' },
                 ],
                 fullName:[
-                    { required: true, message: '请输入单位', trigger: 'blur' },
+                    { required: true, message: '请输入项目全称', trigger: 'blur' },
                 ],
                 contacts:[
                     { required: true, message: '请输入联系人', trigger: 'blur' },

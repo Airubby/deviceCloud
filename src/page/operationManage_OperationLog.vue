@@ -8,7 +8,7 @@
             <div class="loncom_tpadding">
                 <el-search-table-pagination 
                 type="remote"
-                url="/optLog/getOptLog"
+                url="/optLog/optLogList"
                 list-field="list" 
                 total-field="total"
                 method='post' 
@@ -49,10 +49,11 @@ export default {
            table_columns:[
               { prop: 'userId', label: '用户id',minWidth:100},
               { prop: 'userName', label: '用户名',minWidth:100},
-              { prop: 'actionName', label: '系统编码',minWidth:100},
-              { prop: 'methodName', label: '系统编码',minWidth:100},
+              { prop: 'actionName', label: '业务类',minWidth:100},
+              { prop: 'methodName', label: '业务方法',minWidth:100},
               { prop: 'opName', label: '逻辑名称',minWidth:100},
-              { prop: 'requestUri', label: '系统编码',minWidth:100},
+              { prop: 'requestUri', label: '请求路径',minWidth:100},
+              { prop: 'createTime', label: '访问时间',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

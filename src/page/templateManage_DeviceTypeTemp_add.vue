@@ -217,9 +217,10 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('/pointTemplate/deleteEntity', {"ids":thisID,"action":9}, r => {
+		    	 this.$api.post('/pointTemplate/deleteEntity', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
+                        this.getList();
 		       		}else{
                         this.$message.warning(r.msg);
                     }

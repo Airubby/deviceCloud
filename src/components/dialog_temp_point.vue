@@ -223,14 +223,16 @@
                     <h2 style="height: 40px;line-height:30px;">
                         <span class="loncom_fl">触发告警条件</span>
                         <div class="loncom_fr" style="width: 100px;">
-                            <el-form-item prop="triggerRules">
-                                <el-input size="small" placeholder="" v-model="form_info.triggerRules" style="display:none;float:right:width:100px;"></el-input>
+                            <el-form-item prop="_triggerRules">
+                                <el-checkbox-group v-model="form_info._triggerRules" style="display:none;float:right:width:100px;">
+                                    <el-checkbox label=""></el-checkbox>
+                                </el-checkbox-group>
                             </el-form-item>
                         </div>
                     </h2>
                     
                     <el-transfer
-                    v-model="form_info.triggerRules"
+                    v-model="form_info._triggerRules"
                     filterable
                     :props="{
                     key: 'id',
@@ -250,14 +252,16 @@
                     <h2 style="height: 40px;line-height:40px;">
                         <span class="loncom_fl">解除告警条件</span>
                         <div class="loncom_fr" style="width: 100px;">
-                            <el-form-item prop="noTriggerRules">
-                                <el-input size="small" placeholder="" v-model="form_info.noTriggerRules" style="display:none;float:right:width:100px;"></el-input>
+                            <el-form-item prop="_noTriggerRules">
+                                <el-checkbox-group v-model="form_info._noTriggerRules" style="display:none;float:right:width:100px;">
+                                    <el-checkbox label=""></el-checkbox>
+                                </el-checkbox-group>
                             </el-form-item>
                         </div>
                     </h2>
                     
                     <el-transfer
-                    v-model="form_info.noTriggerRules"
+                    v-model="form_info._noTriggerRules"
                     filterable
                     :props="{
                     key: 'id',
@@ -302,8 +306,8 @@ export default {
                         this.form_info[item]=r.data[item];
                     }
                     
-                    this.form_info.triggerRules=this.form_info.triggerRules.split(",");
-                    this.form_info.noTriggerRules=this.form_info.noTriggerRules.split(",");
+                    this.form_info._triggerRules=this.form_info.triggerRules.split(",");
+                    this.form_info._noTriggerRules=this.form_info.noTriggerRules.split(",");
                 }
             }); 
         }
@@ -340,8 +344,10 @@ export default {
                cmin:'',
                cavg:'',
                cincr:'',
-               triggerRules:[],
-               noTriggerRules:[],
+               _triggerRules:[],
+               triggerRules:'',
+               _noTriggerRules:[],
+               noTriggerRules:'',
            },
            formRules:{
                 name:[
@@ -395,10 +401,10 @@ export default {
                 cincr:[
                     { required: true, message: '请输入', trigger: 'change' },
                 ],
-                triggerRules:[
+                _triggerRules:[
                     { type:'array',required: true, message: '请选择', trigger: 'change' },
                 ],
-                noTriggerRules:[
+                _noTriggerRules:[
                     { type:'array',required: true, message: '请选择', trigger: 'change' },
                 ],
            },
@@ -468,15 +474,16 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    // var _form_info=Object.assign({}, this.form_info)
+                    //var _form_info=Object.assign({}, this.form_info)
                     this.form_info.typeTempId=this.dialogInfo.typeTempId;
-                    this.form_info.triggerRules=this.form_info.triggerRules.toString();
-                    this.form_info.noTriggerRules=this.form_info.noTriggerRules.toString();
+                    this.form_info.triggerRules=this.form_info._triggerRules.toString();
+                    this.form_info.noTriggerRules=this.form_info._noTriggerRules.toString();
                     this.$api.post('/pointTemplate/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.transfer_datan=r.data;
                             this.dialogInfo.visible=false;
+                            this.$message.success("新增成功");
                             this.$parent.getList();
                         }else{
                             this.$message.warning(r.msg);
