@@ -94,13 +94,21 @@ export default {
         this.getAlarm();
         //接入数据
         this.getAccesInfo();
-        var getacc=setInterval(function () {
+
+
+
+        var str=this.$route.path;
+        
+        index_getacc=setInterval(function () {
             _this.getAccesInfo();
         },10000);
         //活动趋势
-        var getal=setInterval(function () {
+        index_getal=setInterval(function () {
             _this.getAlarm();
         },60000);
+
+
+        
 
     },
     data() {

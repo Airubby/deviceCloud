@@ -281,6 +281,11 @@ export default {
     methods:{
         //初始化
         init:function(){
+            if(!(this.$route.path=="/")){  //清除定时器
+                clearInterval(index_getacc);
+                clearInterval(index_getal);
+            }
+            
             if(this.navbtn==='open'){
                 $(this.$refs.sidebar).css({
                     "width":"160px",
@@ -302,6 +307,11 @@ export default {
                 $(this.$refs.sidebar).find(".loncom_logo").hide();
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
+
+            $(this.$refs.sidebar_list).find("a").on("click",function(){
+                console.log(12312313123123)
+                window.location.reload();
+            })
             
 
         },

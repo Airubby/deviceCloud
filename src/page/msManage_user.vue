@@ -129,7 +129,7 @@ export default {
 	        }).then(() => {
                 var thisID=ids.toString();
                 console.log(thisID);
-		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID}, r => {
+		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,action:9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
                         this.$refs['thisRef'].searchHandler(false)
