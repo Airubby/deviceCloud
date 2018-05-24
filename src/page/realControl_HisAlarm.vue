@@ -15,6 +15,16 @@
                 class="hisalarm_table"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                   
                     <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-occurTime">
+                        <div>
+                            {{new Date(scope.row.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                        </div>
+                    </template>
+                    <template slot-scope="scope" slot="preview-removeTime">
+                        <div>
+                            {{new Date(scope.row.removeTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a>
                     </template>
@@ -98,10 +108,16 @@ export default {
                 ]
             },
            table_columns:[
-               { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'devName', label: '设备名称',minWidth:100},
-              { prop: 'cityName', label: '所在城市',minWidth:100},
-              { prop: 'projectName', label: '所属工程',minWidth:100},
+              { prop: 'projectName', label: '项目',minWidth:100},
+              { prop: 'moduleName', label: '模块',minWidth:100},
+              { prop: 'devName', label: '设备',minWidth:100},
+              { prop: 'devTypeName', label: '设备类型',minWidth:100},              
+              { prop: 'pointName', label: '属性',minWidth:100},
+              { prop: 'name', label: '事件名称',minWidth:100},              
+              { prop: 'topLevelName', label: '事件等级',minWidth:100},              
+              { prop: 'state', label: '状态',minWidth:100},              
+              { prop: 'occurTime', label: '触发时间',minWidth:100,slotName:'preview-occurTime'},
+              { prop: 'removeTime', label: '解除时间',minWidth:100,slotName:'preview-removeTime'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

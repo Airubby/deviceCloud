@@ -15,18 +15,33 @@
                         <el-table-column type="expand">
                             <template slot-scope="props">
                                 <el-table :data="props.row.logs" border>
-                                    <el-table-column label="创建时间" prop="createTime"></el-table-column>
-                                    <el-table-column label="事件等级" prop="eventAction"></el-table-column>
-                                    <el-table-column label="occurValue" prop="occurValue"></el-table-column>
+                                    <el-table-column label="发生时间" prop="occurTime">
+                                        <template slot-scope="prop">
+                                            {{new Date(prop.row.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column label="事件等级" prop="eventLevel"></el-table-column>
+                                    <el-table-column label="读数" prop="occurValue"></el-table-column>
+                                    <el-table-column label="事件" prop="eventAction"></el-table-column>
                                 </el-table>
                             </template>
-                        </el-table-column>
-                        <el-table-column label="名称" prop="name"></el-table-column>
+                        </el-table-column>       
+                        <el-table-column label="所属工程" prop="projectName"></el-table-column>
                         <el-table-column label="设备名称" prop="devName"></el-table-column>
-                        <el-table-column label="所在城市" prop="cityName"></el-table-column>
-                        <el-table-column label="所属工程" prop="projectName"></el-table-column>
-                        <el-table-column label="设备编码" prop="devCode"></el-table-column>
-                        <el-table-column label="所属工程" prop="projectName"></el-table-column>
+                        <el-table-column label="测点名称" prop="pointName"></el-table-column>
+                        <el-table-column label="时间名称" prop="name"></el-table-column>
+                        <el-table-column label="最高等级" prop="topLevelName"></el-table-column>
+                        <el-table-column label="触发时间" prop="occurTime">
+                            <template slot-scope="prop">
+                                {{new Date(prop.row.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="解除时间" prop="removeTime">
+                            <template slot-scope="prop">
+                                {{new Date(prop.row.removeTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                            </template>
+                        </el-table-column>   
+                                      
                     </el-table>
                     </div>
                 </div>

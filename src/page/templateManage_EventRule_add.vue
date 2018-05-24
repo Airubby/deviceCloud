@@ -35,9 +35,9 @@
                         <div class="loncom_list_boxform">
                             <el-col :span="8">
                                 <el-form-item prop="action">
-                                    <el-select v-model="form_info.action" placeholder="请选择" size="small">
-                                        <el-option value="1" label="触发告警"></el-option>
-                                        <el-option value="0" label="解除告警"></el-option>
+                                    <el-select v-model="form_info.action" placeholder="告警条件" size="small">
+                                        <el-option :value="1" label="触发告警"></el-option>
+                                        <el-option :value="0" label="解除告警"></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
@@ -187,6 +187,7 @@ export default {
             this.topInfo="编辑事件规则模板信息";
             this.$api.post('/eventrule/get', {id:obj.id}, r => {
                 if(r.success){
+                    console.log(r)
                     for(var item in this.form_info){
                         this.form_info[item]=r.data[item]
                     }
@@ -276,6 +277,7 @@ export default {
         //事件等级
         getELevel:function(){
             this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+                console.log(r)
                 if(r.success){
                     this.event_level=r.data;
                 }else{this.$message.warning(r.msg);}

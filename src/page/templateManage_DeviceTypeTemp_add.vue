@@ -50,10 +50,24 @@
                             <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns"
                              @selection-change="handleSelectionChange" >                                           
                                 <el-table-column slot="prepend" type="selection"></el-table-column>
-                                <template slot-scope="scope" slot="vaild">
-                                    <div>
-                                        <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
-                                        <span v-else>无效</span>
+                                <template slot-scope="scope" slot="preview-read">
+                                    <div v-for="item in readType_data">
+                                        <span v-if="scope.row.readFlag==item.code">{{item.label}}</span>
+                                    </div>
+                                </template>
+                                <template slot-scope="scope" slot="preview-write">
+                                    <div v-for="item in writeType_data">
+                                        <span v-if="scope.row.writeFlag==item.code">{{item.label}}</span>
+                                    </div>
+                                </template>
+                                <template slot-scope="scope" slot="preview-valueType">
+                                    <div v-for="item in valueType_data">
+                                        <span v-if="scope.row.valueType==item.code">{{item.label}}</span>
+                                    </div>
+                                </template>
+                                <template slot-scope="scope" slot="preview-unit">
+                                    <div v-for="item in unit_data">
+                                        <span v-if="scope.row.unit==item.code">{{item.label}}</span>
                                     </div>
                                 </template>
                                 <template slot-scope="scope" slot="preview-handle">
@@ -94,8 +108,10 @@ export default {
             //获取设备类型模板
             this.dialogInfo.typeTempId=obj.id;
             this.getList();
-
         }
+
+        this.getType();
+
     },
     mounted() {
         scrollCon();
@@ -126,11 +142,11 @@ export default {
               { prop: 'serialNO', label: '序号',minWidth:100},
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'valueType', label: '值类型',minWidth:100},
+              { prop: 'valueType', label: '值类型',minWidth:100,slotName:'preview-valueType'},
               { prop: 'offSet', label: '偏移量',minWidth:100},
-              { prop: 'readFlag', label: '可读',minWidth:100},
-              { prop: 'writeFlag', label: '可写',minWidth:100},
-              { prop: 'unit', label: '单位',minWidth:100},
+              { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-read'},
+              { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-write'},
+              { prop: 'unit', label: '单位',minWidth:100,slotName:'preview-unit'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -146,9 +162,46 @@ export default {
             //勾选的测点信息
             multipleSelection:[],
 
+            //值类型：
+            valueType_data:[],
+            //抖动类型：
+            shakeType_data:[],
+            writeType_data:[],  //写类型
+            readType_data:[],  //写类型
+            unit_data:[], //单位
+
        }
    },
     methods:{
+         //获取类型
+        getType:function(){
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_VALUETYPE'},r => { //值类型
+                console.log(r)
+                if(r.success){
+                    this.valueType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_SHAKETYPE'},r => { //抖动类型
+                if(r.success){
+                    this.shakeType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_WRITETYPE'},r => { //写类型
+                if(r.success){
+                    this.writeType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //读类型
+                if(r.success){
+                    this.readType_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
+                if(r.success){
+                    this.unit_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+        },
         getList:function(){
             //获取设备类型测点信息
             this.$api.post('/typeTemplate/getById', {id:this.dialogInfo.typeTempId}, r => {

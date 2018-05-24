@@ -23,6 +23,12 @@
                             <span v-else>否</span>
                         </div>
                     </template>
+                    <template slot-scope="scope" slot="preview-action">
+                        <div>
+                            <span v-if="scope.row.action==1">触发告警</span>
+                            <span v-else-if="scope.row.action==0">解除告警</span>
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
@@ -72,7 +78,7 @@ export default {
               { prop: 'varb1', label: '值',minWidth:100},
               { prop: 'optb', label: '运算符',minWidth:100},
               { prop: 'varb2', label: '值',minWidth:100},
-              { prop: 'action', label: '告警条件',minWidth:100},
+              { prop: 'action', label: '告警条件',minWidth:100,slotName:'preview-action'},
               { prop: 'useFel', label: '是否使用自定义',minWidth:100,slotName:'preview-useFel'},
               { prop: 'fel', label: '自定义',minWidth:100},
               { prop: 'eventLibName', label: '事件库',minWidth:100},

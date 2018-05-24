@@ -18,6 +18,11 @@
                     </div>      
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                      
+                    <template slot-scope="scope" slot="preview-transferCode">
+                        <div v-for="item in transferCode_data">
+                            <span v-if="item.code==scope.row.transferCode">{{item.label}}</span>
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
@@ -40,13 +45,19 @@
 
 export default {
     created () {
-        
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
+            if(r.success){
+                console.log(r)
+                this.transferCode_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
     },
     mounted() {
         scrollCon();
     },
     data() {
        return {
+           transferCode_data:[],  //传输规则
            table_data:[
                 // {id:'1',name:'小张',collectCycle:'12',transferCode:'123',transferCycle:'12321',clientHBeat:'124',devHBeat:'123'}
            ],
@@ -61,7 +72,7 @@ export default {
            table_columns:[
               { prop: 'name', label: '策略模板名称',minWidth:100},
               { prop: 'collectCycle', label: '采集周期(秒)',minWidth:100},
-              { prop: 'transferCode', label: '传输规则',minWidth:100},
+              { prop: 'transferCode', label: '传输规则',minWidth:100,slotName:'preview-transferCode'},
               { prop: 'transferCycle', label: '传输周期(秒)',minWidth:100},
               { prop: 'clientHBeat', label: '模块心跳周期(秒)',minWidth:100},
               { prop: 'devHBeat', label: '设备心跳周期(秒)',minWidth:100},

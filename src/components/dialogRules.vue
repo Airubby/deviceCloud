@@ -28,6 +28,13 @@
                             <span v-else>否</span>
                         </div>
                     </template>
+                    <template slot-scope="scope" slot="preview-action">
+                        <div>
+                            <span v-if="scope.row.action==1">触发告警</span>
+                            <span v-else-if="scope.row.action==0">解除告警</span>
+                            <span v-else>状态错误</span>
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="del1(scope.row)">删除</a>
                     </template>
@@ -56,17 +63,17 @@ export default {
             table_data:[],
             table_data1:[],
             table_columns:[
-              { prop: 'name', label: '模板名称',minWidth:100},
-              { prop: 'vara1', label: '值',minWidth:100},
-              { prop: 'opta', label: '运算符',minWidth:100},
-              { prop: 'vara2', label: '值',minWidth:100},
+              { prop: 'name', label: '规则名称',minWidth:100},
+              { prop: 'vara1', label: '值a',minWidth:100},
+              { prop: 'opta', label: '运算符a',minWidth:100},
+              { prop: 'vara2', label: '值a',minWidth:100},
               { prop: 'optc', label: '逻辑符',minWidth:100},
-              { prop: 'varb1', label: '值',minWidth:100},
-              { prop: 'optb', label: '运算符',minWidth:100},
-              { prop: 'varb2', label: '值',minWidth:100},
-              { prop: 'action', label: '告警条件',minWidth:100},
-              { prop: 'useFel', label: '是否使用自定义',minWidth:100,slotName:'preview-useFel'},
-              { prop: 'fel', label: '自定义',minWidth:100},
+              { prop: 'varb1', label: '值b',minWidth:100},
+              { prop: 'optb', label: '运算符b',minWidth:100},
+              { prop: 'varb2', label: '值b',minWidth:100},
+              { prop: 'action', label: '规则动作',minWidth:100,slotName:'preview-action'},
+              { prop: 'useFel', label: '自定义脚本',minWidth:100,slotName:'preview-useFel'},
+              { prop: 'fel', label: '脚本',minWidth:100},
               { prop: 'eventLibName', label: '事件库',minWidth:100},
               { prop: 'eventLevelName', label: '事件等级',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:60},

@@ -37,7 +37,14 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="transferCode">
-                                    <el-input size="small" placeholder="请输入传输规则" v-model="form_info.transferCode"></el-input>
+                                    <el-select v-model="form_info.transferCode" placeholder="请输入传输规则" size="small">
+                                        <el-option
+                                        v-for="item in transferCode_data"
+                                        :key="item.code"
+                                        :label="item.label"
+                                        :value="item.code">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                             </div>
                         </div>
@@ -98,6 +105,16 @@ export default {
                 }
             }); 
         }
+
+        
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
+            if(r.success){
+                console.log(r)
+                this.transferCode_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
+        
+
     },
     mounted() {
         scrollCon();
@@ -106,6 +123,7 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'',
+           transferCode_data:[],  //传输规则
            form_info:{
                id:'',
                name:'',
@@ -140,6 +158,7 @@ export default {
                     { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
            },
+
        }
    },
     methods:{

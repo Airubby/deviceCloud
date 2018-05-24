@@ -402,7 +402,7 @@ export default {
                             'display':'block',
                             "transition":"all 0.4s ease-in"
                         })
-                    },600)
+                    },300)
                 }
             }else{
                 $(this.$refs.sidebar_list).find(".loncom_morenav").css({

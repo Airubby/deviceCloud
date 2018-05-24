@@ -61,6 +61,23 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>所属客户：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="custId">
+                                    <el-select v-model="form_info.custId" placeholder="请选择" size="small">
+                                        <el-option
+                                            v-for="item in cust_data"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </div>
                         <getAddress v-bind:addressInfo="addr_info" v-if="showAddr"></getAddress>
                     </el-form>
                 </div>
@@ -99,6 +116,17 @@ export default {
                 }
             }); 
         }
+
+        this.$api.post('/cust/list', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.cust_data=r.list;
+            }else{
+                this.$message.warning(r.msg);
+            }
+        });
+
+
     },
     mounted() {
         scrollCon();
@@ -108,6 +136,7 @@ export default {
            showAddr:false,  //判断编辑时获取了信息才加载
            //新增编辑控制器头部显示
            topInfo:'',
+           cust_data:'',  //所属客户
            form_info:{
                id:'',
                code:'',
@@ -115,6 +144,7 @@ export default {
                fullName:'',
                contacts:'',
                phoneNo:'',
+               custId:'',
                loca:'',
            },
            addr_info:{
