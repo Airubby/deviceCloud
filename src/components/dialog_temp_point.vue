@@ -220,9 +220,17 @@
                     </div>
                 </div>
                 <div style="margin:0 auto;width:560px;">
-                    <h2 style="height: 40px;line-height:30px;">触发告警条件</h2>
+                    <h2 style="height: 40px;line-height:30px;">
+                        <span class="loncom_fl">触发告警条件</span>
+                        <div class="loncom_fr" style="width: 100px;">
+                            <el-form-item prop="triggerRules">
+                                <el-input size="small" placeholder="" v-model="form_info.triggerRules" style="display:none;float:right:width:100px;"></el-input>
+                            </el-form-item>
+                        </div>
+                    </h2>
+                    
                     <el-transfer
-                    v-model="form_info.eventActionRuleIds"
+                    v-model="form_info.triggerRules"
                     filterable
                     :props="{
                     key: 'id',
@@ -239,9 +247,17 @@
                     </el-transfer>
                 </div>
                 <div style="margin:0 auto;width:560px;">
-                    <h2 style="height: 40px;line-height:40px;">解除告警条件</h2>
+                    <h2 style="height: 40px;line-height:40px;">
+                        <span class="loncom_fl">解除告警条件</span>
+                        <div class="loncom_fr" style="width: 100px;">
+                            <el-form-item prop="noTriggerRules">
+                                <el-input size="small" placeholder="" v-model="form_info.noTriggerRules" style="display:none;float:right:width:100px;"></el-input>
+                            </el-form-item>
+                        </div>
+                    </h2>
+                    
                     <el-transfer
-                    v-model="form_info.eventRemoveRuleIds"
+                    v-model="form_info.noTriggerRules"
                     filterable
                     :props="{
                     key: 'id',
@@ -276,11 +292,18 @@ export default {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
+                        // if(item=='triggerRules'){
+                        //     this.form_info.triggerRules=r.data.triggerRules.split(",");
+                        // }else if(item=='noTriggerRules'){
+                        //     this.form_info.noTriggerRules=r.data.noTriggerRules.split(",");
+                        // }else{
+                        //     this.form_info[item]=r.data[item];
+                        // }
                         this.form_info[item]=r.data[item];
                     }
                     
-                    this.form_info.eventActionRuleIds==this.form_info.eventActionRuleIds.split(",");
-                    this.form_info.eventRemoveRuleIds==this.form_info.eventRemoveRuleIds.split(",");
+                    this.form_info.triggerRules=this.form_info.triggerRules.split(",");
+                    this.form_info.noTriggerRules=this.form_info.noTriggerRules.split(",");
                 }
             }); 
         }
@@ -289,16 +312,6 @@ export default {
         
     },
     data() {
-    //     const generateData = _ => {
-    //     const data = [];
-    //     for (let i = 1; i <= 15; i++) {
-    //       data.push({
-    //         id: i,
-    //         name: `备选项 ${ i }`,
-    //       });
-    //     }
-    //     return data;
-    //   };
         return {
             //值类型：
             valueType_data:[],
@@ -308,7 +321,8 @@ export default {
             readType_data:[],  //写类型
             unit_data:[], //单位
             form_info:{
-                id:'',
+                typeTempId:'',
+               id:'',
                name:'',
                code:'',
                serialNO:'',
@@ -326,8 +340,8 @@ export default {
                cmin:'',
                cavg:'',
                cincr:'',
-               eventActionRuleIds:[],
-               eventRemoveRuleIds:[],
+               triggerRules:[],
+               noTriggerRules:[],
            },
            formRules:{
                 name:[
@@ -381,10 +395,10 @@ export default {
                 cincr:[
                     { required: true, message: '请输入', trigger: 'change' },
                 ],
-                eventActionRuleIds:[
+                triggerRules:[
                     { type:'array',required: true, message: '请选择', trigger: 'change' },
                 ],
-                eventRemoveRuleIds:[
+                noTriggerRules:[
                     { type:'array',required: true, message: '请选择', trigger: 'change' },
                 ],
            },
@@ -402,7 +416,6 @@ export default {
         //获取类型
         getType:function(){
             this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_VALUETYPE'},r => { //值类型
-                console.log(r)
                 if(r.success){
                     this.valueType_data=r.data;
                 }else{this.$message.warning(r.msg);}
@@ -430,10 +443,10 @@ export default {
         },
         //获取触发告警条件
         getDatay:function(){
-             this.$api.post('/eventRuleTemplate/list', {"action":1}, r => {
+             this.$api.post('/eventrule/getRulesByAction', {"action":1}, r => {
                  console.log(r)
                 if(r.success){
-                    this.transfer_datay=r.data;
+                    this.transfer_datay=r.list;
                 }else{
                     this.$message.warning(r.msg);
                 }
@@ -441,10 +454,10 @@ export default {
         },
         //获取解除告警条件
         getDatan:function(){
-            this.$api.post('/eventRuleTemplate/list', {"action":0}, r => {
+            this.$api.post('/eventrule/getRulesByAction', {"action":0}, r => {
                  console.log(r)
                 if(r.success){
-                    this.transfer_datan=r.data;
+                    this.transfer_datan=r.list;
                 }else{
                     this.$message.warning(r.msg);
                 }
@@ -455,8 +468,10 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if(valid){
                     console.log(this.form_info)
-                    this.form_info.eventActionRuleIds=this.form_info.eventActionRuleIds.toString();
-                    this.form_info.eventRemoveRuleIds=this.form_info.eventRemoveRuleIds.toString();
+                    // var _form_info=Object.assign({}, this.form_info)
+                    this.form_info.typeTempId=this.dialogInfo.typeTempId;
+                    this.form_info.triggerRules=this.form_info.triggerRules.toString();
+                    this.form_info.noTriggerRules=this.form_info.noTriggerRules.toString();
                     this.$api.post('/pointTemplate/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){
@@ -471,8 +486,10 @@ export default {
             })
         },
         handleChange(value, direction, movedKeys) {
-        console.log(value, direction, movedKeys);
-      }
+            // console.log(this.form_info.triggerRules)
+            // console.log(this.form_info.noTriggerRules)
+            // console.log(value, direction, movedKeys);
+        }
 
     },
     props:["dialogInfo"],

@@ -18,7 +18,7 @@
             </div>
             <div class="gis_right">
                 <el-input placeholder="请输入内容" v-model="searchInfo" size="small">
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="getDevList"></el-button>
                 </el-input>
                 <div class="searchbox numScroll0">
                     <div class="searchboxcon numScrollCon0">
@@ -92,7 +92,7 @@ export default {
         this.map.centerAndZoom("成都",6); 
         this.map.enableScrollWheelZoom();
 
-
+        var _this=this;
         document.onkeyup = function (event) {
             if (event.keyCode == 13) {
                 _this.getDevList()
@@ -124,7 +124,7 @@ export default {
     methods:{
         //设备列表
         getDevList:function(){
-            this.$api.post('/gitMap/devList', {projectId:this.obj.projectId}, r => {
+            this.$api.post('/gitMap/devList', {projectId:this.obj.projectId,queryKey:this.searchInfo}, r => {
                 console.log(r)
                 if(r.success){
                     this.devList=r.list;

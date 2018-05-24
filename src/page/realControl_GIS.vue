@@ -57,6 +57,9 @@
                             </div>
                             -->
                         </div>
+                        <div class="el-pagination is-background paginationbox">
+                            <ul class="pagination el-pager"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,21 +81,10 @@ export default {
                 this.countDevAll=r.data.countDevAll;
                 this.countPointWarn=r.data.countPointWarn;
             }
-            //底部告警信息
-            this.$api.post('/gitMap/listPointWarn', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.alarmInfo=r.list;
-                }
-            }); 
+            this.getAlarm();  //底部告警信息
         }); 
 
         
-        
-
-
-
-
     },
     mounted() {
         var _this=this;
@@ -114,6 +106,7 @@ export default {
         numScroll(0)
         numScroll(1)
         
+        this.fenye();
        
     },
     data() {
@@ -136,9 +129,62 @@ export default {
                 projectId:'',
            },
 
+           //底部告警分页
+           pageNo:1,
+           pageSize:20,
+           total:'',
+           pageTotal:'',
+
        }
    },
     methods:{
+        fenye:function(){
+            var current = this.pageNo;  //当前页
+            var total = this.pageTotal;  //总共页
+            var show = 7;  //显示几个页
+            var begin = current - Math.floor(show/2);  //正常情况下当前页的最左边的页码
+            begin = begin < 1 ? 1 : begin;
+            var end = begin + show; //正常情况下当前页的最右边的页码
+            if(end>total){
+                end = total + 1;
+                begin = end -show;
+                begin = begin < 1 ? 1 : begin;
+            }
+            var container = document.getElementsByClassName('pagination')[0];
+            var prevElement = document.createElement('li');
+            prevElement.classList.add('active');
+            prevElement.innerHTML='<a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+            if(current==1){
+                prevElement.classList.add('disabled');
+            }
+            container.appendChild(prevElement);
+            for(var i=begin;i<end;i++){
+                var liElement = document.createElement('li');
+                liElement.innerHTML = '<a href="#">' + i + '</a>';
+                if (i == current) {
+                    // 此时是当前页
+                    liElement.classList.add('active');
+                }
+                container.appendChild(liElement);
+            }
+            var nextElement = document.createElement('li');
+                nextElement.classList.add('active');
+                nextElement.innerHTML = '<a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+                if(current == total){
+                nextElement.classList.add('disabled');
+                }
+                container.appendChild(nextElement);
+        },
+        //获取底部告警
+        getAlarm:function(){
+            this.$api.post('/gitMap/listPointWarn', {pageNo:this.pageNo,pageSize:this.pageSize}, r => {
+                console.log(r)
+                if(r.success){
+                    this.alarmInfo=r.list;
+                    this.pageTotal=r.pageTotal;
+                }
+            }); 
+        },
         //获取项目列表，搜索项目列表
         getProList:function(){
             this.$api.post('/gitMap/projectList', {queryKey:this.searchInfo}, r => {
@@ -236,8 +282,12 @@ export default {
     },
      watch:{
         map:function(val,oldval){
-            this.getMap()
+            this.getMap();
         },
+        pageNo:function(val,oldval){
+            this.fenye();
+        }
+
    },
     components:{dialogCustInfo}
 }

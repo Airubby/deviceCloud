@@ -275,16 +275,10 @@ export default {
         },
         //事件等级
         getELevel:function(){
-            this.$api.post('/sysDic/list', {}, r => {
-                console.log(r)
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
                 if(r.success){
-                    for(var i=0;i<r.data.length;i++){
-                        if(r.data[i].code=='1'){
-                            this.event_level=r.data[i].itemSet;
-                            break;
-                        }
-                    }
-                }
+                    this.event_level=r.data;
+                }else{this.$message.warning(r.msg);}
             }); 
         },
        //提交

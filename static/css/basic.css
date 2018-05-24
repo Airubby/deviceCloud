@@ -699,12 +699,22 @@ em{
   cursor: pointer;
 }
 
-
-
 .hisDataecharts{
   width: 100%;
   height: 480px;
 }
+.paginationbox{
+  margin: 10px 0;
+  text-align: right;
+}
+.pagination .active.disabled a{
+  color: #000;
+}
+.pagination li.active a{
+   color: #fff;
+}
+
+
 
 /*接入管理accessManage*/
 

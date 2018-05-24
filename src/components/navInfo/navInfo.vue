@@ -18,7 +18,7 @@
                         </div>
                     </router-link>
                 </li>
-                <li v-for="item in navList">
+                <li v-for="item in navList" v-if="navList.length>0">
                     <router-link :to="item.url" class="alink">
                         <div class="loncom_nav">
                             <em><img :src="item.icon"></em><span class="loncm_menu">{{item.name}}</span>
@@ -223,7 +223,7 @@ export default {
                 this.$router.push({path:'/login'});
             }else{
                 if(r.success){
-                    this.navList=r.data.subMenu
+                    this.navList=r.data.subMenu;
                 }else{
                     this.$message.warning("菜单获取异常");
                 }
@@ -234,12 +234,10 @@ export default {
     },
     mounted() {
         if(JSON.stringify(localStorage.navInfo) == undefined){
-            localStorage.navInfo = JSON.stringify({navbtn:'open'});
-        }else{
-            this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
-            this.init();
-            this.alink();
-        }
+                localStorage.navInfo = JSON.stringify({navbtn:'open'});
+            }else{
+                this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
+            }
     },
     
     data() {
@@ -247,36 +245,36 @@ export default {
            navbtn:'open',
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
-               {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
-                   {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.svg'},
-                   {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.svg'},
-                   {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.svg'},
-               ]},
-               {url:'/accessManage',name:'接入管理',icon:'static/images/access.svg',subMenu:[
-                    {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.svg'},
-                    {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.svg'},
-                    {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.svg'},
-                    {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.svg'},
-                    {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.svg'},
-               ]},
-               {url:'/operationManage',name:'运维管理',icon:'static/images/operation.svg',subMenu:[
-                    {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.svg'},
-                    {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.svg'},
-                    {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.svg'},
-               ]},
-               {url:'/templateManage',name:'模板管理',icon:'static/images/template.svg',subMenu:[
-                    {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.svg'},
-                    {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.svg'},
-                    {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.svg'},
-                    {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.svg'},
-                    {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.svg'},
-               ]},
-               {url:'/msManage',name:'系统管理',icon:'static/images/sys.svg',subMenu:[
-                   {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.svg'},
-                   {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.svg'},
-                   {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.svg'},
-                   {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.svg'},
-               ]},
+            //    {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
+            //        {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.svg'},
+            //        {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.svg'},
+            //        {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.svg'},
+            //    ]},
+            //    {url:'/accessManage',name:'接入管理',icon:'static/images/access.svg',subMenu:[
+            //         {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.svg'},
+            //         {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.svg'},
+            //         {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.svg'},
+            //         {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.svg'},
+            //         {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.svg'},
+            //    ]},
+            //    {url:'/operationManage',name:'运维管理',icon:'static/images/operation.svg',subMenu:[
+            //         {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.svg'},
+            //         {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.svg'},
+            //         {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.svg'},
+            //    ]},
+            //    {url:'/templateManage',name:'模板管理',icon:'static/images/template.svg',subMenu:[
+            //         {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.svg'},
+            //         {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.svg'},
+            //         {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.svg'},
+            //         {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.svg'},
+            //         {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.svg'},
+            //    ]},
+            //    {url:'/msManage',name:'系统管理',icon:'static/images/sys.svg',subMenu:[
+            //        {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.svg'},
+            //        {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.svg'},
+            //        {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.svg'},
+            //        {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.svg'},
+            //    ]},
            ]
        }
    },
@@ -304,9 +302,10 @@ export default {
                 $(this.$refs.sidebar).find(".loncom_logo").hide();
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
+
         },
         //展开收缩
-       navclick:function(){
+        navclick:function(){
             var navInfo = JSON.parse(localStorage.navInfo);
             var _this=this;
             if(this.navbtn=='open'){
@@ -344,6 +343,7 @@ export default {
             this.navlink();
             localStorage.navInfo = JSON.stringify(navInfo);
         },
+
         //切换大小导航后用的
         navlink:function(){
             console.log(this.navbtn)
@@ -389,8 +389,8 @@ export default {
         alink:function(){
             var _this=this;
             if(this.navbtn=='open'){ //展开的
-                 if($(this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").length>0){
-                     $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
+                if($(this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").length>0){
+                    $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
                             'position':'relative',
                             'left':'15px',
                             'padding-top':'10px',
@@ -399,6 +399,7 @@ export default {
                     setTimeout(function(){
                         $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
                             'display':'block',
+                            "transition":"all 0.4s ease-in"
                         })
                     },600)
                 }
@@ -418,8 +419,17 @@ export default {
                 })
             }
             
+            
         },
     },
+    watch:{
+        navList:function(val,oldval){
+            this.$nextTick(function(){
+                this.init();
+                this.alink();
+            })
+        },
+   },
     components:{}
 }
 </script>
