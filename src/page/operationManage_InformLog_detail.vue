@@ -13,10 +13,10 @@
                     <div class="loncom_public_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                项目ID：
+                                项目名称：
                             </div>
                             <div class="loncom_list_box_right">
-                                <el-input v-model="form_info.projectId" :disabled="true" size="small"></el-input>
+                                <el-input v-model="form_info.projectName" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
                         <div class="loncom_list_boxform">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                应用者：
+                                称谓：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.appellation" :disabled="true" size="small"></el-input>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                编码：
+                                业务主键：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.bizKey" :disabled="true" size="small"></el-input>
@@ -77,14 +77,14 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                通道：
+                                发送通道：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-input v-model="form_info.channelType" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
                         <div>
-                            <h2 class="loncom_mb10">日志内容</h2>
+                            <h2 class="loncom_mb10">消息内容</h2>
                             <el-input type="textarea" v-model="form_info.content" :disabled="true" size="small"></el-input>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ export default {
        return {
            form_info:{
                id:'',
-               projectId:'',
+               projectName:'',
                addr:'',
                title:'',
                appellation:'',

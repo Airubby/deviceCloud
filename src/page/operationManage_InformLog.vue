@@ -54,15 +54,15 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'projectId', label: '项目ID',minWidth:100},
+              { prop: 'projectName', label: '项目',minWidth:100},
               { prop: 'addr', label: '邮件地址',minWidth:100},
               { prop: 'title', label: '标题',minWidth:100},
-              { prop: 'appellation', label: '应用者',minWidth:100},
+              { prop: 'appellation', label: '称谓',minWidth:100},
               { prop: 'sendTime', label: '发送时间',minWidth:100},
               { prop: 'state', label: '状态',minWidth:100},
               { prop: 'bizType', label: '类型',minWidth:100},
-              { prop: 'bizKey', label: '编码',minWidth:100},
-              { prop: 'channelType', label: '通道',minWidth:100},
+              { prop: 'bizKey', label: '业务主键',minWidth:100},
+              { prop: 'channelType', label: '发送通道',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

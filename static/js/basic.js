@@ -1,3 +1,4 @@
+var index_getacc,index_getal;  //index页面的定时器
 //ajax请求没用ajax请求
 function open_ajax(url, parameter, request,type, error, async) {
     type = type ? type : "Get";

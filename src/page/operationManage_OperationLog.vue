@@ -46,8 +46,7 @@ export default {
                     { prop: 'queryKey3-queryKey4', label: '',placeholder:'时间',itemType: 'datetimerange' },
                 ]
             },
-           table_columns:[
-              { prop: 'userId', label: '用户id',minWidth:100},
+           table_columns:[             
               { prop: 'userName', label: '用户名',minWidth:100},
               { prop: 'actionName', label: '业务类',minWidth:100},
               { prop: 'methodName', label: '业务方法',minWidth:100},

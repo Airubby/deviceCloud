@@ -215,7 +215,6 @@ export default {
         if(localStorage.loginInfo){
             loginInfo=JSON.parse(localStorage.loginInfo);
         }
-        console.log(loginInfo)
         this.$api.post('/comm/getUserRoleMenu', {userId:loginInfo.id}, r => {
             console.log(r)
             if(r.code=='-1'){
@@ -245,42 +244,50 @@ export default {
            navbtn:'open',
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
-            //    {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
-            //        {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.svg'},
-            //        {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.svg'},
-            //        {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.svg'},
-            //    ]},
-            //    {url:'/accessManage',name:'接入管理',icon:'static/images/access.svg',subMenu:[
-            //         {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.svg'},
-            //         {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.svg'},
-            //         {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.svg'},
-            //         {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.svg'},
-            //         {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.svg'},
-            //    ]},
-            //    {url:'/operationManage',name:'运维管理',icon:'static/images/operation.svg',subMenu:[
-            //         {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.svg'},
-            //         {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.svg'},
-            //         {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.svg'},
-            //    ]},
-            //    {url:'/templateManage',name:'模板管理',icon:'static/images/template.svg',subMenu:[
-            //         {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.svg'},
-            //         {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.svg'},
-            //         {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.svg'},
-            //         {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.svg'},
-            //         {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.svg'},
-            //    ]},
-            //    {url:'/msManage',name:'系统管理',icon:'static/images/sys.svg',subMenu:[
-            //        {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.svg'},
-            //        {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.svg'},
-            //        {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.svg'},
-            //        {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.svg'},
-            //    ]},
+               {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
+                   {url:'/realControl/gis',name:'设备监控',icon:'static/images/morenav.svg'},
+                   {url:'/realControl/hisData',name:'设备历史数据',icon:'static/images/morenav.svg'},
+                   {url:'/realControl/hisAlarm',name:'告警历史数据',icon:'static/images/morenav.svg'},
+               ]},
+               {url:'/accessManage',name:'接入管理',icon:'static/images/access.svg',subMenu:[
+                    {url:'/accessManage/client',name:'客户管理',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/project',name:'项目管理',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/gateway',name:'接入网关',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/device',name:'接入设备',icon:'static/images/morenav.svg'},
+                    {url:'/accessManage/deviceType',name:'设备类型管理',icon:'static/images/morenav.svg'},
+               ]},
+               {url:'/operationManage',name:'运维管理',icon:'static/images/operation.svg',subMenu:[
+                    {url:'/operationManage/abnormalLog',name:'系统异常日志',icon:'static/images/morenav.svg'},
+                    {url:'/operationManage/operationLog',name:'系统操作日志',icon:'static/images/morenav.svg'},
+                    {url:'/operationManage/informLog',name:'通知消息日志',icon:'static/images/morenav.svg'},
+               ]},
+               {url:'/templateManage',name:'模板管理',icon:'static/images/template.svg',subMenu:[
+                    {url:'/templateManage/collection',name:'采集控制模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/deviceTypeTemp',name:'设备类型模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/eventRule',name:'事件规则模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/inform',name:'消息模板',icon:'static/images/morenav.svg'},
+                    {url:'/templateManage/eventBase',name:'事件库',icon:'static/images/morenav.svg'},
+               ]},
+               {url:'/msManage',name:'系统管理',icon:'static/images/sys.svg',subMenu:[
+                   {url:'/msManage/userManage',name:'用户管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/roleManage',name:'角色管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/limitsManage',name:'权限管理',icon:'static/images/morenav.svg'},
+                   {url:'/msManage/datadicManage',name:'数据字典管理',icon:'static/images/morenav.svg'},
+               ]},
            ]
        }
    },
+   beforeRouteEnter (to, from, next) {
+        console.log(to)
+        console.log(from)
+        console.log(next)
+  },
     methods:{
+        
         //初始化
         init:function(){
+            console.log(1321)
+            var _this=this;
             if(!(this.$route.path=="/")){  //清除定时器
                 clearInterval(index_getacc);
                 clearInterval(index_getal);
@@ -310,7 +317,23 @@ export default {
 
             $(this.$refs.sidebar_list).find("a").on("click",function(){
                 console.log(12312313123123)
-                window.location.reload();
+                //window.location.reload();
+                // var _path=_this.$route.path;
+                // console.log(_path)
+                // _this.$router.push({path:_path});
+
+
+                // _this.$router.push({
+                //     path:_this.$route.fullPath, // 获取当前连接，重新跳转
+                // })
+
+                console.log(_this.$parent)
+                console.log(_this.$parent.$refs.content)
+                $(_this.$parent.$refs.content).hide()
+                $(_this.$parent.$refs.content).show()
+
+
+
             })
             
 
