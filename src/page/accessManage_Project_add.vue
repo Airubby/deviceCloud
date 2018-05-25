@@ -78,6 +78,23 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>消息模板：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="templId">
+                                    <el-select v-model="form_info.templId" placeholder="请选择" size="small">
+                                        <el-option
+                                            v-for="item in info_data"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </div>
                         <getAddress v-bind:addressInfo="addr_info" v-if="showAddr"></getAddress>
                     </el-form>
                 </div>
@@ -103,7 +120,7 @@ export default {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
-                        if(item=="loca"){
+                        if(item=="loca"&&r.data.loca!=null&&r.data.loca!=''){
                             for(var initem in this.addr_info){
                                 this.addr_info[initem]=r.data[item][initem];
                             }
@@ -112,15 +129,23 @@ export default {
                         }
                     } 
                     this.showAddr=true;
-                    console.log(this.addr_info)
                 }
             }); 
         }
-
+        //所属客户
         this.$api.post('/cust/list', {}, r => {
             console.log(r)
             if(r.success){
                 this.cust_data=r.list;
+            }else{
+                this.$message.warning(r.msg);
+            }
+        });
+        //项目消息模板
+        this.$api.post('/msgTemplate/getSelect', {}, r => {
+            console.log(r)
+            if(r.success){
+                this.info_data=r.list;
             }else{
                 this.$message.warning(r.msg);
             }
@@ -137,6 +162,7 @@ export default {
            //新增编辑控制器头部显示
            topInfo:'',
            cust_data:'',  //所属客户
+           info_data:'',  //消息模板
            form_info:{
                id:'',
                code:'',
@@ -145,6 +171,7 @@ export default {
                contacts:'',
                phoneNo:'',
                custId:'',
+               templId:'',
                loca:'',
            },
            addr_info:{
@@ -180,6 +207,9 @@ export default {
                 ],
                 custId:[
                     { required: true, message: '请选择所属客户', trigger: 'change' },
+                ],
+                templId:[
+                    { required: true, message: '请选择消息模板', trigger: 'change' },
                 ],
                 // address:[
                 //     { required: true, message: '请输入地址', trigger: 'blur' },

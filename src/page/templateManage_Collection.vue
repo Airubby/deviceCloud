@@ -66,7 +66,7 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'name', label: '',placeholder:'名称' },
+                    { prop: 'queryKey', label: '',placeholder:'名称' },
                 ]
             },
            table_columns:[

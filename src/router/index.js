@@ -50,17 +50,18 @@ import templateManage_DeviceTypeTemp_add from '@/page/templateManage_DeviceTypeT
 import templateManage_EventRule from '@/page/templateManage_EventRule'  //事件规则模板
 import templateManage_EventRule_add from '@/page/templateManage_EventRule_add' //事件规则增加
 import templateManage_Inform from '@/page/templateManage_Inform'  //消息模板
+import templateManage_Inform_add from '@/page/templateManage_Inform_add'  //消息模板新增
 import templateManage_EventBase from '@/page/templateManage_EventBase'  //事件库
 import templateManage_EventBase_add from '@/page/templateManage_EventBase_add'
 
 //系统管理
 import msManage from '@/page/msManage'
-import msManageUser from '@/page/msManage_User'
+import msManageUser from '@/page/msManage_User' //用户管理
 import msManage_user_add from '@/page/msManage_user_add'
-import msManageRole from '@/page/msManage_Role'
+import msManageRole from '@/page/msManage_Role'  //角色管理
 import msManage_role_add from '@/page/msManage_role_add'
-import msManageLimits from '@/page/msManage_Limits'
-import msManageDatadic from '@/page/msManage_Datadic'
+import msManageLimits from '@/page/msManage_Limits'//权限管理
+import msManageDatadic from '@/page/msManage_Datadic' //数据字典管理
 import msManage_datadic_add from '@/page/msManage_datadic_add'
 
 
@@ -142,6 +143,7 @@ export default new Router({
           {path:'/templateManage/eventRule',component:templateManage_EventRule},
           {path:'/templateManage/eventRule/add',component:templateManage_EventRule_add},
           {path:'/templateManage/inform',component:templateManage_Inform},
+          {path:'/templateManage/inform/add',component:templateManage_Inform_add},
           {path:'/templateManage/eventBase',component:templateManage_EventBase},
           {path:'/templateManage/eventBase/add',component:templateManage_EventBase_add},
       ]

@@ -6,130 +6,31 @@
         </div>
         <div class="loncom_public_right loncom_scroll_con">
             <div class="loncom_tpadding">
-                <div class="msManage_tree">
-                    <div class="msManage_tree_title">
-                        项目选择
-                    </div>
-                    <div class="msManage_tree_con numScroll0">
-                        <div class="numScrollCon0">
-                            <div v-for="item in project_data" class="templateManage_inform_probox">
-                                <div class="el-collapse-item__header" :class="{'active':item.id==projectId}" @click="proclick(item)">
-                                    <i class="el-collapse-item__arrow el-icon-arrow-right"></i>{{item.name}}
-                                </div>
-                            </div>
+                <el-search-table-pagination type="remote"
+                 url="/msgTemplate/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange" ref="thisRef">                                           
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="add">新增</el-button>
+                    </div>      
+                    <el-table-column slot="prepend" type="selection"></el-table-column>
+                   
+                    <template slot-scope="scope" slot="preview-handle">
+                        <div>
+                            <p>
+                                <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
+                                <em>|</em> 
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
+                            </p>
                         </div>
+                    </template>
+                    <div class="loncom_table_btn">
+                        <el-button type="info" plain size="mini" @click="del">删除</el-button>
                     </div>
-                </div>
-                <div class="msManage_table">
-                    <div class="loncom_public_filter loncom_mtb20">
-                        <div class="loncom_fr">
-                            <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
-                        </div>
-                    </div>
-                    <div class="loncom_public_table numScroll1">
-                        <div class="numScrollCon1 templateManage_informright">
-                            <div class="templateManage_inform_form">
-                                <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>名称：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="name">
-                                                <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>标题：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="title">
-                                                <el-input size="small" placeholder="请输入标题" v-model="form_info.title"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>发生告警：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="occurContent">
-                                                <el-input type="textarea" v-model="form_info.occurContent"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>告警升级：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="upContent">
-                                                <el-input type="textarea" v-model="form_info.upContent"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>告警降级：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="downContent">
-                                                <el-input type="textarea" v-model="form_info.downContent"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>解除告警：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="removeContent">
-                                                <el-input type="textarea" v-model="form_info.removeContent"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>确认告警：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="confirmContent">
-                                                <el-input type="textarea" v-model="form_info.confirmContent"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                </el-form>
-                            </div>
-                            <div class="templateManage_inform_info">
-                                <el-collapse accordion>
-                                    <el-collapse-item>
-                                        <template slot="title">发生告警模板说明：</template>
-                                        <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。</div>
-                                    </el-collapse-item>
-                                    <el-collapse-item>
-                                        <template slot="title">升级告警模板说明：</template>
-                                        <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
-                                    </el-collapse-item>
-                                    <el-collapse-item>
-                                        <template slot="title">降级告警模板说明：</template>
-                                        <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
-                                    </el-collapse-item>
-                                    <el-collapse-item>
-                                        <template slot="title">解除告警模板说明：</template>
-                                        <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$etime 解除时间，$preeventvalue 上次告警触发值</div>
-                                    </el-collapse-item>
-                                    <el-collapse-item>
-                                        <template slot="title">确认告警模板说明：</template>
-                                        <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$cmtime 确认时间，$cmman 确认人</div>
-                                    </el-collapse-item>
-                                </el-collapse>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                </el-search-table-pagination>
             </div>
         </div>
     </div>
@@ -139,105 +40,87 @@
 
 export default {
     created () {
-        //获项目
-        this.$api.post('/project/list', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.project_data=r.list;
-            }
-        }); 
+        
     },
     mounted() {
-        numScroll(0);
-        numScroll(1);
+        scrollCon();
     },
     data() {
        return {
-           projectId:'',
-           project_data:[
-            //    {name:'项目一',id:'1'},{name:'项目2',id:'2'},{name:'项目3',id:'3'}
-            ],
-           form_info:{
-               id:'',
-               name:'',
-               title:'',
-               occurContent:'',
-               upContent:'',
-               downContent:'',
-               removeContent:'',
-               confirmContent:'',
-
-           },
-           formRules:{
-                name:[
-                    { required: true, message: '请输入名称', trigger: 'blur' },
-                ],
-                title:[
-                    { required: true, message: '请输入标题', trigger: 'blur' },
-                ],
-                occurContent:[
-                    { required: true, message: '请输入发生告警', trigger: 'blur' },
-                ],
-                upContent:[
-                    { required: true, message: '请输入告警升级', trigger: 'blur' },
-                ],
-                downContent:[
-                    { required: true, message: '请输入告警降级', trigger: 'blur' },
-                ],
-                removeContent:[
-                    { required: true, message: '请输入解除告警', trigger: 'blur' },
-                ],
-                confirmContent:[
-                    { required: true, message: '请输入确认告警', trigger: 'blur' },
-                ],
-           },
+           table_data:[
+                // {id:'1',name:'小张',collectCycle:'12',transferCode:'123',transferCycle:'12321',clientHBeat:'124',devHBeat:'123'}
+           ],
+           table_forms: {
+            inline: true,
+            size:'small',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '',placeholder:'名称' },
+                ]
+            },
+           table_columns:[
+              { prop: 'name', label: '名称',minWidth:100},
+              { prop: 'title', label: '标题',minWidth:100},
+              { prop: 'occurContent', label: '发生告警',minWidth:100},
+              { prop: 'upContent', label: '告警升级',minWidth:100},
+              { prop: 'downContent', label: '告警降级',minWidth:100},
+              { prop: 'removeContent', label: '解除告警',minWidth:100},
+              { prop: 'confirmContent', label: '确认告警',minWidth:100},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
+          ],
+          //勾选信息
+          multipleSelection:[],
        }
    },
     methods:{
-        //点击项目
-       proclick:function(item){
-           console.log(item)
-            this.projectId=item.id;
-            this.$api.post('/msgTemplate/getByProjectId', {id:item.id}, r => {
-                console.log(r)
-                if(r.success){
-                    if(r.data!=null&&r.data!=""){
-                        for(var item in this.form_info){
-                            this.form_info[item]=r.data[item];
-                        }
-                    }else{
-                        for(var item in this.form_info){
-                            this.form_info[item]="";
-                        }
-                    }
-                    
+        //勾选框角色
+        handleSelectionChange:function(val){
+            this.multipleSelection=[];
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
+       //删除
+       del:function(row){
+            var ids=[];
+            if(row!=undefined&&row.id!=undefined){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的项");
+                    return;
                 }
-            }); 
+           }
+
+           this.$confirm("确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/msgTemplate/delete', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
        },
        
-       //保存
-       save:function(formName){
-           if(this.projectId!=""){
-                this.$refs[formName].validate((valid) => {
-                    if(valid){
-                        this.form_info.projectId=this.projectId;
-                        this.$api.post('/msgTemplate/save', this.form_info, r => {
-                            console.log(r)
-                            if(r.success){
-                                this.$message.success(r.msg);
-                            }else{
-                                this.$message.warning(r.msg);
-                            }
-                        });
-                    }
-                })
-                 
-           }else{
-               this.$message.warning("请点击需要保存到的项目");
-           }
-            
+       //编辑
+       edit:function(row){
+            this.$router.push({path:'/templateManage/inform/add',query:{id:row.id}});
        },
-
+       //新增
+       add:function(){
+            this.$router.push({path:'/templateManage/inform/add'});
+       },
     },
     components:{}
 }
