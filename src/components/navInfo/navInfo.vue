@@ -1,4 +1,5 @@
 <template>
+<div class="loncom_content">
     <div class="loncom_sidebar" ref="sidebar">
         <div class="loncom_sidebar_top">
             <div class="loncom_fl">
@@ -32,216 +33,36 @@
                         </dl>
                     </router-link>
                 </li>
-                <!--
-                <li>
-                    <router-link to="/" exact>
-                        <div class="loncom_nav">
-                            <em><img src="static/images/home.svg"></em><span class="loncm_menu">首页</span>
-                        </div>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/realControl">
-                        <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">实时监控</span>
-                        </div>
-                        <dl class="loncom_morenav">
-                            <dd>
-                                <router-link to="/realControl/gis">
-                                <em><img src="static/images/morenav.svg"></em><span>设备监控</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/realControl/listView">
-                                <em><img src="static/images/morenav.svg"></em><span>当前告警</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/realControl/hisData">
-                                <em><img src="static/images/morenav.svg"></em><span>设备历史数据</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/realControl/hisAlarm">
-                                <em><img src="static/images/morenav.svg"></em><span>告警历史数据</span>
-                                </router-link>
-                            </dd>
-                        </dl>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/accessManage">
-                        <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">接入管理</span>
-                        </div>
-                        <dl class="loncom_morenav">
-                            <dd>
-                                <router-link to="/accessManage/client">
-                                <em><img src="static/images/morenav.svg"></em><span>客户管理</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/accessManage/project">
-                                <em><img src="static/images/morenav.svg"></em><span>项目管理</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/accessManage/gateway">
-                                <em><img src="static/images/morenav.svg"></em><span>接入网关</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/accessManage/device">
-                                <em><img src="static/images/morenav.svg"></em><span>接入设备</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/accessManage/deviceType">
-                                <em><img src="static/images/morenav.svg"></em><span>设备类型管理</span>
-                                </router-link>
-                            </dd>
-                        </dl>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/operationManage">
-                        <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">运维管理</span>
-                        </div>
-                        <dl class="loncom_morenav">
-                            <dd>
-                                <router-link to="/operationManage/abnormalLog">
-                                <em><img src="static/images/morenav.svg"></em><span>系统异常日志</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/operationManage/operationLog">
-                                <em><img src="static/images/morenav.svg"></em><span>系统操作日志</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/operationManage/control">
-                                <em><img src="static/images/morenav.svg"></em><span>队列监控</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/operationManage/informLog">
-                                <em><img src="static/images/morenav.svg"></em><span>通知消息日志</span>
-                                </router-link>
-                            </dd>
-                        </dl>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/templateManage">
-                        <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">模板管理</span>
-                        </div>
-                        <dl class="loncom_morenav">
-                            <dd>
-                                <router-link to="/templateManage/collection">
-                                <em><img src="static/images/morenav.svg"></em><span>采集控制模板</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/templateManage/deviceTypeTemp">
-                                <em><img src="static/images/morenav.svg"></em><span>设备类型模板</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/templateManage/eventRule">
-                                <em><img src="static/images/morenav.svg"></em><span>事件规则模板</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/templateManage/inform">
-                                <em><img src="static/images/morenav.svg"></em><span>消息模板</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/templateManage/eventBase">
-                                <em><img src="static/images/morenav.svg"></em><span>事件库</span>
-                                </router-link>
-                            </dd>
-                        </dl>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/msManage">
-                        <div class="loncom_nav">
-                            <em><img src="static/images/realControl.svg"></em><span class="loncm_menu">系统管理</span>
-                        </div>
-                        <dl class="loncom_morenav">
-                            <dd>
-                                <router-link to="/msManage/userManage">
-                                <em><img src="static/images/morenav.svg"></em><span>用户管理</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/msManage/roleManage">
-                                <em><img src="static/images/morenav.svg"></em><span>角色管理</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/msManage/limitsManage">
-                                <em><img src="static/images/morenav.svg"></em><span>权限管理</span>
-                                </router-link>
-                            </dd>
-                            <dd>
-                                <router-link to="/msManage/datadicManage">
-                                <em><img src="static/images/morenav.svg"></em><span>数据字典管理</span>
-                                </router-link>
-                            </dd>
-                        </dl>
-                    </router-link>
-                </li>
-                -->
             </ul>
         </div>
     </div>
-    
+    <div class="loncom_sidebar_right" ref="content">
+        <router-view v-if="isRouterAlive"></router-view>
+    </div>
+</div>
 </template>
 
 <script>
 export default {
     created () {
-        var loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
-        if(JSON.stringify(loginInfo) == "{}"){
+    },
+    mounted() {
+        this.loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
+        if(JSON.stringify(this.loginInfo) == "{}"){
             this.$message.warning("请登录系统");
             this.$router.push({path:'/login'});
             return;
+        }else{
+            this.init();  //先设置宽度
         }
-        var loginInfo={};
-        if(localStorage.loginInfo){
-            loginInfo=JSON.parse(localStorage.loginInfo);
-        }
-        this.$api.post('/comm/getUserRoleMenu', {userId:loginInfo.id}, r => {
-            console.log(r)
-            if(r.code=='-1'){
-                this.$message.warning("请登录系统");
-                this.$router.push({path:'/login'});
-            }else{
-                if(r.success){
-                    this.navList=r.data.subMenu;
-                }else{
-                    this.$message.warning("菜单获取异常");
-                }
-            }
-            
-        }); 
-
-    },
-    mounted() {
-        if(JSON.stringify(localStorage.navInfo) == undefined){
-                localStorage.navInfo = JSON.stringify({navbtn:'open'});
-            }else{
-                this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
-            }
+        
     },
     
     data() {
        return {
+           loginInfo:{},
            navbtn:'open',
+           isRouterAlive:true,
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
             //    {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
@@ -278,21 +99,52 @@ export default {
        }
    },
     methods:{
-        
-        //初始化
-        init:function(){
-            console.log(1321)
-            var _this=this;
-            if(!(this.$route.path=="/index")){  //清除定时器
+        getMenu:function(){
+            this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
+                console.log(r)
+                if(r.code=='-1'){
+                    this.$message.warning("请登录系统");
+                    this.$router.push({path:'/login'});
+                }else{
+                    if(r.success){
+                        this.navList=r.data.subMenu;
+                        var menuInfo=JSON.parse(localStorage.menuInfo);
+                        menuInfo=this.navList;
+                        localStorage.menuInfo=JSON.stringify(menuInfo);
+                    }else{
+                        this.$message.warning("菜单获取异常");
+                    }
+                }
+                
+            }); 
+        },
+        //点击刷新
+        reload:function() {
+            //清除定时器
+            if(this.$route.path=="/index"){
                 clearInterval(index_getacc);
                 clearInterval(index_getal);
             }
-            
+            this.isRouterAlive = false
+            this.$nextTick(() => (this.isRouterAlive = true))
+        },   
+        //初始化
+        init:function(){
+            var _this=this;
+            if(!(this.$route.path=="/index")){  
+                clearInterval(index_getacc);
+                clearInterval(index_getal);
+            }
+            if(JSON.stringify(localStorage.navInfo) == undefined){
+                localStorage.navInfo = JSON.stringify({navbtn:'open'});
+            }else{
+                this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
+            }
             if(this.navbtn==='open'){
                 $(this.$refs.sidebar).css({
                     "width":"160px",
                 });
-                $(this.$parent.$refs.content).css({
+                $(this.$refs.content).css({
                     "padding-left":"160px",
                 });
                 //logo操作
@@ -302,19 +154,22 @@ export default {
                 $(this.$refs.sidebar).css({
                     "width":"60px",
                 });
-                $(this.$parent.$refs.content).css({
+                $(this.$refs.content).css({
                     "padding-left":"60px",
                 });
                 //logo操作
                 $(this.$refs.sidebar).find(".loncom_logo").hide();
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
-
-            $(this.$refs.sidebar_list).find("a").on("click",function(){
-                //点击刷新
-                _this.$parent.reload()
-            })
-            
+            if(localStorage.menuInfo){
+                this.navList=JSON.parse(localStorage.menuInfo);  //登录的时候就给了menuInfo
+            }else{
+                var menuInfo=[];
+                localStorage.menuInfo=JSON.stringify(menuInfo);
+            }
+            if(this.navList.length==0){
+                this.getMenu();
+            }
 
         },
         //展开收缩
@@ -326,7 +181,7 @@ export default {
                     "width":"60px",
                     "transition":"all 0.4s ease-in"
                 });
-                $(this.$parent.$refs.content).css({
+                $(this.$refs.content).css({
                     "padding-left":"60px",
                     "transition":"all 0.4s ease-in"
                 });
@@ -345,7 +200,7 @@ export default {
                         "width":"160px",
                         "transition":"all 0.4s ease-in"
                     });
-                    $(_this.$parent.$refs.content).css({
+                    $(_this.$refs.content).css({
                         "padding-left":"160px",
                         "transition":"all 0.4s ease-in"
                     });
@@ -404,17 +259,13 @@ export default {
             if(this.navbtn=='open'){ //展开的
                 if($(this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").length>0){
                     $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
-                            'position':'relative',
-                            'left':'15px',
-                            'padding-top':'10px',
-                            'padding-bottom':'10px',
-                        })
-                    setTimeout(function(){
-                        $(_this.$refs.sidebar_list).find(".alink.router-link-active").find(".loncom_morenav").css({
-                            'display':'block',
-                            "transition":"all 0.4s ease-in"
-                        })
-                    },300)
+                        'position':'relative',
+                        'left':'15px',
+                        'padding-top':'10px',
+                        'padding-bottom':'10px',
+                        'display':'block',
+                        "transition":"all 0.4s ease-in"
+                    })
                 }
             }else{
                 $(this.$refs.sidebar_list).find(".loncom_morenav").css({
@@ -437,13 +288,14 @@ export default {
     },
     watch:{
         navList:function(val,oldval){
+            var _this=this;
             this.$nextTick(function(){
-                this.init();
+                $(this.$refs.sidebar_list).find("a").on("click",function(){
+                    //点击刷新
+                    _this.reload()
+                })
                 this.alink();
             })
-        },
-        '$route' (to, from) {
-            console.log('数据更新操作')
         },
    },
     components:{}

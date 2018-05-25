@@ -43,7 +43,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>所属客户：
+                                所属客户：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="customerId">
@@ -152,9 +152,6 @@ export default {
                 ],
                 roleIds:[
                     { required: true, message: '请选择角色', trigger: 'change' },
-                ],
-                customerId:[
-                    { required: true, message: '请选择客户', trigger: 'change' },
                 ],
            },
            //客户信息

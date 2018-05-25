@@ -178,6 +178,9 @@ export default {
                 phoneNo:[
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
                 ],
+                custId:[
+                    { required: true, message: '请选择所属客户', trigger: 'change' },
+                ],
                 // address:[
                 //     { required: true, message: '请输入地址', trigger: 'blur' },
                 // ],

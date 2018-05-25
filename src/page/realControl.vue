@@ -1,10 +1,13 @@
 <template>
+<!--
     <div class="loncom_content">
         <navInfo></navInfo>
         <div class="loncom_sidebar_right" ref="content">
             <router-view v-if="isRouterAlive"></router-view>
         </div>
     </div>
+    -->
+    <navInfo></navInfo>
 </template>
 
 
@@ -19,14 +22,14 @@ export default {
     },
     data() {
        return {
-           isRouterAlive:true,
+        //    isRouterAlive:true,
        }
    },
     methods:{
-       reload () {
-            this.isRouterAlive = false
-            this.$nextTick(() => (this.isRouterAlive = true))
-        }   
+    //    reload () {
+    //         this.isRouterAlive = false
+    //         this.$nextTick(() => (this.isRouterAlive = true))
+    //     }   
     },
     components:{}
 }

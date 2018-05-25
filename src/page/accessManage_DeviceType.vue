@@ -13,6 +13,7 @@
                     <div class="msManage_tree_con numScroll0">
                         <el-tree
                         ref="tree"
+                        default-expand-all
                         :data="tree_data"
                         node-key="id"
                         :props="defaultProps"

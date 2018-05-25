@@ -139,23 +139,18 @@ export default {
                 ],
                 collectCycle:[
                     { required: true, message: '请输入采集周期', trigger: 'blur' },
-                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 transferCode:[
                     { required: true, message: '请输入传输规则', trigger: 'blur' },
-                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 transferCycle:[
                     { required: true, message: '请输入传输周期', trigger: 'blur' },
-                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 clientHBeat:[
                     { required: true, message: '请输入模块心跳周期', trigger: 'blur' },
-                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
                 devHBeat:[
                     { required: true, message: '请输入设备心跳周期', trigger: 'blur' },
-                    { max: 11, message: '长度最长11位', trigger: 'blur' },
                 ],
            },
 

@@ -147,7 +147,7 @@ export default {
             var _this=this;
             var current = this.pagin.pageNo;  //当前页
             var total = this.pagin.pageTotal;  //总共页
-            var show = 7;  //显示几个页
+            var show = this.pagin.pageTotal<7?this.pagin.pageTotal:7;  //显示几个页
             var begin = current - Math.floor(show/2);  //正常情况下当前页的最左边的页码
             begin = begin < 1 ? 1 : begin;
             var end = begin + show; //正常情况下当前页的最右边的页码

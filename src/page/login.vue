@@ -53,13 +53,11 @@ export default {
                 this.$api.post('/login/getSalt', {}, r => {
                     console.log(r)
                     if(r.success){
-                        console.log(this.user.userid)
                         var md5pwd= b64_md5(b64_md5(this.user.userid+ r.salt1 + b64_md5(this.user.psword)) + r.salt2);
-                        console.log(md5pwd)
                         this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, re => {
-                            console.log(re)
                             if(re.success){
                                 this.$message.success('登录成功！');
+                                //存登录信息
                                 var loginInfo={};
                                 if(localStorage.loginInfo){
                                     loginInfo=JSON.parse(localStorage.loginInfo);
@@ -67,6 +65,9 @@ export default {
                                 loginInfo.username=this.user.userid;
                                 loginInfo.id=re.data.id;
                                 localStorage.loginInfo = JSON.stringify(loginInfo);
+                                //清空menu信息
+                                var menuInfo=[];
+                                localStorage.menuInfo=JSON.stringify(menuInfo);
                                 this.$router.push({path:'/'});
                             }else{
                                 this.$message.warning(re.msg);
