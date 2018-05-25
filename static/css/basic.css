@@ -314,6 +314,12 @@ em{
 .el-form-item__content{
   display: block !important;
 }
+.template_eventruleaddbox .loncom_list_box_right .el-select{
+  width: auto;
+}
+.loncom_list_box_right .el-select{
+  width: 100%;
+}
 
 /*公共右边*/
 .loncom_sidebar_right{
@@ -513,13 +519,16 @@ em{
   margin-bottom: 20px;
 }
 
-.loncom_login_input .loncom_user input {
-  background: url(../images/login_user.png) no-repeat 10px center;
+.loncom_login_input .loncom_user input{
+  background: url(../images/login_user.png) no-repeat 10px center !important;
 }
 
-.loncom_login_input .loncom_pass input {
-  background: url(../images/login_pass.png) no-repeat 10px center;
+.loncom_login_input .loncom_pass input{
+  background: url(../images/login_pass.png) no-repeat 10px center !important;
 }
+input:-webkit-autofill { 
+  background-color: none;
+} 
 .loncom_login_input {
   margin-left:0 !important; 
 }

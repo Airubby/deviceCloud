@@ -290,7 +290,7 @@ export default {
         navList:function(val,oldval){
             var _this=this;
             this.$nextTick(function(){
-                $(this.$refs.sidebar_list).find("a").on("click",function(){
+                $(this.$refs.sidebar_list).find("dd a").on("click",function(){
                     //点击刷新
                     _this.reload()
                 })
