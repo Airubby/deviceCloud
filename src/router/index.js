@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/page/login'
 import Index from '@/page/index'
+import indexContent from '@/page/indexContent'
 //实时监控
 import realControl from '@/page/realControl'
 import realControlGis from '@/page/realControl_GIS'  //设备监控
@@ -71,10 +72,18 @@ export default new Router({
   routes: [
     {
       path: '',
-      component: Index
+      component: Index,
+      redirect:'/index',
+      children:[
+        {path:'/index',component:indexContent},
+      ]
     },{
       path: '/',
-      component: Index
+      component: Index,
+      redirect:'/index',
+      children:[
+        {path:'/index',component:indexContent},
+      ]
     },{
       path: '/login',
       component: Login

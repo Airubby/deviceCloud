@@ -2,7 +2,7 @@
     <div class="loncom_content">
         <navInfo></navInfo>
         <div class="loncom_sidebar_right" ref="content">
-            <router-view></router-view>
+            <router-view v-if="isRouterAlive"></router-view>
         </div>
     </div>
 </template>
@@ -19,11 +19,14 @@ export default {
     },
     data() {
        return {
-           
+           isRouterAlive:true,
        }
    },
     methods:{
-       
+       reload () {
+            this.isRouterAlive = false
+            this.$nextTick(() => (this.isRouterAlive = true))
+        }   
     },
     components:{}
 }

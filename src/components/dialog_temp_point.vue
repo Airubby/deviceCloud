@@ -51,7 +51,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>偏移量：
+                        偏移量：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="offSet">
@@ -112,7 +112,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>状态字：
+                        状态字：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="enumDic">
@@ -122,7 +122,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>最大有效值：
+                        最大有效值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="maxVaild">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>最小有效值：
+                        最小有效值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="minVaild">
@@ -142,7 +142,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>抖动类型：
+                        抖动类型：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="shakeType">
@@ -159,7 +159,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>抖动值：
+                        抖动值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="shakeValue">
@@ -169,7 +169,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>计算最大值：
+                        计算最大值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="cmax">
@@ -182,7 +182,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>计算最小值：
+                        计算最小值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="cmin">
@@ -195,7 +195,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>计算平均值：
+                        计算平均值：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="cavg">
@@ -208,7 +208,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        <em>*</em>计算增量：
+                        计算增量：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="cincr">
@@ -325,7 +325,7 @@ export default {
             readType_data:[],  //写类型
             unit_data:[], //单位
             form_info:{
-                typeTempId:'',
+               typeTempId:'',
                id:'',
                name:'',
                code:'',
@@ -362,9 +362,6 @@ export default {
                 valueType:[
                     { required: true, message: '请选择', trigger: 'change' },
                 ],
-                offSet:[
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
                 writeFlag:[
                     { required: true, message: '请输入', trigger: 'blur' },
                 ],
@@ -374,39 +371,7 @@ export default {
                 unit:[
                     { required: true, message: '请输入', trigger: 'blur' },
                 ],
-                enumDic:[
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                maxVaild:[
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                minVaild:[
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                shakeValue:[
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                shakeType:[
-                    { required: true, message: '请选择', trigger: 'change' },
-                ],
-                cmax:[
-                    { required: true, message: '请输入', trigger: 'change' },
-                ],
-                cmin:[
-                    { required: true, message: '请输入', trigger: 'change' },
-                ],
-                cavg:[
-                    { required: true, message: '请输入', trigger: 'change' },
-                ],
-                cincr:[
-                    { required: true, message: '请输入', trigger: 'change' },
-                ],
-                _triggerRules:[
-                    { type:'array',required: true, message: '请选择', trigger: 'change' },
-                ],
-                _noTriggerRules:[
-                    { type:'array',required: true, message: '请选择', trigger: 'change' },
-                ],
+               
            },
             //源数据
             transfer_datay: [],
