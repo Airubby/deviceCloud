@@ -65,9 +65,6 @@ export default {
                                 loginInfo.username=this.user.userid;
                                 loginInfo.id=re.data.id;
                                 localStorage.loginInfo = JSON.stringify(loginInfo);
-                                //清空menu信息
-                                var menuInfo=[];
-                                localStorage.menuInfo=JSON.stringify(menuInfo);
                                 this.$router.push({path:'/'});
                             }else{
                                 this.$message.warning(re.msg);

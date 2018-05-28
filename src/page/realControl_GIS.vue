@@ -60,7 +60,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="el-pagination is-background paginationbox">
+                        <div class="el-pagination is-background paginationbox" v-if="alarmInfo.length>0">
                             <ul class="pagination el-pager"></ul>
                         </div>
                     </div>
@@ -313,7 +313,10 @@ export default {
           handler:function(val,oldval){
               console.log(this.pagin)
               this.getAlarm();
-              this.paginationFn();
+              if(this.alarmInfo.length>0){
+                this.paginationFn();
+              }
+              
           },
           deep: true
         },

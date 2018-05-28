@@ -108,9 +108,9 @@ export default {
                 }else{
                     if(r.success){
                         this.navList=r.data.subMenu;
-                        var menuInfo=JSON.parse(localStorage.menuInfo);
-                        menuInfo=this.navList;
-                        localStorage.menuInfo=JSON.stringify(menuInfo);
+                        // var menuInfo=JSON.parse(localStorage.menuInfo);
+                        // menuInfo=this.navList;
+                        // localStorage.menuInfo=JSON.stringify(menuInfo);
                     }else{
                         this.$message.warning("菜单获取异常");
                     }
@@ -161,15 +161,7 @@ export default {
                 $(this.$refs.sidebar).find(".loncom_logo").hide();
                 $(this.$refs.sidebar).find(".loncom_logosmall").show();
             }
-            if(localStorage.menuInfo){
-                this.navList=JSON.parse(localStorage.menuInfo);  //登录的时候就给了menuInfo
-            }else{
-                var menuInfo=[];
-                localStorage.menuInfo=JSON.stringify(menuInfo);
-            }
-            if(this.navList.length==0){
-                this.getMenu();
-            }
+            this.getMenu();
 
         },
         //展开收缩

@@ -18,14 +18,7 @@
                     </div>                                              
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     
-                     <template slot-scope="scope" slot="preview-roles">
-                        <div>
-                            <span v-for="(item,index) in scope.row.roles">
-                                <em v-if="index=='0'">{{item.name}}</em>
-                                <em v-else>，{{item.name}}</em>
-                            </span>
-                        </div>
-                    </template>
+                     
                     <template slot-scope="scope" slot="preview-vaild">
                         <div>
                             <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">启用</span>
@@ -80,7 +73,7 @@ export default {
               { prop: 'email', label: '邮箱',minWidth:100},
               { prop: 'phoneNo', label: '电话',minWidth:100},
               { prop: 'customerName', label: '所属客户',minWidth:100},
-              { prop: 'roleName', label: '角色',slotName:'preview-roles',minWidth:100},
+              { prop: 'roleName', label: '角色',minWidth:100},
               { prop: 'vaild', label: '状态',slotName:'preview-vaild',minWidth:50},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],

@@ -146,6 +146,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.info_data=r.list;
+                this.info_data.unshift({id:'',name:''})
             }else{
                 this.$message.warning(r.msg);
             }
@@ -207,9 +208,6 @@ export default {
                 ],
                 custId:[
                     { required: true, message: '请选择所属客户', trigger: 'change' },
-                ],
-                templId:[
-                    { required: true, message: '请选择消息模板', trigger: 'change' },
                 ],
                 // address:[
                 //     { required: true, message: '请输入地址', trigger: 'blur' },

@@ -101,6 +101,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.custNameList=r.list;
+                this.custNameList.unshift({id:'',name:''})
             }
         }); 
     },
