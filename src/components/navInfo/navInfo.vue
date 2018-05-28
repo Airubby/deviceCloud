@@ -108,14 +108,31 @@ export default {
                 }else{
                     if(r.success){
                         this.navList=r.data.subMenu;
-                        // var menuInfo=JSON.parse(localStorage.menuInfo);
-                        // menuInfo=this.navList;
-                        // localStorage.menuInfo=JSON.stringify(menuInfo);
+                        var urlStr=this.$route.path;
+                        console.log(urlStr)
+                        var urlHas=false;
+                        for(var i=0;i<this.navList.length;i++){
+                            for(var j=0;j<this.navList[i].subMenu.length;j++){
+                                if(urlStr=='/index'||this.navList[i].subMenu[j].url==urlStr||this.navList[i].url==urlStr){
+                                    urlHas=true;
+                                    break;
+                                }
+                            }
+                        }
+                        console.log(urlHas)
+                        if(!urlHas){
+                            this.$router.push({path:'/notFoundComponent'});
+                        }
+                        // var index=str.lastIndexOf("\/")
+                        // var _path=str.substring(0, index);
+                        // this.$router.push({path:_path});
                     }else{
                         this.$message.warning("菜单获取异常");
                     }
                 }
                 
+            },re => {
+                console.log(re)
             }); 
         },
         //点击刷新
