@@ -15,13 +15,11 @@
                 total-field="total"
                 method='post' 
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                            @selection-change="handleSelectionChange" @cell-click="handleCellChange" ref="thisRef">   
+                 highlight-current-row @current-change="handleCellChange" ref="thisRef">   
                             <div class="form_add">
-                                <span class="loncom_color_main">提示：给角色赋权限时，需要同时勾选角色和权限点击保存！</span>
                                 <el-button type="primary" size="small" @click="save">保存</el-button>
                                 <el-button type="primary" size="small" @click="add">新增</el-button>
                             </div>                                        
-                            <el-table-column slot="prepend" type="selection"></el-table-column>
                             <template slot-scope="scope" slot="preview-handle">
                                 <div>
                                     <p>
@@ -31,9 +29,7 @@
                                     </p>
                                 </div>
                             </template>
-                            <div class="loncom_table_btn">
-                                <el-button type="info" plain size="mini" @click="del">删除</el-button>
-                            </div>
+                            
                         </el-search-table-pagination>
                         </div>
                     </div>
@@ -93,14 +89,15 @@ export default {
               { prop: 'remark', label: '备注',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
-          //存角色勾选的id
+          //存角色勾选的id，没用勾选的了
           multipleSelection:[],
           tree_data: [],
           defaultProps: {
                 children: 'subMenu',
                 label: 'name'
-            },
-
+           },
+           currentRowID:'',
+        
        }
    },
     methods:{
@@ -122,16 +119,17 @@ export default {
                 }
             }); 
         },
-        //勾选框角色
-        handleSelectionChange:function(val){
-            this.multipleSelection=[];
-            for(var i=0;i<val.length;i++){
-                this.multipleSelection.push(val[i].id);
-            }
-        },
+        // //勾选框角色
+        // handleSelectionChange:function(val){
+        //     this.multipleSelection=[];
+        //     for(var i=0;i<val.length;i++){
+        //         this.multipleSelection.push(val[i].id);
+        //     }
+        // },
         //点击单元行，获取角色拥有的权限
         handleCellChange:function(row){
             console.log(row)
+            this.currentRowID=row.id;
             this.$api.post('/role/getById', {"id":row.id}, r => {
                 console.log(r)
                 var ids=[];
@@ -190,7 +188,7 @@ export default {
        },
        //保存
        save:function(){
-            if(this.multipleSelection.length>0){
+            if(this.currentRowID!=''){
                 var treeSelect=this.$refs.tree.getCheckedNodes();
                 console.log(treeSelect)
                 var treeID=[];
@@ -198,9 +196,7 @@ export default {
                     treeID.push(treeSelect[i].id);
                 }
                 if(treeSelect.length>0){
-                    console.log(this.multipleSelection.toString())
-                    console.log(treeID.toString())
-                    this.$api.post('/role/batchUpdateRoleMenu', {"ids":this.multipleSelection.toString(),"menuIds":treeID.toString()}, r => {
+                    this.$api.post('/role/batchUpdateRoleMenu', {"ids":this.currentRowID,"menuIds":treeID.toString()}, r => {
                         if(r.success){
                             this.$message.success(r.msg);
                         }else{
@@ -212,7 +208,7 @@ export default {
                     return;
                 }
             }else{
-                this.$message.warning("请勾选角色");
+                this.$message.warning("请选择角色");
                 return;
             }
        },

@@ -44,17 +44,7 @@ export default {
             }
         }); 
         //获取设备
-        this.$api.post('/device/list', {}, r => {
-            console.log(r)
-            if(r.success){
-                this.table_forms.forms[1].options=r.list;
-            }
-        }); 
-        var _this=this;
-        setTimeout(function(){
-           console.log(_this.table_forms.forms[0].propValue)
-
-        },3000)
+         
 
     },
     mounted() {
@@ -65,13 +55,14 @@ export default {
            table_data:[
                 //  {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
+           
            table_forms: {
             inline: true,
             size:'small',
             submitBtnText: '搜索',
             forms: [
                     { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name',propValue:'' },
-                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name'},
+                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name',propValue:'' },
                     {prop:'queryKey3',placeholder:'测点'},
                 ]
             },
@@ -86,10 +77,19 @@ export default {
               { prop: 'unit', label: '单位',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
-
+          propValue:'',  //根据项目筛选出项目下的设备
        }
    },
     methods:{
+        //获取设备
+        getDev:function(){
+            this.$api.post('/hisdata/getDevByProject', {id:this.propValue}, r => {
+                console.log(r)
+                if(r.success){
+                    this.table_forms.forms[1].options=r.list;
+                }
+            });
+        },
        //详情
        detail:function(row){
             this.$router.push({path:'/realControl/hisData/detail',query:{id:row.id}});
@@ -97,9 +97,16 @@ export default {
 
     },
      watch:{
-        'table_forms.forms.modelValue':function(val,oldval){
-            console.log('数据变化了')
+        'table_forms.forms':{
+          handler:function(val,oldval){
+              this.propValue=val[0].propValue;
+          },
+          deep: true
         },
+        propValue:function(val,oldval){
+            this.table_forms.forms[1].propValue='';
+            this.getDev();
+        }
    },
     components:{}
 }
