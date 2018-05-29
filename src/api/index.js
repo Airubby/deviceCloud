@@ -1,4 +1,7 @@
-
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import router from '../router'
 // 配置API接口地址
 //var root = '/api'  //开发环境
 var root2=''   //生产环境
@@ -67,9 +70,9 @@ function apiAxios (method, url, params, success, failure) {
     if(success){
       success(res.data);
     }
-    if(failure){
-      failure(res.data);
-    }
+    // if(failure){
+    //   failure(res.data);
+    // }
     // if (res.data.success === true) {
     //   //console.log("success:"+ JSON.stringify(res.data))
     //   if (success) {
@@ -85,8 +88,15 @@ function apiAxios (method, url, params, success, failure) {
   })
   .catch(function (err) {
     let res = err.response
-    if (err) {
+    console.log(res)
+    if (err&&failure) {
+      failure(res);
       //console.log('api error, HTTP CODE: ' + res.status)
+    }else{
+      if(res.status==504||res.status==404){
+          ElementUI.Message.warning("接口访问异常！");
+          router.push({path:'/login'});
+      }
     }
   })
 }

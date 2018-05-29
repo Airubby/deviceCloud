@@ -123,16 +123,11 @@ export default {
                         if(!urlHas){
                             this.$router.push({path:'/notFoundComponent'});
                         }
-                        // var index=str.lastIndexOf("\/")
-                        // var _path=str.substring(0, index);
-                        // this.$router.push({path:_path});
                     }else{
                         this.$message.warning("菜单获取异常");
                     }
                 }
                 
-            },re => {
-                console.log(re)
             }); 
         },
         //点击刷新

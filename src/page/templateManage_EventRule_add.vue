@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>值选择：
+                                        值选择：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-col :span="11">
@@ -160,7 +160,7 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>运算符：
+                                        运算符：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="optb">
@@ -180,7 +180,7 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>值选择：
+                                        值选择：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-col :span="11">

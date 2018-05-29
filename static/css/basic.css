@@ -142,7 +142,24 @@ em{
 .loncom_color:hover{
   color: #66B1FF;
 }
-
+.loncom_timg{
+  background: #007BC1;
+}
+.loncom_timg_con{
+  width: 1000px;
+  position: relative;
+  margin: 0 auto;
+}
+.loncom_timg img{
+  width: 1000px;
+}
+.loncom_timg_con a{
+  width: 285px;
+  height: 50px;
+  position: absolute;
+  left: 322px;
+  bottom: 94px;
+}
 /*sidebar侧边导航*/
 .loncom_sidebar{
   height: 100%;

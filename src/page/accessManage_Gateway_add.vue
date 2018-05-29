@@ -116,6 +116,7 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <h2 class="loncom_mtb20">接入设备：</h2>
                         <el-search-table-pagination type="local"  
                         :show-pagination="true" border :data="table_data" :columns="table_columns">    
                             <template slot-scope="scope" slot="preview-state">

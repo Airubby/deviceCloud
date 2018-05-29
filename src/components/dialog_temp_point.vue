@@ -222,6 +222,7 @@
                 <div style="margin:0 auto;width:560px;">
                     <h2 style="height: 40px;line-height:30px;">
                         <span class="loncom_fl">触发告警条件</span>
+                        <!--
                         <div class="loncom_fr" style="width: 100px;">
                             <el-form-item prop="_triggerRules">
                                 <el-checkbox-group v-model="form_info._triggerRules" style="display:none;float:right:width:100px;">
@@ -229,6 +230,7 @@
                                 </el-checkbox-group>
                             </el-form-item>
                         </div>
+                        -->
                     </h2>
                     
                     <el-transfer
@@ -251,6 +253,7 @@
                 <div style="margin:0 auto;width:560px;">
                     <h2 style="height: 40px;line-height:40px;">
                         <span class="loncom_fl">解除告警条件</span>
+                        <!--
                         <div class="loncom_fr" style="width: 100px;">
                             <el-form-item prop="_noTriggerRules">
                                 <el-checkbox-group v-model="form_info._noTriggerRules" style="display:none;float:right:width:100px;">
@@ -258,6 +261,7 @@
                                 </el-checkbox-group>
                             </el-form-item>
                         </div>
+                        -->
                     </h2>
                     
                     <el-transfer

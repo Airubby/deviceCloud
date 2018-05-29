@@ -52,9 +52,9 @@ export default {
         }); 
         var _this=this;
         setTimeout(function(){
-           console.log(_this.table_forms.forms[0].modelValue)
+           console.log(_this.table_forms.forms[0].propValue)
 
-        },1000)
+        },3000)
 
     },
     mounted() {
@@ -69,11 +69,9 @@ export default {
             inline: true,
             size:'small',
             submitBtnText: '搜索',
-            queryKey1:'',
-            queryKey2:'',
             forms: [
-                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name',modelValue:'' },
-                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name',modelValue:''},
+                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name',propValue:'' },
+                    {prop:'queryKey2', placeholder:'设备',itemType: 'select',options:[],valueKey:'id',labelKey:'name'},
                     {prop:'queryKey3',placeholder:'测点'},
                 ]
             },
