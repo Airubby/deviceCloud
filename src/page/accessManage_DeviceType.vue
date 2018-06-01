@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="code">
-                                            <el-input size="small" placeholder="请输入类型编码" v-model="form_info.code"></el-input>
+                                            <el-input size="small" placeholder="请输入类型编码" v-model="form_info.code" :disabled="form_info.parentId==null || form_info.parentId==''"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>
@@ -50,11 +50,11 @@
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="name">
-                                            <el-input size="small" placeholder="请输入类型名称" v-model="form_info.name"></el-input>
+                                            <el-input size="small" placeholder="请输入类型名称" v-model="form_info.name" :disabled="form_info.parentId==null || form_info.parentId==''"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>                                
-                                <div class="loncom_list_boxform">
+                                <div class="loncom_list_boxform" v-if="form_info.parentId!=null && form_info.parentId!=''">
                                     <div class="loncom_list_box_left">
                                         <em>*</em>设备类型模板：
                                     </div>

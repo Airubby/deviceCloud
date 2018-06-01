@@ -53,7 +53,6 @@ function filterNull (o) {
 */
 
 function apiAxios (method, url, params, success, failure) {
-  console.log(url);
   if (params) {
     params = filterNull(params)
   }
@@ -88,15 +87,9 @@ function apiAxios (method, url, params, success, failure) {
   })
   .catch(function (err) {
     let res = err.response
-    console.log(res)
     if (err&&failure) {
       failure(res);
       //console.log('api error, HTTP CODE: ' + res.status)
-    }else{
-      if(res.status==504||res.status==404){
-          ElementUI.Message.warning("接口访问异常！");
-          router.push({path:'/login'});
-      }
     }
   })
 }

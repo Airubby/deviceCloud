@@ -9,7 +9,7 @@
 <script>
 export default {
     created () {
-        var loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
+        var loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
         if(JSON.stringify(loginInfo) != "{}"){
             this.username=loginInfo.username
         }

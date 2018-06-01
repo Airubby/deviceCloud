@@ -43,11 +43,13 @@
 </template>
 
 <script>
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 export default {
     created () {
+        console.log(123)
     },
     mounted() {
-        this.loginInfo=localStorage.loginInfo?JSON.parse(localStorage.loginInfo):{};
+        this.loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
         if(JSON.stringify(this.loginInfo) == "{}"){
             this.$message.warning("请登录系统");
             this.$router.push({path:'/login'});
@@ -62,7 +64,7 @@ export default {
        return {
            loginInfo:{},
            navbtn:'open',
-           isRouterAlive:true,
+           isRouterAlive:true,  //默认view-router显示的，点击刷新用
            navList:[
             //    {url:'/',name:'首页',icon:'',subMenu:[]},
             //    {url:'/realControl',name:'实时监控',icon:'static/images/realControl.svg',subMenu:[
@@ -100,8 +102,10 @@ export default {
    },
     methods:{
         getMenu:function(){
+            // console.log(this.loginInfo)
+            // this.getComponent(this.loginInfo.id)
+            // console.log(123)
             this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
-                console.log(r)
                 if(r.code=='-1'){
                     this.$message.warning("请登录系统");
                     this.$router.push({path:'/login'});
@@ -109,17 +113,26 @@ export default {
                     if(r.success){
                         this.navList=r.data.subMenu;
                         var urlStr=this.$route.path;
-                        console.log(urlStr)
-                        var urlHas=false;
+                        var urlHas=true;
                         for(var i=0;i<this.navList.length;i++){
-                            for(var j=0;j<this.navList[i].subMenu.length;j++){
-                                if(urlStr=='/index'||this.navList[i].subMenu[j].url==urlStr||this.navList[i].url==urlStr){
-                                    urlHas=true;
-                                    break;
-                                }
-                            }
+                            // if(this.navList[i].subMenu.length>0){
+                            //     for(var j=0;j<this.navList[i].subMenu.length;j++){
+                            //         if(this.navList[i].subMenu[j].url==urlStr){
+                            //             urlHas=true;
+                            //             break;
+                            //         }
+                            //     }
+                            // }else{
+                            //     if(this.navList[i].url==urlStr){
+                            //         urlHas=true;
+                            //         break;
+                            //     }
+                            // }
+                            
                         }
-                        console.log(urlHas)
+                        if(urlStr=='/index'){
+                            urlHas=true;
+                        }
                         if(!urlHas){
                             this.$router.push({path:'/notFoundComponent'});
                         }
@@ -147,10 +160,10 @@ export default {
                 clearInterval(index_getacc);
                 clearInterval(index_getal);
             }
-            if(JSON.stringify(localStorage.navInfo) == undefined){
-                localStorage.navInfo = JSON.stringify({navbtn:'open'});
+            if(JSON.stringify(sessionStorage.navInfo) == undefined){
+                sessionStorage.navInfo = JSON.stringify({navbtn:'open'});
             }else{
-                this.navbtn = JSON.parse(localStorage.navInfo).navbtn;
+                this.navbtn = JSON.parse(sessionStorage.navInfo).navbtn;
             }
             if(this.navbtn==='open'){
                 $(this.$refs.sidebar).css({
@@ -178,7 +191,7 @@ export default {
         },
         //展开收缩
         navclick:function(){
-            var navInfo = JSON.parse(localStorage.navInfo);
+            var navInfo = JSON.parse(sessionStorage.navInfo);
             var _this=this;
             if(this.navbtn=='open'){
                 $(this.$refs.sidebar).css({
@@ -213,7 +226,7 @@ export default {
                 navInfo.navbtn='open';
             }
             this.navlink();
-            localStorage.navInfo = JSON.stringify(navInfo);
+            sessionStorage.navInfo = JSON.stringify(navInfo);
         },
 
         //切换大小导航后用的
@@ -302,7 +315,7 @@ export default {
             })
         },
    },
-    components:{}
+    components:{CollapseTransition}
 }
 </script>
 

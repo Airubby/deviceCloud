@@ -33,7 +33,7 @@
                                     <em v-else-if="index<3">，{{initem.name}}[{{initem.count}}]</em>
                                 </span>
                             </p>
-                            <p><span class="loncom_color_main dangan" @click="custInfo(item.id)">[单位档案]</span></p>
+                            <p><span class="loncom_color_main dangan" @click="custInfo(item.id)">[客户档案]</span></p>
                         </div>
                     </div>
                 </div>

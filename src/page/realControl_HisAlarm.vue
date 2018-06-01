@@ -15,6 +15,11 @@
                 class="hisalarm_table"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                   
                     <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-state">
+                        <div v-for="item in eventType">
+                            <span v-if="item.code==scope.row.state">{{item.label}}</span>
+                        </div>
+                    </template>
                     <template slot-scope="scope" slot="preview-occurTime">
                         <div>
                             {{new Date(scope.row.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}
@@ -47,7 +52,13 @@ export default {
             }
         }); 
         
-        
+        //获取事件状态
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_STATE'},r => { 
+            console.log(r)
+            if(r.success){
+                this.eventType=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
         // //获取设备
         // this.$api.post('/device/list', {}, r => {
         //     console.log(r)
@@ -89,6 +100,8 @@ export default {
     },
     data() {
        return {
+           //获取事件状态
+           eventType:[],
            devType:[],
            table_data:[
                 //  {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
@@ -115,7 +128,7 @@ export default {
               { prop: 'pointName', label: '属性',minWidth:100},
               { prop: 'name', label: '事件名称',minWidth:100},              
               { prop: 'topLevelName', label: '事件等级',minWidth:100},              
-              { prop: 'state', label: '状态',minWidth:100},              
+              { prop: 'state', label: '状态',minWidth:100,slotName:'preview-state'},              
               { prop: 'occurTime', label: '触发时间',minWidth:100,slotName:'preview-occurTime'},
               { prop: 'removeTime', label: '解除时间',minWidth:100,slotName:'preview-removeTime'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},

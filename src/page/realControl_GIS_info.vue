@@ -23,7 +23,7 @@
                 <div class="searchbox numScroll0">
                     <div class="searchboxcon numScrollCon0">
                         <div class="searchlist" v-for="item in devList">
-                            <h2><span @click="devInfo(item.id)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
+                            <h2><span @click="pointInfo(item)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>设备编码：{{item.code}}</p>
                             <p>启用状态：<span v-if="item.state==1">启用</span><span v-else>停用</span></p>
                             <p>告警数量：<span>{{item.alarmNum}}</span></p>
@@ -60,12 +60,13 @@
                 </div>
             </div>
         </div>
+        <dialogPointInfo v-bind:dialogInfo="point_Info" v-if="point_Info.visible"></dialogPointInfo>
     </div>
 </template>
 
 
 <script>
-
+import dialogPointInfo from '../components/dialogGisPointInfo.vue'
 export default {
     created () {
         this.obj = this.$route.query;
@@ -127,7 +128,16 @@ export default {
                 pageSize:10,
                 total:'',
                 pageTotal:'',
-           }
+           },
+
+           //d设备测点信息
+           point_Info:{
+                title:'设备测点信息',
+                visible:false,
+                width:'1100px',
+                devId:'',
+                name:'',
+           },
 
        }
    },
@@ -189,6 +199,19 @@ export default {
                 
             })
         },
+        //项目列表右边的定位：
+        addrCenter:function(item){
+            console.log(item)
+            if(item.loca!=null&&item.loca!=''){
+                if(item.loca.lng!=null&&item.loca.lng!=''){
+                    this.map.centerAndZoom(new BMap.Point(item.loca.lng,item.loca.latl),16); 
+                }else{
+                    this.$message.warning("还没有设置经纬坐标，请到项目管理中设置经纬坐标");
+                }
+            }else{
+                this.$message.warning("还没有设置位置信息，请到项目管理中添加位置信息");
+            }
+        },
         //获取底部告警
         getAlarm:function(){
             this.alarmInfo=[];
@@ -199,6 +222,12 @@ export default {
                     this.pagin.pageTotal=r.pageTotal;
                 }
             }); 
+        },
+        //点击设备查看测点信息
+        pointInfo:function(item){
+            this.point_Info.devId=item.id;
+            this.point_Info.name=item.name;
+            this.point_Info.visible=true;
         },
         //设备列表
         getDevList:function(){
@@ -298,6 +327,6 @@ export default {
         },
 
    },
-    components:{}
+    components:{dialogPointInfo}
 }
 </script>

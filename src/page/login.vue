@@ -22,7 +22,7 @@
 <script>
 export default {
   created () {
-        
+      
  },
  data(){
   
@@ -59,12 +59,13 @@ export default {
                                 this.$message.success('登录成功！');
                                 //存登录信息
                                 var loginInfo={};
-                                if(localStorage.loginInfo){
-                                    loginInfo=JSON.parse(localStorage.loginInfo);
+                                if(sessionStorage.loginInfo){
+                                    loginInfo=JSON.parse(sessionStorage.loginInfo);
                                 }
                                 loginInfo.username=this.user.userid;
                                 loginInfo.id=re.data.id;
-                                localStorage.loginInfo = JSON.stringify(loginInfo);
+                                sessionStorage.loginInfo = JSON.stringify(loginInfo);
+                                this.getComponent(re.data.id,'true');
                                 this.$router.push({path:'/'});
                             }else{
                                 this.$message.warning(re.msg);

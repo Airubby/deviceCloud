@@ -80,7 +80,7 @@
                         </div>
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
-                                <em>*</em>消息模板：
+                                消息模板：
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="templId">

@@ -3,7 +3,7 @@
         <div class="loncom_dialog_con loncom_public_add_con" style="height:500px;overflow:auto;">
             <div class="loncom_list_boxform">
                 <div class="loncom_list_box_left">
-                    名称：
+                    客户名称：
                 </div>
                 <div class="loncom_list_box_right">
                     <el-input size="small" v-model="form_info.name" :disabled="true"></el-input>
@@ -11,7 +11,7 @@
             </div>
             <div class="loncom_list_boxform">
                 <div class="loncom_list_box_left">
-                    单位：
+                    客户全称：
                 </div>
                 <div class="loncom_list_box_right">
                     <el-input size="small" v-model="form_info.fullName" :disabled="true"></el-input>
@@ -19,7 +19,7 @@
             </div>
             <div class="loncom_list_boxform">
                 <div class="loncom_list_box_left">
-                    单位编码：
+                    客户编码：
                 </div>
                 <div class="loncom_list_box_right">
                     <el-input size="small" v-model="form_info.code" :disabled="true"></el-input>

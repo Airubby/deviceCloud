@@ -70,6 +70,16 @@
                                         <span v-if="scope.row.unit==item.code">{{item.label}}</span>
                                     </div>
                                 </template>
+                                <template slot-scope="scope" slot="preview-action">
+                                    <div v-for="item in action_data">
+                                        <span v-if="scope.row.actionType==item.code">{{item.label}}</span>
+                                    </div>
+                                </template>
+                                <template slot-scope="scope" slot="preview-alarm">
+                                    <div v-for="item in alarm_data">
+                                        <span v-if="scope.row.alarmType==item.code">{{item.label}}</span>
+                                    </div>
+                                </template>
                                 <template slot-scope="scope" slot="preview-handle">
                                     <div>
                                         <p>
@@ -147,6 +157,8 @@ export default {
               { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-read'},
               { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-write'},
               { prop: 'unit', label: '单位',minWidth:100,slotName:'preview-unit'},
+              { prop: 'actionType', label: '动作类型',minWidth:100,slotName:'preview-action'},
+              { prop: 'alarmType', label: '告警触发类型',minWidth:100,slotName:'preview-alarm'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -154,7 +166,7 @@ export default {
           dialogInfo:{
                 title:'新增测点信息',
                 visible:false,
-                width:"650px",
+                width:"900px",
                 add:true,  //默认新增
                 typeTempId:'',
                 data:{},
@@ -169,6 +181,8 @@ export default {
             writeType_data:[],  //写类型
             readType_data:[],  //写类型
             unit_data:[], //单位
+            action_data:[],  //测点动作类型
+            alarm_data:[], //告警触发类型
 
        }
    },
@@ -199,6 +213,16 @@ export default {
             this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
                 if(r.success){
                     this.unit_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
+                if(r.success){
+                    this.action_data=r.data;
+                }else{this.$message.warning(r.msg);}
+            });
+            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+                if(r.success){
+                    this.alarm_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
         },
@@ -241,7 +265,7 @@ export default {
                         console.log(r)
                         if(r.success){
                             this.$message.success(r.msg);
-                            this.dialogInfo.typeTempId=r.id;
+                            this.dialogInfo.typeTempId=r.data.id;
                         }else{
                             this.$message.warning(r.msg);
                         }

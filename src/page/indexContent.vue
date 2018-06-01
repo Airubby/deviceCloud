@@ -64,7 +64,6 @@ export default {
         var _this=this;
         //注册概况
         this.$api.post('/dash/getSysInfo', {}, r => {
-            console.log(r)
             if(r.success){
                 var xData=[];
                 var yData=[];
@@ -126,12 +125,14 @@ export default {
                 if(r.success){
                     var xData=[];
                     var yData=[];
+                    var color=[];
                     var allAlarm=r.data.alarmTotal;
                     for(var item in r.data.amap){
                         xData.push("告警等级"+item);
                         yData.push({value:r.data.amap[item],name:"告警等级"+item})
+                        color.push()
                     }
-                    piemoreChar("indexpieChar",xData,yData,allAlarm)
+                    piemoreChar("indexpieChar",xData,yData,allAlarm,color)
                     
                    this.alarmDate.push(new Date().Format('hh:mm:ss'));
                    this.yData1.push(r.data.nearNewAlarm);
@@ -143,7 +144,6 @@ export default {
         //接入数据
        getAccesInfo:function(){
             this.$api.post('/dash/getAccesInfo', {}, r => {
-                console.log(r)
                 if(r.success){
                     this.dateTime.push(new Date().Format('hh:mm:ss'));
                     this.activeModule.push(r.data.activeModuleNum);

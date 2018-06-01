@@ -24,6 +24,26 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
+                        扩展参数一：
+                    </div>
+                    <div class="loncom_list_box_right">
+                        <el-form-item prop="var1">
+                            <el-input size="small" placeholder="" v-model="form_info.var1"></el-input>
+                        </el-form-item>
+                    </div>
+                </div>
+                <div class="loncom_list_boxform">
+                    <div class="loncom_list_box_left">
+                        扩展参数一：
+                    </div>
+                    <div class="loncom_list_box_right">
+                        <el-form-item prop="var2">
+                            <el-input size="small" placeholder="" v-model="form_info.var2"></el-input>
+                        </el-form-item>
+                    </div>
+                </div>
+                <div class="loncom_list_boxform">
+                    <div class="loncom_list_box_left">
                         备注：
                     </div>
                     <div class="loncom_list_box_right">
@@ -63,7 +83,10 @@ export default {
                id:'',
                label:'',
                code:'',
+               var1:'',
+               var2:'',
                remark:'',
+               dicCode:this.dialogInfo.dicCode,
                dicId:this.dialogInfo.dicId,
            },
            formRules:{

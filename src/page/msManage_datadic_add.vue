@@ -136,6 +136,8 @@ export default {
            table_columns:[
               { prop: 'label', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'var1', label: '扩展参数一',minWidth:100},
+              { prop: 'var2', label: '扩展参数二',minWidth:100},
               { prop: 'remark', label: '备注',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
@@ -148,6 +150,7 @@ export default {
                 add:true,  //默认新增
                  //存字典的id，因为先保存字典，才可以添加列表项
                 dicId:"",
+                dicCode:'',
                 data:{},
             },
             //勾选信息
@@ -179,6 +182,9 @@ export default {
                 if(r.success){
                     for(var item in this.form_info){
                         this.form_info[item]=r.data[item];
+                        if(item=="code"){
+                            this.dialog_info.dicCode=r.data[item];
+                        }
                     }
                     this.table_data=r.data.itemSet;
                 }
@@ -194,6 +200,7 @@ export default {
                         if(r.success){
                             this.$message.success(r.msg);
                             this.dialog_info.dicId=r.data.id;
+                            this.dialog_info.dicCode=r.data.code;
                         }else{
                             this.$message.warning(r.msg);
                         }

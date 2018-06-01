@@ -20,9 +20,21 @@
                                             {{new Date(prop.row.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}
                                         </template>
                                     </el-table-column>
-                                    <el-table-column label="事件等级" prop="eventLevel"></el-table-column>
+                                    <el-table-column label="事件等级" prop="eventLevel">
+                                        <template slot-scope="prop">
+                                            <div v-for="item in eventLevel">
+                                                <span v-if="item.code==prop.row.eventLevel">{{item.label}}</span>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
                                     <el-table-column label="读数" prop="occurValue"></el-table-column>
-                                    <el-table-column label="事件" prop="eventAction"></el-table-column>
+                                    <el-table-column label="事件动作" prop="eventAction">
+                                        <template slot-scope="prop">
+                                            <div v-for="item in eventAction">
+                                                <span v-if="item.code==prop.row.eventAction">{{item.label}}</span>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
                                 </el-table>
                             </template>
                         </el-table-column>       
@@ -57,6 +69,21 @@ export default {
     created () {
         var obj = this.$route.query;
         this.form_info.id=obj.id;
+
+        //获取事件等级
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+            console.log(r)
+            if(r.success){
+                this.eventLevel=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
+        //事件动作
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_ACTION'},r => { 
+            console.log(r)
+            if(r.success){
+                this.eventAction=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
     },
     mounted() {
         scrollCon();
@@ -65,6 +92,10 @@ export default {
     },
     data() {
        return {
+           //事件等级
+           eventLevel:[],
+           //事件动作
+           eventAction:[],
            typelist:[],
            form_info:{
                 id:''

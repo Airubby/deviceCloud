@@ -35,7 +35,7 @@
 
 export default {
     created () {
-        this.$message.info("请选择项目和设备查询信息");
+        
         //获取项目
         this.$api.post('/project/list', {}, r => {
             console.log(r)
@@ -93,6 +93,9 @@ export default {
        //详情
        detail:function(row){
             this.$router.push({path:'/realControl/hisData/detail',query:{id:row.id}});
+       },
+       searchHandler:function(){
+            this.$message.info("请选择项目和设备查询信息");
        },
 
     },

@@ -120,6 +120,19 @@ export default {
         scrollCon();
     },
     data() {
+        var validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('不能为空'));
+            } else {
+                var re=/^[1-9]+[0-9]*]*$/; 
+                if (!re.test(parseInt(value))) {
+                    callback(new Error('请输入整数数字'));
+                }else if(parseInt(value)>86400){
+                    callback(new Error('最大值为86400'));
+                } 
+                callback();
+            }
+      };
        return {
            //新增编辑控制器头部显示
            topInfo:'',
@@ -139,18 +152,22 @@ export default {
                 ],
                 collectCycle:[
                     { required: true, message: '请输入采集周期', trigger: 'blur' },
+                    { validator: validatePass, trigger: 'blur' }
                 ],
                 transferCode:[
                     { required: true, message: '请输入传输规则', trigger: 'blur' },
                 ],
                 transferCycle:[
                     { required: true, message: '请输入传输周期', trigger: 'blur' },
+                    { validator: validatePass, trigger: 'blur' }
                 ],
                 clientHBeat:[
                     { required: true, message: '请输入模块心跳周期', trigger: 'blur' },
+                    { validator: validatePass, trigger: 'blur' }
                 ],
                 devHBeat:[
                     { required: true, message: '请输入设备心跳周期', trigger: 'blur' },
+                    { validator: validatePass, trigger: 'blur' }
                 ],
            },
 

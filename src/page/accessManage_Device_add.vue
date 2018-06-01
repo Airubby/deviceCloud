@@ -68,8 +68,14 @@
                                 </el-radio-group>
                             </div>
                         </div>
-                        <el-search-table-pagination type="local"  
-                        :show-pagination="true" border :data="table_data" :columns="table_columns">    
+                        <h2 class="loncom_mt20">设备测点信息</h2>
+                        <el-search-table-pagination type="remote"
+                            url="/gitMap/listPointVOForDev"
+                            list-field="list" 
+                            total-field="total"
+                            method='post' 
+                            :formOptions="table_forms" border :data="table_data" :columns="table_columns" 
+                            ref="thisRef" >   
                             <template slot-scope="scope" slot="preview-readFlag">
                                <span v-if="scope.row.readFlag==1||scope.row.readFlag=='1'">是</span>
                                <span v-else>否</span>
@@ -77,6 +83,16 @@
                             <template slot-scope="scope" slot="preview-writeFlag">
                                <span v-if="scope.row.writeFlag==1||scope.row.writeFlag=='1'">是</span>
                                <span v-else>否</span>
+                            </template>
+                            <template slot-scope="scope" slot="preview-action">
+                                <div v-for="item in action_data">
+                                    <span v-if="scope.row.actionType==item.code">{{item.label}}</span>
+                                </div>
+                            </template>
+                            <template slot-scope="scope" slot="preview-alarm">
+                                <div v-for="item in alarm_data">
+                                    <span v-if="scope.row.alarmType==item.code">{{item.label}}</span>
+                                </div>
                             </template>
                             <template slot-scope="scope" slot="preview-handle">
                                <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">规则详情</a> 
@@ -109,6 +125,18 @@ export default {
                 } 
             }
         }); 
+
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
+            if(r.success){
+                this.action_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+            if(r.success){
+                this.alarm_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
+
     },
     mounted() {
         scrollCon();
@@ -117,6 +145,8 @@ export default {
        return {
            //新增编辑控制器头部显示
            topInfo:'设备详情',
+           action_data:[],  //测点动作类型
+           alarm_data:[],  //告警类型
            form_info:{
                id:'',
                sno:'',
@@ -133,6 +163,15 @@ export default {
            },
 
            table_data:[],
+           table_forms: {
+            inline: true,
+            size:'small',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '',placeholder:'当前设备', itemType: 'select',options:[],valueKey:'id',labelKey:'name',propValue:'' },
+                    { prop: 'queryKey1', label: '',placeholder:'名称/编码' },
+                ]
+            },
            table_columns:[
               { prop: 'serialNO', label: '序号',minWidth:50},
               { prop: 'name', label: '名称',minWidth:100},
@@ -142,6 +181,9 @@ export default {
               { prop: 'readFlag', label: '可读',minWidth:50,slotName:'preview-readFlag'},
               { prop: 'writeFlag', label: '可写',minWidth:50,slotName:'preview-writeFlag'},
               { prop: 'unit', label: '单位',minWidth:50},
+              { prop: 'actionType', label: '动作类型',minWidth:100,slotName:'preview-action'},
+              { prop: 'alarmType', label: '告警触发类型',minWidth:100,slotName:'preview-alarm'},
+              { prop: 'currValue', label: '当前读数',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           dialogInfo:{
@@ -162,6 +204,12 @@ export default {
           this.dialogInfo.visible=true;
       }
 
+    },
+    watch:{
+        'form_info.id':function(val,oldval){
+            this.table_forms.forms[0].options.push({"id":this.form_info.id,"name":this.form_info.name});
+        },
+        
     },
     components:{noSubmitBtnInfo,dialogRules}
 }
