@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="enumDic">
-                                        <el-input size="small" placeholder="格式,[0,高压;1,低压]" v-model="form_info.enumDic"></el-input>
+                                        <el-input size="small" placeholder="格式：0,高压;1,低压" v-model="form_info.enumDic"></el-input>
                                     </el-form-item>
                                 </div>
                             </div>
@@ -351,6 +351,32 @@
                                                 :value="item.code">
                                                 </el-option>
                                             </el-select>
+                                        </el-form-item>
+                                    </div>
+                                </div>
+                            </el-col>
+                        </div>
+                        <div v-if="form_info.actionType=='timelength'">
+                            <el-col :span="12">
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        <em>*</em>统计目标值：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-form-item prop="timingTarget">
+                                            <el-input size="small" v-model="form_info.timingTarget"></el-input>
+                                        </el-form-item>
+                                    </div>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="loncom_list_boxform">
+                                    <div class="loncom_list_box_left">
+                                        <em>*</em>统计值：
+                                    </div>
+                                    <div class="loncom_list_box_right">
+                                        <el-form-item prop="timingTotal">
+                                            <el-input size="small" v-model="form_info.timingTotal"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>
@@ -486,8 +512,9 @@ export default {
         this.getType();
         this.getDatay();
         this.getDatan();
-
-        if(!this.dialogInfo.add){  //编辑
+        if(this.dialogInfo.add){
+            this.change_info=true;
+        }else{ //编辑
             this.$api.post('/pointTemplate/getById', {id:this.dialogInfo.data.id}, r => {
                 console.log(r)
                 if(r.success){
@@ -509,10 +536,15 @@ export default {
         }
     },
     mounted() {
-        
+        var _this=this;
+        setTimeout(function(){
+            _this.change_info=true;
+        },3000)
     },
     data() {
         return {
+            //
+            change_info:false,  //初始化后，给一定时间才让watch中的切换生效
             //值类型：
             valueType_data:[],
             //抖动类型：
@@ -527,7 +559,7 @@ export default {
             alarm_data_bits:[],  //事件触发类型-bits
             alarm_data_thr:[],  //事件触发类型-thr
             store_data:[],//日志存储策略：
-
+            
             form_info:{
                typeTempId:'',
                id:'',
@@ -551,6 +583,8 @@ export default {
                actionType:'', //动作类型
                alarmType:'',  //告警类型
                storePolicy:'',  //日志存储策略：
+               timingTarget:'',  // 统计目标值
+               timingTotal:'',  //统计值
                _triggerRules:[],
                triggerRules:'',
                _noTriggerRules:[],
@@ -622,6 +656,7 @@ export default {
                 }else{this.$message.warning(r.msg);}
             });
             this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
+                console.log(r.data)
                 if(r.success){
                     this.unit_data=r.data;
                 }else{this.$message.warning(r.msg);}
@@ -712,11 +747,15 @@ export default {
     },
     watch:{
         'form_info.valueType':function(val,oldval){
-            this.form_info.actionType='';
-            this.form_info.alarmType="";
+            if(this.change_info){
+                this.form_info.actionType='';
+                this.form_info.alarmType="";
+            }
         },
         'form_info.actionType':function(val,oldval){
-            this.form_info.alarmType="";
+            if(this.change_info){
+                this.form_info.alarmType="";
+            }
         },
     },
     props:["dialogInfo"],

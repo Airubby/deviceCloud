@@ -105,7 +105,7 @@ export default {
                 }
            }
 
-           this.$confirm("确定删除?", '提示', {
+           this.$confirm("删除项目会同时删除接入的模块，确定删除?", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',
             type:'warning',

@@ -95,7 +95,7 @@ export default {
                 }
            }
 
-           this.$confirm("此删除会删除客户下的所有项目，请谨慎操作，是否删除?", '提示', {
+           this.$confirm("删除客户时会删除客户下面的所有项目，确定删除吗?", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',
             type:'warning',

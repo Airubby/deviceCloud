@@ -157,7 +157,7 @@ export default {
                 }
            }
 
-           this.$confirm("确定删除?", '提示', {
+           this.$confirm("删除该角色后关联了该角色的用户就没有该角色权限了，确定删除?", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',
             type:'warning',

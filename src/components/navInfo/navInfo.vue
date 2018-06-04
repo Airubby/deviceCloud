@@ -112,30 +112,30 @@ export default {
                 }else{
                     if(r.success){
                         this.navList=r.data.subMenu;
-                        var urlStr=this.$route.path;
-                        var urlHas=true;
-                        for(var i=0;i<this.navList.length;i++){
-                            // if(this.navList[i].subMenu.length>0){
-                            //     for(var j=0;j<this.navList[i].subMenu.length;j++){
-                            //         if(this.navList[i].subMenu[j].url==urlStr){
-                            //             urlHas=true;
-                            //             break;
-                            //         }
-                            //     }
-                            // }else{
-                            //     if(this.navList[i].url==urlStr){
-                            //         urlHas=true;
-                            //         break;
-                            //     }
-                            // }
+                        // var urlStr=this.$route.path;
+                        // var urlHas=true;
+                        // for(var i=0;i<this.navList.length;i++){
+                        //     // if(this.navList[i].subMenu.length>0){
+                        //     //     for(var j=0;j<this.navList[i].subMenu.length;j++){
+                        //     //         if(this.navList[i].subMenu[j].url==urlStr){
+                        //     //             urlHas=true;
+                        //     //             break;
+                        //     //         }
+                        //     //     }
+                        //     // }else{
+                        //     //     if(this.navList[i].url==urlStr){
+                        //     //         urlHas=true;
+                        //     //         break;
+                        //     //     }
+                        //     // }
                             
-                        }
-                        if(urlStr=='/index'){
-                            urlHas=true;
-                        }
-                        if(!urlHas){
-                            this.$router.push({path:'/notFoundComponent'});
-                        }
+                        // }
+                        // if(urlStr=='/index'){
+                        //     urlHas=true;
+                        // }
+                        // if(!urlHas){
+                        //     this.$router.push({path:'/notFoundComponent'});
+                        // }
                     }else{
                         this.$message.warning("菜单获取异常");
                     }

@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="name">
-                                            <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                            <el-input size="small" placeholder="请输入名称" v-model="form_info.name" :disabled="form_info.parentId==null || form_info.parentId==''"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>
@@ -50,62 +50,64 @@
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="code">
-                                            <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                            <el-input size="small" placeholder="请输入编码" v-model="form_info.code" :disabled="form_info.parentId==null || form_info.parentId==''"></el-input>
                                         </el-form-item>
                                     </div>
                                 </div>
-                                <div class="loncom_list_boxform">
-                                    <div class="loncom_list_box_left">
-                                        <em>*</em>权限类型：
-                                    </div>
-                                    <div class="loncom_list_box_right">
-                                        <el-radio-group v-model="form_info.menuType">
-                                            <el-radio label="module">模块</el-radio>
-                                            <el-radio label="menu">菜单</el-radio>
-                                            <el-radio label="func">功能</el-radio>
-                                        </el-radio-group>
-                                    </div>
-                                </div>
-                                <div v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
+                                <div v-if="form_info.parentId!=null && form_info.parentId!=''">
                                     <div class="loncom_list_boxform">
                                         <div class="loncom_list_box_left">
-                                            <em>*</em>图标：
+                                            <em>*</em>权限类型：
                                         </div>
                                         <div class="loncom_list_box_right">
-                                            <el-form-item prop="icon">
-                                                <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
-                                            </el-form-item>
+                                            <el-radio-group v-model="form_info.menuType">
+                                                <el-radio label="module">模块</el-radio>
+                                                <el-radio label="menu">菜单</el-radio>
+                                                <el-radio label="func">功能</el-radio>
+                                            </el-radio-group>
+                                        </div>
+                                    </div>
+                                    <div v-if="form_info.menuType=='module'||form_info.menuType=='menu'">
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                <em>*</em>图标：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="icon">
+                                                    <el-input size="small" placeholder="请输入图标" v-model="form_info.icon"></el-input>
+                                                </el-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                <em>*</em>链接：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="url">
+                                                    <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
+                                                </el-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                排序：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="idx">
+                                                    <el-input size="small" placeholder="排序号又小到大依次显示" v-model="form_info.idx"></el-input>
+                                                </el-form-item>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="loncom_list_boxform">
                                         <div class="loncom_list_box_left">
-                                            <em>*</em>链接：
+                                            备注：
                                         </div>
                                         <div class="loncom_list_box_right">
-                                            <el-form-item prop="url">
-                                                <el-input size="small" placeholder="请输入链接" v-model="form_info.url"></el-input>
-                                            </el-form-item>
+                                            <el-input type="textarea" v-model="form_info.remark"></el-input>
                                         </div>
+                                    
                                     </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            排序：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="idx">
-                                                <el-input size="small" placeholder="排序号又小到大依次显示" v-model="form_info.idx"></el-input>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="loncom_list_boxform">
-                                    <div class="loncom_list_box_left">
-                                        备注：
-                                    </div>
-                                    <div class="loncom_list_box_right">
-                                        <el-input type="textarea" v-model="form_info.remark"></el-input>
-                                    </div>
-                                
                                 </div>
                             </el-form>
 

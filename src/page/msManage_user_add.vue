@@ -76,6 +76,14 @@
                                 </el-radio-group>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform" v-if="form_info.id!=''">
+                            <div class="loncom_list_box_left">
+                                密码：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-button type="primary" size="small" @click="resizePass">重置密码</el-button>
+                            </div>
+                        </div>
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
@@ -180,7 +188,16 @@ export default {
                 }
             })
        },
-
+       //重置密码
+       resizePass:function(){
+            this.$api.post('/user/resetPwd', {id:this.form_info.id}, r => {
+                if(r.success){
+                    this.$message.success(r.msg);
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
+       },
     },
     components:{SubmitBtnInfo}
 }

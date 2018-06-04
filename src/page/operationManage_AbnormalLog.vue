@@ -42,8 +42,8 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey1', label: '',placeholder:'sysCode' },
-                    { prop: 'queryKey2', label: '',placeholder:'typeCode' },
+                    { prop: 'queryKey1', label: '',placeholder:'系统编码' },
+                    { prop: 'queryKey2', label: '',placeholder:'日志类型编码' },
                     { prop: 'queryKey3-queryKey4', label: '',placeholder:'时间',itemType: 'datetimerange' },
                 ]
             },

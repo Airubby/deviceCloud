@@ -97,10 +97,13 @@ export default {
         }else{
             this.topInfo="编辑采集控制模板信息"
             this.$api.post('/accessConfigTemplate/getById', {id:obj.id}, r => {
-                console.log(r)
                 if(r.success){
                     for (var item in this.form_info){
-                        this.form_info[item]=r.data[item]; 
+                        if(item=="transferCode"){
+                            this.form_info[item]=(r.data[item]).toString();
+                        }else{
+                            this.form_info[item]=r.data[item]; 
+                        }
                     }
                 }
             }); 
@@ -109,7 +112,6 @@ export default {
         
         this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
             if(r.success){
-                console.log(r)
                 this.transferCode_data=r.data;
             }else{this.$message.warning(r.msg);}
         });
@@ -124,7 +126,7 @@ export default {
             if (value === '') {
                 callback(new Error('不能为空'));
             } else {
-                var re=/^[1-9]+[0-9]*]*$/; 
+                var re=/^[0-9]*$/; 
                 if (!re.test(parseInt(value))) {
                     callback(new Error('请输入整数数字'));
                 }else if(parseInt(value)>86400){
@@ -178,7 +180,8 @@ export default {
        submitInfo:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-
+                    console.log(this.form_info)
+                    console.log(typeof(this.form_info.transferCode) )
                      this.$api.post('/accessConfigTemplate/saveOrUpdateEntity', this.form_info, r => {
                         console.log(r)
                         if(r.success){

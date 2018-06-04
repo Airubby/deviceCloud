@@ -42,7 +42,7 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey1', label: '',placeholder:'userName' },
+                    { prop: 'queryKey1', label: '',placeholder:'用户名' },
                     { prop: 'queryKey3-queryKey4', label: '',placeholder:'时间',itemType: 'datetimerange' },
                 ]
             },

@@ -72,6 +72,19 @@
                                 </el-form-item>
                             </div>
                         </div>
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                <em>*</em>事件动作：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-form-item prop="action">
+                                    <el-select v-model="form_info.action" placeholder="事件动作" size="small">
+                                        <el-option :value="1" label="触发告警"></el-option>
+                                        <el-option :value="0" label="解除告警"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </div>
+                        </div>
                         <div v-if="form_info.alarmType=='bits'">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
@@ -95,19 +108,6 @@
                             </div>
                         </div>
                         <div v-if="form_info.alarmType=='thr'">
-                            <div class="loncom_list_boxform">
-                                <div class="loncom_list_box_left">
-                                    <em>*</em>事件动作：
-                                </div>
-                                <div class="loncom_list_box_right">
-                                    <el-form-item prop="action">
-                                        <el-select v-model="form_info.action" placeholder="事件动作" size="small">
-                                            <el-option :value="1" label="触发告警"></el-option>
-                                            <el-option :value="0" label="解除告警"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </div>
-                            </div>
                             
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
@@ -280,7 +280,11 @@ export default {
                 if(r.success){
                     console.log(r)
                     for(var item in this.form_info){
-                        this.form_info[item]=r.data[item]
+                        if(item=="eventLevel"){
+                            this.form_info[item]=(r.data[item]).toString();
+                        }else{
+                            this.form_info[item]=r.data[item]
+                        }
                     }
                 }
             }); 

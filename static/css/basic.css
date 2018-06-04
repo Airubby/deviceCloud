@@ -467,8 +467,11 @@ em{
 .top_loginInfo{
   float: right;
 }
-.top_loginInfo span{
+.top_loginInfo .top_loginInfo_con span{
   margin-left: 20px;
+}
+.top_people{
+  cursor: pointer;
 }
 .top_logout{
   width: 60px;

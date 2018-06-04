@@ -1,17 +1,22 @@
 <template>
     <div class="top_loginInfo">
-        <span class="top_time">{{top_time}}</span>
-        <span class="top_people"><img src="static/images/top_people.svg"><em>{{username}}</em></span>
-        <span class="top_logout" @click="logout"><img src="static/images/top_logout.svg"></span>
+        <div class="top_loginInfo_con">
+            <span class="top_time">{{top_time}}</span>
+            <span class="top_people" @click="showInfo"><img src="static/images/top_people.svg"><em>{{user_info.username}}</em></span>
+            <span class="top_logout" @click="logout"><img src="static/images/top_logout.svg"></span>
+        </div>
+        <userInfo v-bind:dialogInfo="user_info"></userInfo>
     </div>
 </template>
 
 <script>
+import userInfo from '../dialogUserInfo.vue'
 export default {
     created () {
         var loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
         if(JSON.stringify(loginInfo) != "{}"){
-            this.username=loginInfo.username
+            this.user_info.username=loginInfo.username
+            this.user_info.id=loginInfo.id;
         }
     },
     mounted() {
@@ -25,7 +30,13 @@ export default {
     data() {
        return {
            top_time:'',
-           username:'',
+           user_info:{
+               title:'修改密码',
+               visible:false,
+                width:"550px",
+                username:'',
+                id:'',
+           }
        }
    },
     methods:{
@@ -46,9 +57,12 @@ export default {
             }); 
 	          
 	      });
-       }
+       },
+       showInfo:function(){
+            this.user_info.visible=true;
+       },
     },
-    components:{}
+    components:{userInfo}
 }
 </script>
 

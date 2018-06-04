@@ -187,7 +187,7 @@ export default {
                 }
            }
 
-           this.$confirm("确定删除?", '提示', {
+           this.$confirm("删除模块会同时删除模块下的设备，确定删除?", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',
             type:'warning',
