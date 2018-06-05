@@ -134,7 +134,7 @@ export default {
                 } 
                 callback();
             }
-      };
+       };
        return {
            //新增编辑控制器头部显示
            topInfo:'',

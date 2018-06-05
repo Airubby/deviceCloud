@@ -337,6 +337,9 @@ em{
 .loncom_list_box_right .el-select{
   width: 100%;
 }
+.el-transfer-panel{
+  width: calc(50% - 65px) !important;
+}
 
 /*公共右边*/
 .loncom_sidebar_right{
@@ -397,9 +400,8 @@ em{
 }
 .loncom_public_add{
   width: 100%;
-  max-width: 1120px;
   height: 100%;
-  padding-top: 20px;
+  padding: 20px 20px 0 20px;
   margin: 0 auto;
 }
 .loncom_public_add_title{

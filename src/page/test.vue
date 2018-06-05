@@ -1,28 +1,32 @@
 <template>
     <div class="loncom_content">
-        <el-search-table-pagination type="remote"
-            url="/itom/api/v1/baseStation/query"
-            list-field="data.Rows" 
-            total-field="data.RecordCount"
-            :show-pagination="true"
-             border :columns="table_columns" :page-sizes="[1,2]">    
-        </el-search-table-pagination>
-         
-        <el-table
-    :data="table_data"
-    style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-table :data="props.row.local">
-            <el-table-column label="名称" prop="localname"></el-table-column>
-            <el-table-column label="名称1" prop="localaddr"></el-table-column>
-        </el-table>
-      </template>
-    </el-table-column>
-    <el-table-column label="名称" prop="name"></el-table-column>
-    <el-table-column label="desc" prop="desc"></el-table-column>
-  </el-table>
-
+        <el-search-table-pagination 
+                type="remote"
+                url="/cust/list"
+                list-field="list" 
+                total-field="total"
+                method='post' 
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
+                @selection-change="handleSelectionChange" ref="thisRef" >   
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="add">新增</el-button>
+                    </div>                                                   
+                    <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-handle">
+                        <div>
+                            <p>
+                                <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
+                                <em>|</em> 
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
+                            </p>
+                        </div>
+                    </template>
+                    <div class="loncom_table_btn">
+                        <el-button type="info" plain size="mini" @click="del">删除</el-button>
+                    </div>
+                </el-search-table-pagination>
+        <el-button type="primary" @click="test">测试按钮</el-button>
+        <div style="height:300px;"></div>
     </div>
 </template>
 
@@ -44,38 +48,34 @@ export default {
     },
     data() {
        return {
-            table_data:[{
-          id: '12987122',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333',
-          local:[{
-              localname:'123',
-              localaddr:'sldfalfj'
-          },{
-              localname:'1233333',
-              localaddr:'sldfalfj3333'
-          }]
-        }],
-        test_columns:[
-            { prop: 'id', label: '名称',minWidth:100},
-              { prop: 'name', label: '账号',minWidth:100},
-              { prop: 'desc', label: '联系人',minWidth:100},
-        ],
+           table_data:[
+                //  {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true},
+           ],
+            table_forms: {
+            inline: true,
+            size:'small',
+            submitBtnText: '搜索',
+            forms: [
+                    { prop: 'queryKey', label: '',placeholder:'名称',propValue:'' },
+                ]
+            },
            table_columns:[
-              { prop: 'code', label: '名称',minWidth:100},
-              { prop: 'grade', label: '账号',minWidth:100},
-              { prop: 'group_name', label: '联系人',minWidth:100},
-              { prop: 'province', label: '联系电话',minWidth:100},
-              { prop: 'monitor_center', label: '是否有效',slotName:'vaild',minWidth:100},
+              { prop: 'code', label: '客户编码',minWidth:100},
+              { prop: 'name', label: '客户名称',minWidth:100},
+              { prop: 'fullName', label: '客户全称',minWidth:100},
+              { prop: 'contacts', label: '联系人',minWidth:100},
+              { prop: 'phoneNo', label: '联系电话',minWidth:100},
+              { prop: 'createTime', label: '创建时间',minWidth:100},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
+
        }
    },
     methods:{
-       
+       test:function(){
+            console.log(this.template_data)
+            console.log(this.template_data1)
+       },
     },
     components:{}
 }

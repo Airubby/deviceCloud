@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">网关接入</span>
+            <span class="loncom_public_topinfo">接入设备</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
@@ -31,11 +31,14 @@
                             <a href="javascript:;" class="loncom_color" v-if="scope.row.state=='1'||scope.row.state==1" @click="stop(scope.row)">停用</a>  
                             <em>|</em> 
                             <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
+                            <em>|</em>
+                            <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a> 
                         </div>
                     </template>
                     <div class="loncom_table_btn">
                         <el-button @click="start()" type="info" size="mini" plain>启用</el-button>
                         <el-button @click="stop()" type="info" size="mini" plain>停用</el-button>
+                        <el-button @click="del()" type="info" size="mini" plain>删除</el-button>
                     </div>
                     
                 </el-search-table-pagination>
@@ -143,6 +146,38 @@ export default {
                 var thisID=ids.toString();
                 console.log(thisID);
 		    	 this.$api.post('/device/updateState', {"ids":thisID,"state":0}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+       },
+       //删除
+       del:function(row){
+            var ids=[];
+            if(row!=undefined&&row.id!=undefined){ //单条删除
+               ids.push(row.id);
+           }else{  //多条删除
+                if(this.multipleSelection.length>0){
+                    ids=this.multipleSelection;
+                }else{
+                    this.$message.warning("请勾选需要删除的项");
+                    return;
+                }
+           }
+
+           this.$confirm("操作为不可逆操作，可能会影响历史数据完整性，请谨慎操作！确定删除?", '提示', {
+	        confirmButtonText: '确定',
+	        cancelButtonText: '取消',
+            type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/device/deleteDev', {"ids":thisID}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
                         this.$refs['thisRef'].searchHandler(false)

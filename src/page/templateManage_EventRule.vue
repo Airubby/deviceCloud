@@ -17,10 +17,9 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                          
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="preview-useFel">
-                        <div>
-                            <span v-if="scope.row.useFel">是</span>
-                            <span v-else>否</span>
+                     <template slot-scope="scope" slot="preview-alarmType">
+                        <div v-for="item in alarm_data">
+                            <span v-if="item.code==scope.row.alarmType">{{item.label}}</span>
                         </div>
                     </template>
                     <template slot-scope="scope" slot="preview-action">
@@ -52,12 +51,19 @@
 export default {
     created () {
         //this.getList();
+        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+            console.log(r.data)
+            if(r.success){
+                this.alarm_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
     },
     mounted() {
         scrollCon();
     },
     data() {
        return {
+           alarm_data:[], //告警类型
            table_data:[
                 // {id:'1',name:'小张',vara1:'12',opta:'true'}
            ],
@@ -70,17 +76,12 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '模板名称',minWidth:100},
-              { prop: 'vara1', label: '值',minWidth:100},
-              { prop: 'opta', label: '运算符',minWidth:100},
-              { prop: 'vara2', label: '值',minWidth:100},
-              { prop: 'optc', label: '逻辑符',minWidth:100},
-              { prop: 'varb1', label: '值',minWidth:100},
-              { prop: 'optb', label: '运算符',minWidth:100},
-              { prop: 'varb2', label: '值',minWidth:100},
-              { prop: 'action', label: '告警条件',minWidth:100,slotName:'preview-action'},
-              { prop: 'useFel', label: '是否使用自定义',minWidth:100,slotName:'preview-useFel'},
-              { prop: 'fel', label: '自定义',minWidth:100},
+              { prop: 'name', label: '模板名称',minWidth:150},
+              { prop: 'desc', label: '事件规则',minWidth:300},
+              { prop: 'alarmType', label: '告警类型',minWidth:100,slotName:'preview-alarmType'},
+              { prop: 'action', label: '事件动作',minWidth:100,slotName:'preview-action'},
+              { prop: 'bitIndex', label: '比特位',minWidth:100},
+              { prop: 'vara2', label: '比特值',minWidth:100},
               { prop: 'eventLibName', label: '事件库',minWidth:100},
               { prop: 'eventLevelName', label: '事件等级',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},

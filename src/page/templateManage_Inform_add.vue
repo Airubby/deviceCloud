@@ -89,23 +89,23 @@
                             <el-collapse accordion>
                                 <el-collapse-item>
                                     <template slot="title">发生告警模板说明：</template>
-                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。</div>
+                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警时间,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。</div>
                                 </el-collapse-item>
                                 <el-collapse-item>
                                     <template slot="title">升级告警模板说明：</template>
-                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
+                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警时间,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
                                 </el-collapse-item>
                                 <el-collapse-item>
                                     <template slot="title">降级告警模板说明：</template>
-                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
+                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警时间,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$prealarmlevel 变化前等级，$utime 更新，$preeventvalue  上次告警触发值</div>
                                 </el-collapse-item>
                                 <el-collapse-item>
                                     <template slot="title">解除告警模板说明：</template>
-                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$etime 解除时间，$preeventvalue 上次告警触发值</div>
+                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警时间,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$etime 解除时间，$preeventvalue 上次告警触发值</div>
                                 </el-collapse-item>
                                 <el-collapse-item>
                                     <template slot="title">确认告警模板说明：</template>
-                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警事件,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$cmtime 确认时间，$cmman 确认人</div>
+                                    <div>$eventname 事件名称,$eventcode 事件编码,$realvalue  当前读数,$prevalue  上次采集读数,$alarmlevel  告警等级,$btime 发生告警时间,$action 事件动作，解除确认等,$pointcode 测点编码,$pointname 测点名称,$unit 单位,$devcode 设备编码,$devname 设备名称,$modulecode 模块编码,$modulesno 模块序号,$moduleaddr 模块位置。$cmtime 确认时间，$cmman 确认人</div>
                                 </el-collapse-item>
                             </el-collapse>
                         </div>

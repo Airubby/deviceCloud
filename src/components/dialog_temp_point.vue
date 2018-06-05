@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="enumDic">
-                                        <el-input size="small" placeholder="格式：0,高压;1,低压" v-model="form_info.enumDic"></el-input>
+                                        <el-input size="small" placeholder="格式：0,高压;1,低压;" v-model="form_info.enumDic"></el-input>
                                     </el-form-item>
                                 </div>
                             </div>
@@ -445,10 +445,11 @@
                                 </div>
                                 -->
                             </h2>
-                            <div style="margin:0 auto;width:560px;">
+                            <div>
                                 <el-transfer
                                 v-model="form_info._triggerRules"
                                 filterable
+                                :filter-method="filterMethod"
                                 :props="{
                                 key: 'id',
                                 }"
@@ -477,10 +478,11 @@
                                 </div>
                                 -->
                             </h2>
-                            <div style="margin:0 auto;width:560px;">
+                            <div>
                                 <el-transfer
                                 v-model="form_info._noTriggerRules"
                                 filterable
+                                :filter-method="filterMethod"
                                 :props="{
                                 key: 'id',
                                 }"
@@ -539,9 +541,19 @@ export default {
         var _this=this;
         setTimeout(function(){
             _this.change_info=true;
-        },3000)
+        },2000)
     },
     data() {
+        var validatePass = (rule, value, callback) => {
+            if (value != '') {
+                var re=/(([\u4e00-\u9fa5\w]{1,})([,，]{1})([\u4e00-\u9fa5\w]{1,})([;；]{1})){1,}/;
+                console.log(re.test(value))
+                if (!re.test(value)) {
+                    callback(new Error('请输入正确的格式'));
+                }
+                callback();
+            }
+       };
         return {
             //
             change_info:false,  //初始化后，给一定时间才让watch中的切换生效
@@ -592,6 +604,9 @@ export default {
                remark:'',  
            },
            formRules:{
+               enumDic:[
+                   { validator: validatePass, trigger: 'blur' }
+                ],
                 name:[
                     { required: true, message: '请输入名称', trigger: 'blur' },
                 ],
@@ -619,6 +634,12 @@ export default {
                 alarmType:[
                     { required: true, message: '请选择', trigger: 'change' },
                 ],
+                timingTarget:[
+                    { required: true, message: '请输入', trigger: 'blur' },
+                ],
+                timingTotal:[
+                    { required: true, message: '请输入', trigger: 'blur' },
+                ],
                
            },
             //源数据
@@ -626,6 +647,9 @@ export default {
             transfer_datan: [],
             renderFunc(h, option) {
                 return <span>{ option.name }</span>;
+            },
+            filterMethod(query, item) {
+                return item.name.indexOf(query) > -1;
             }
 
         }
@@ -742,7 +766,8 @@ export default {
             // console.log(this.form_info.triggerRules)
             // console.log(this.form_info.noTriggerRules)
             // console.log(value, direction, movedKeys);
-        }
+        },
+        
 
     },
     watch:{

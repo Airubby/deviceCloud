@@ -87,7 +87,11 @@
                 method='post' 
                 :formOptions="table_forms" border :data="table_data" :columns="table_columns" 
                 ref="thisRef" >   
-                
+                <template slot-scope="scope" slot="prev-lastTitme">
+                    <span v-if="scope.row.lastUpdateTime!=null && scope.row.lastUpdateTime!=''">
+                       {{new Date(scope.row.lastUpdateTime).Format("yyyy-MM-dd hh:mm:ss")}}
+                    </span>
+                </template>
             </el-search-table-pagination>
         </div>
     </el-dialog>
@@ -137,7 +141,7 @@ export default {
              { prop: 'code', label: '编码',minWidth:100},
               { prop: 'currValue', label: '当前值',minWidth:100},
               { prop: 'unit', label: '单位',minWidth:100},
-              { prop: 'lastUpdateTime', label: '最后更新时间',minWidth:100},
+              { prop: 'lastUpdateTime', label: '最后更新时间',minWidth:100,slotName:'prev-lastTitme'},
           ],
 
         }
