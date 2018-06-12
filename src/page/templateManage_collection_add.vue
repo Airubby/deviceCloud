@@ -10,7 +10,7 @@
                     采集控制模板信息
                 </div>
                 <div class="loncom_public_add_con">
-                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
+                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form loncom_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 <em>*</em>名称：

@@ -294,6 +294,7 @@ em{
 .loncom_sidebar_list .loncom_morenav dd:hover em img{
   margin-top: -16px;
 }
+
 /*重置element*/
 .el-dialog__body{
   padding: 0 !important;
@@ -330,9 +331,6 @@ em{
 }
 .el-form-item__content{
   display: block !important;
-}
-.template_eventruleaddbox .loncom_list_box_right .el-select{
-  width: auto;
 }
 .loncom_list_box_right .el-select{
   width: 100%;
@@ -423,8 +421,9 @@ em{
     text-align: right;
     padding: 12px 0;
 }
+
 .loncom_list_boxform {
-    width: 420px;
+    width: 100%;
     min-height: 36px;
     line-height: 36px;
     padding-bottom: 20px;
@@ -433,7 +432,7 @@ em{
     margin: 0 auto;
 }
 .loncom_list_box_left {
-    width: 100px;
+    width: calc(30% - 20px);
     margin-right: 20px;
     float: left;
     color: #666;
@@ -444,9 +443,15 @@ em{
     margin-right: 5px;
 }
 .loncom_list_box_right {
-    width: 300px;
+    width: calc(70% - 30px);
+    padding-right: 30px;
+    line-height: 40px;
     float: left;
     color: #666;
+}
+.loncom_add_form{
+  width: 500px;
+  margin: 0 auto;
 }
 .el-form-item{
   margin-bottom: 0 !important;
@@ -670,11 +675,14 @@ input:-webkit-autofill {
   padding: 15px 0;
 }
 .gis_bottomlist{
-  height: 70px;
+  width: 100%;
+  min-height: 70px;
   padding: 10px 0;
+  overflow: hidden;
     border-bottom: 1px solid #e4e4e4;
 }
 .gis_bottomlist_left{
+  width: 45px;
   line-height: 50px;
   margin-right: 20px;
 }
@@ -702,7 +710,8 @@ input:-webkit-autofill {
   background: #f00;
 }
 .gis_bottomlist .gis_bottomlist_center{
-  float: left
+  width: calc(100% - 70px);
+  float: left;
 }
 .gis_bottomlist_center h2{
   color: #000;

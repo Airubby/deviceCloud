@@ -57,7 +57,9 @@
 
 export default {
     created () {
-        
+        clearInterval(index_getacc);
+        clearInterval(index_getal);
+        console.log(12312312312312)
     },
     mounted() {
         scrollCon();
@@ -81,7 +83,7 @@ export default {
                     }
                     yData.push(r.data[item])
                 }
-                barChar("indexbarChar",xData,yData)
+                this._barChar=barChar("indexbarChar",xData,yData)
             }
         }); 
         //告警等级;活动趋势
@@ -102,6 +104,14 @@ export default {
         },60000);
 
 
+        $(window).resize(function () {
+            _this._barChar.resize();
+            _this._twoLineChar.resize();
+            _this._piemoreChar.resize();
+            _this._echartLine1.resize();
+            _this._echartLine2.resize();
+        });
+
         
 
     },
@@ -114,7 +124,13 @@ export default {
           alarmDate:[],
           yData1:[],
           yData2:[],
-          alarmName:["24H产生告警数", "24H解除告警数"],
+          alarmName:["24H产生告警数", "24H解除告警数"],   
+          _barChar:'',  //
+          _twoLineChar:'',
+          _piemoreChar:'',
+          _echartLine1:'',
+          _echartLine2:'',
+
        }
    },
     methods:{
@@ -132,12 +148,12 @@ export default {
                         yData.push({value:r.data.amap[item],name:"告警等级"+item})
                         color.push()
                     }
-                    piemoreChar("indexpieChar",xData,yData,allAlarm,color)
+                    this._piemoreChar=piemoreChar("indexpieChar",xData,yData,allAlarm,color)
                     
                    this.alarmDate.push(new Date().Format('hh:mm:ss'));
                    this.yData1.push(r.data.nearNewAlarm);
                    this.yData2.push(r.data.nearEvictAlarm);
-                   twoLineChar("alarmLine",this.alarmDate,this.yData1,this.yData2,this.alarmName)
+                   this._twoLineChar=twoLineChar("alarmLine",this.alarmDate,this.yData1,this.yData2,this.alarmName)
                 }
             });
         },
@@ -148,8 +164,8 @@ export default {
                     this.dateTime.push(new Date().Format('hh:mm:ss'));
                     this.activeModule.push(r.data.activeModuleNum);
                     this.pointPkg.push(r.data.pointPkgNum);
-                    echartLine("activeModuleNum",this.dateTime,this.activeModule);
-                    echartLine("pointPkgNum",this.dateTime,this.pointPkg);
+                    this._echartLine1=echartLine("activeModuleNum",this.dateTime,this.activeModule);
+                    this._echartLine2=echartLine("pointPkgNum",this.dateTime,this.pointPkg);
                 }
             });
        },

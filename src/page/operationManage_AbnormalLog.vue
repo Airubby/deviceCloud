@@ -12,7 +12,10 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
-                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                    
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >    
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="clear">清除</el-button>
+                    </div>                                                         
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
@@ -48,7 +51,7 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'sysCode', label: '系统编码',minWidth:100},
+              { prop: 'sysCode', label: '系统编码',minWidth:150},
               { prop: 'typeCode', label: '日志类型编码',minWidth:100},
               { prop: 'typeName', label: '日志名称',minWidth:100},
               { prop: 'createTime', label: '发生时间',minWidth:100},
@@ -61,6 +64,16 @@ export default {
        //详情
        detail:function(row){
             this.$router.push({path:'/operationManage/abnormalLog/detail',query:{id:row.id}});
+       },
+       clear:function(){
+            this.$api.post('/errLog/delLogs', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.$message.success(r.msg);
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
        },
 
     },

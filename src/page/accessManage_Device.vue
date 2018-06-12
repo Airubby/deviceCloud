@@ -19,6 +19,10 @@
                         <span v-if="scope.row.state==1||scope.row.state=='1'">启用</span>
                         <span v-else>停用</span>
                     </template>
+                    <template slot-scope="scope" slot="preview-online">
+                        <span v-if="scope.row.online==true||scope.row.online=='true'">在线</span>
+                        <span v-else>离线</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-dtype">
                         {{scope.row.name}}
                     </template>
@@ -27,11 +31,11 @@
                     </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
-                            <a href="javascript:;" class="loncom_color" v-if="scope.row.state=='0'||scope.row.state==0" @click="start(scope.row)">启用</a> 
-                            <a href="javascript:;" class="loncom_color" v-if="scope.row.state=='1'||scope.row.state==1" @click="stop(scope.row)">停用</a>  
-                            <em>|</em> 
                             <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
                             <em>|</em>
+                            <a href="javascript:;" class="loncom_color" v-if="scope.row.state=='0'||scope.row.state==0" @click="start(scope.row)">启用</a> 
+                            <a href="javascript:;" class="loncom_color" v-if="scope.row.state=='1'||scope.row.state==1" @click="stop(scope.row)">停用</a>  
+                            <em>|</em>                            
                             <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a> 
                         </div>
                     </template>
@@ -73,7 +77,8 @@ export default {
               { prop: 'code', label: '设备编码',minWidth:100},
               { prop: 'name', label: '设备名称',minWidth:100},
               { prop: 'sno', label: '设备序列号',minWidth:100},              
-              { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
+              { prop: 'state', label: '状态',slotName:'preview-state',minWidth:50},
+              { prop: 'online', label: '在线状态',slotName:'preview-online',minWidth:60},
               { prop: 'dtype', label: '设备类型',minWidth:100,slotName:'preview-dtype'},
               { prop: 'aclient', label: '接入模块',minWidth:100,slotName:'preview-aclient'},
               { prop: 'createTime', label: '创建时间',minWidth:100},

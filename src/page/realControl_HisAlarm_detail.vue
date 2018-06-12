@@ -50,7 +50,9 @@
                         </el-table-column>
                         <el-table-column label="解除时间" prop="removeTime">
                             <template slot-scope="prop">
-                                {{new Date(prop.row.removeTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                                <span v-if="prop.row.removeTime">
+                                    {{new Date(prop.row.removeTime).Format('yyyy-MM-dd hh:mm:ss')}}
+                                </span>
                             </template>
                         </el-table-column>   
                                       

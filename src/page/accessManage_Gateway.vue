@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">网关接入</span>
+            <span class="loncom_public_topinfo">接入模块</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
@@ -27,6 +27,10 @@
                         <span v-if="scope.row.state==1||scope.row.state=='1'">启用</span>
                         <span v-else>停用</span>
                     </template>
+                    <template slot-scope="scope" slot="preview-online">
+                        <span v-if="scope.row.online==true||scope.row.online=='true'">在线</span>
+                        <span v-else>离线</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
@@ -46,6 +50,17 @@
                         <el-button @click="start()" type="info" size="mini" plain>启用</el-button>
                         <el-button @click="stop()" type="info" size="mini" plain>停用</el-button>
                         <el-button @click="del()" type="info" size="mini" plain>删除</el-button>
+                        
+                        <el-button @click="getState()" type="info" size="mini" plain>获取状态</el-button>
+                        <el-button @click="sendParam()" type="info" size="mini" plain>发送参数</el-button>
+                        <el-button-group>
+                            <el-button @click="startCollect()" type="info" size="mini" plain>启用采集</el-button>
+                            <el-button @click="stopCollect()" type="info" size="mini" plain>停用采集</el-button>
+                        </el-button-group>
+                        <el-button-group>
+                            <el-button @click="startReport()" type="info" size="mini" plain>启用上报</el-button>
+                            <el-button @click="stopReport()" type="info" size="mini" plain>停用上报</el-button>
+                        </el-button-group>
                     </div>
                     
                 </el-search-table-pagination>
@@ -80,10 +95,11 @@ export default {
               { prop: 'code', label: '模块编码',minWidth:100},
               { prop: 'name', label: '模块名称',minWidth:100},  
               { prop: 'sno', label: '模块序列号',minWidth:100},            
-              { prop: 'state', label: '状态',slotName:'preview-state',minWidth:100},
-              { prop: 'project', label: '所属项目',slotName:'preview-project',minWidth:100},
-              { prop: 'loca', label: '位置',minWidth:200,slotName:'preview-loca'},
-              { prop: 'handel', label: '操作',slotName:'preview-handle',width:140},
+              { prop: 'state', label: '状态',slotName:'preview-state',minWidth:50},
+              { prop: 'online', label: '在线状态',slotName:'preview-online',minWidth:60},
+              { prop: 'project', label: '所属项目',slotName:'preview-project',minWidth:150},
+              { prop: 'loca', label: '位置',minWidth:300,slotName:'preview-loca'},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           multipleSelection:[],
 
@@ -213,6 +229,153 @@ export default {
        add:function(){
             this.$router.push({path:'/accessManage/gateway/add'});
        },
+       //获取模块在线状态
+       getState:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定获取模块在线状态?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/getModuleOnlineStatus', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+       //发送模块控制参数
+       sendParam:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定发送模块控制参数?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/sendModuleConfig', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+       //启用模块数据采集
+       startCollect:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定启用模块数据采集?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/enableModuleGather', {"ids":thisID,state:1}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+       //停用模块数据采集
+       stopCollect:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定停用模块数据采集?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/enableModuleGather', {"ids":thisID,state:0}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+       //启用模块数据上报
+       startReport:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定启用模块数据上报?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/enableModuleTrans', {"ids":thisID,state:1}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+       //停用模块数据上报
+       stopReport:function(){
+            if(this.multipleSelection.length==0){
+                this.$message.warning("请勾选需要的项");
+                return;
+            }
+            this.$confirm("确定停用模块数据上报?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=this.multipleSelection.toString();
+		    	 this.$api.post('/module/enableModuleTrans', {"ids":thisID,state:0}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+
+       },
+
+       
+       
 
     },
     components:{}

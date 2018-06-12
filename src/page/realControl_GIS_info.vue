@@ -26,6 +26,7 @@
                             <h2><span @click="pointInfo(item)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>设备编码：{{item.code}}</p>
                             <p>启用状态：<span v-if="item.state==1">启用</span><span v-else>停用</span></p>
+                            <p>在线状态：<span v-if="item.online==true" style="color:#33C466">在线</span><span style="color:#E9664B" v-else>离线</span></p>
                             <p>告警数量：<span>{{item.alarmNum}}</span></p>
                         </div>
                     </div>
@@ -43,17 +44,19 @@
                                 <span :class="'alarm'+item.topLevel">{{item.topLevelName}}</span>
                             </div>
                             <div class="gis_bottomlist_center">
-                                <h2>{{item.name}}</h2>
+                                <h2>{{item.name}}<span class="loncom_ml15">触发时间：{{new Date(item.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}</span></h2>
                                 <p>
-                                    <span>项目名称：{{item.projectName}}</span>，
-                                    <span>设备名称：{{item.devName}}</span>，
-                                    <span>测点名称：{{item.pointName}}</span>，
-                                    <span>触发时间：{{new Date(item.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}</span>
-                                    <span>最后更新时间：{{new Date(item.updateTime).Format('yyyy-MM-dd hh:mm:ss')}}</span>
+                                    <span>项目：{{item.projectName}}</span>，
+                                    <span>设备：{{item.devName}}</span>，
+                                    <span>测点：{{item.pointName}}</span>，
+                                    <span>当前值：{{item.currValue}}</span>，
+                                    <span>先前值：{{item.preValue}}</span>，
+                                    <span>触发条件：{{item.conds}}</span>，
+                                    <span>更新时间：{{new Date(item.updateTime).Format('yyyy-MM-dd hh:mm:ss')}}</span>
                                 </p>
                             </div>
                         </div>
-                        <div class="el-pagination is-background paginationbox" v-if="alarmInfo.length>0">
+                        <div class="el-pagination is-background paginationbox">
                             <ul class="pagination el-pager"></ul>
                         </div>
                     </div>
@@ -183,10 +186,7 @@ export default {
                 container.appendChild(nextElement);
             
              $('.pagination').find("li").on("click",function(){
-                 console.log($(this))
-                 console.log($(this).hasClass("disabled"))
                  if(!$(this).hasClass("disabled")){
-                     console.log($(this).find("a").data("num"))
                      if($(this).find("a").data("num")=="add"){
                          _this.pagin.pageNo+=1;
                      }else if($(this).find("a").data("num")=="min"){
@@ -194,7 +194,7 @@ export default {
                      }else{
                         _this.pagin.pageNo=$(this).find("a").data("num");
                      }  
-                    console.log(_this.pagin.pageNo)
+                    _this.getAlarm();
                  }
                 
             })
@@ -220,6 +220,7 @@ export default {
                 if(r.success){
                     this.alarmInfo=r.list;
                     this.pagin.pageTotal=r.pageTotal;
+                    this.paginationFn();
                 }
             }); 
         },
@@ -315,16 +316,16 @@ export default {
 
     },
     watch:{
-        pagin:{
-          handler:function(val,oldval){
-              console.log(this.pagin)
-              this.getAlarm();
-              if(this.alarmInfo.length>0){
-                this.paginationFn();
-              }
-          },
-          deep: true
-        },
+        // pagin:{
+        //   handler:function(val,oldval){
+        //       console.log(this.pagin)
+        //       this.getAlarm();
+        //       if(this.alarmInfo.length>0){
+        //         this.paginationFn();
+        //       }
+        //   },
+        //   deep: true
+        // },
 
    },
     components:{dialogPointInfo}

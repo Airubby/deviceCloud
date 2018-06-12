@@ -11,6 +11,8 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <div class="loncom_public_add_form">
+                        <el-row>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 项目名称：
@@ -19,6 +21,8 @@
                                 <el-input v-model="form_info.projectName" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 邮件地址：
@@ -27,6 +31,8 @@
                                 <el-input v-model="form_info.addr" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 标题：
@@ -35,6 +41,8 @@
                                 <el-input v-model="form_info.title" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 称谓：
@@ -43,6 +51,8 @@
                                 <el-input v-model="form_info.appellation" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 发送时间：
@@ -51,6 +61,8 @@
                                 <el-input v-model="form_info.sendTime" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 状态：
@@ -59,6 +71,8 @@
                                 <el-input v-model="form_info.state" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 类型：
@@ -67,6 +81,8 @@
                                 <el-input v-model="form_info.bizType" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 业务主键：
@@ -75,6 +91,8 @@
                                 <el-input v-model="form_info.bizKey" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
+                        </el-col>
+                        <el-col :span="12">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 发送通道：
@@ -83,10 +101,18 @@
                                 <el-input v-model="form_info.channelType" :disabled="true" size="small"></el-input>
                             </div>
                         </div>
-                        <div>
-                            <h2 class="loncom_mb10">消息内容</h2>
-                            <el-input type="textarea" v-model="form_info.content" :disabled="true" size="small"></el-input>
+                        </el-col>
+                        <el-col :span="12">
+                        <div class="loncom_list_boxform">
+                            <div class="loncom_list_box_left">
+                                消息内容：
+                            </div>
+                            <div class="loncom_list_box_right">
+                                <el-input type="textarea" v-model="form_info.content" :disabled="true" size="small"></el-input>
+                            </div>
                         </div>
+                        </el-col>
+                        </el-row>
                     </div>
                 </div>
                 <noSubmitBtnInfo></noSubmitBtnInfo>

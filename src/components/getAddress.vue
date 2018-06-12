@@ -1,47 +1,51 @@
 <template>
-    <div>
+    <div style="height:100%;">
         <div class="loncom_list_boxform">
-            <el-form-item prop="address">
-                <el-input placeholder="请输入地址搜索" v-model="form_info.address" size="small" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search" id="search"></el-button>
-                </el-input>
-            </el-form-item>
+            <el-row :gutter="20">
+                <el-col :span="10">
+                    <el-form-item prop="address">
+                        <el-input placeholder="请输入地址搜索" v-model="form_info.address" size="small" class="input-with-select">
+                            <el-button slot="append" icon="el-icon-search" id="search"></el-button>
+                        </el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="14">
+                    <el-form-item prop="fullAddress">
+                        <el-input v-model="form_info.fullAddress" size="small" placeholder="请输入全地址" ></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
         </div>
         <div class="loncom_list_boxform">
-            <el-col :span="8">
-                <el-form-item prop="provinceName">
-                    <el-input v-model="form_info.provinceName" :disabled="true" size="small" placeholder="省"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="8">
-                <el-form-item prop="cityName">
-                    <el-input v-model="form_info.cityName" :disabled="true" size="small" placeholder="市"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="8">
-                <el-form-item prop="areaName">
-                    <el-input v-model="form_info.areaName" :disabled="true" size="small" placeholder="区"></el-input>
-                </el-form-item>
-            </el-col>
+            <el-row :gutter="20">
+                <el-col :span="4">
+                    <el-form-item prop="provinceName">
+                        <el-input v-model="form_info.provinceName" :disabled="true" size="small" placeholder="省"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <el-form-item prop="cityName">
+                        <el-input v-model="form_info.cityName" :disabled="true" size="small" placeholder="市"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <el-form-item prop="areaName">
+                        <el-input v-model="form_info.areaName" :disabled="true" size="small" placeholder="区"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item prop="lng">
+                        <el-input v-model="form_info.lng" :disabled="true" size="small" placeholder="经度"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item prop="latl">
+                        <el-input v-model="form_info.latl" :disabled="true" size="small" placeholder="纬度"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
         </div>
-        <div class="loncom_list_boxform">
-            <el-col :span="12">
-                <el-form-item prop="lng">
-                    <el-input v-model="form_info.lng" :disabled="true" size="small" placeholder="经度"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-col :span="12">
-                <el-form-item prop="latl">
-                    <el-input v-model="form_info.latl" :disabled="true" size="small" placeholder="纬度"></el-input>
-                </el-form-item>
-            </el-col>
-        </div>
-        <div class="loncom_list_boxform">
-            <el-form-item prop="fullAddress">
-                <el-input v-model="form_info.fullAddress" size="small" placeholder="请输入全地址" ></el-input>
-            </el-form-item>
-        </div>
-        <div id="container" style="width:100%;height:400px;border:1px solid #ccc;"></div>
+        <div id="container" style="width:100%;height:calc(100% - 120px);border:1px solid #ccc;"></div>
     </div>
 </template>
 

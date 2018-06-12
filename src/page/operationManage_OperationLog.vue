@@ -12,7 +12,10 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
-                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                    
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >   
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="clear">清除</el-button>
+                    </div>                                                  
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
@@ -47,12 +50,12 @@ export default {
                 ]
             },
            table_columns:[             
-              { prop: 'userName', label: '用户名',minWidth:100},
-              { prop: 'actionName', label: '业务类',minWidth:100},
+              { prop: 'userName', label: '用户名',minWidth:80},
+              { prop: 'actionName', label: '业务类',minWidth:250},
               { prop: 'methodName', label: '业务方法',minWidth:100},
               { prop: 'opName', label: '逻辑名称',minWidth:100},
               { prop: 'requestUri', label: '请求路径',minWidth:100},
-              { prop: 'createTime', label: '访问时间',minWidth:100},
+              { prop: 'createTime', label: '访问时间',minWidth:80},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -62,6 +65,16 @@ export default {
        //详情
        detail:function(row){
             this.$router.push({path:'/operationManage/operationLog/detail',query:{id:row.id}});
+       },
+       clear:function(){
+            this.$api.post('/optLog/delLogs', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.$message.success(r.msg);
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
        },
 
     },

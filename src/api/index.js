@@ -61,11 +61,15 @@ function apiAxios (method, url, params, success, failure) {
     url: url,
     data: method === 'POST' ||method === 'GET' ? params : null,
     params: method === 'POST' ||method === 'GET' ? params : null,
-    //headers: method === 'POST'? {'Content-Type': 'application/x-www-form-urlencoded'}: null,
+    headers: method === 'GET'? {'Content-Type': 'application/vnd.ms-excel'}: null,
     baseURL: root2,
     withCredentials: true
   })
   .then(function (res) {
+    if(res.data.code=="-1"){
+        ElementUI.Message.warning("请登录系统");
+        router.push({path:'/login'});
+    }
     if(success){
       success(res.data);
     }

@@ -11,65 +11,80 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>设备序列号：
+                        <el-row>
+                            <el-col :span="12">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>设备序列号：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="sno">
+                                        <el-input size="small" placeholder="请输入序列号" v-model="form_info.sno" :disabled="true"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="sno">
-                                    <el-input size="small" placeholder="请输入序列号" v-model="form_info.sno" :disabled="true"></el-input>
-                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    设备编码：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="code">
+                                        <el-input size="small" placeholder="请输入编码" v-model="form_info.code" :disabled="true"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                设备编码：
+                            </el-col>
+                            <el-col :span="12">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    设备名称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="name">
+                                        <el-input size="small" placeholder="请输入名称" v-model="form_info.name" :disabled="true"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </div>    
+                            </el-col>
+                            <el-col :span="12">                    
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    接入模块：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-input size="small" placeholder="" v-model="form_info.aclient.name" :disabled="true"></el-input>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code" :disabled="true"></el-input>
-                                </el-form-item>
+                            </el-col>
+                            <el-col :span="12">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                设备类型：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                <el-input size="small" placeholder="" v-model="form_info.dtype.name" :disabled="true"></el-input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                设备名称：
+                            </el-col>
+                            <el-col :span="12">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    是否启用：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-radio-group v-model="form_info.state":disabled="true">
+                                        <el-radio :label="1">启用</el-radio>
+                                        <el-radio :label="0">停用</el-radio>
+                                    </el-radio-group>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name" :disabled="true"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>                        
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                接入模块：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-input size="small" placeholder="" v-model="form_info.aclient.name" :disabled="true"></el-input>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                               设备类型：
-                            </div>
-                            <div class="loncom_list_box_right">
-                               <el-input size="small" placeholder="" v-model="form_info.dtype.name" :disabled="true"></el-input>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                是否启用：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.state":disabled="true">
-                                    <el-radio :label="1">启用</el-radio>
-                                    <el-radio :label="0">停用</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
+                            </el-col>
+                        </el-row>
                         <h2 class="loncom_mt20">设备测点信息</h2>
                         <el-search-table-pagination type="remote"
+                           :params="table_forms.initParams"
                             url="/gitMap/listPointVOForDev"
                             list-field="list" 
                             total-field="total"
@@ -115,8 +130,8 @@ export default {
 
     created () {
         
-        var obj = this.$route.query;
-        this.$api.post('/device/get', {id:obj.id}, r => {
+        this.obj = this.$route.query;
+        this.$api.post('/device/get', {id:this.obj.id}, r => {
             console.log(r)
             if(r.success){
                 this.table_data=r.data.plist;
@@ -147,6 +162,7 @@ export default {
            topInfo:'设备详情',
            action_data:[],  //测点动作类型
            alarm_data:[],  //告警类型
+           obj:'',
            form_info:{
                id:'',
                sno:'',
@@ -164,25 +180,25 @@ export default {
 
            table_data:[],
            table_forms: {
-            inline: true,
-            size:'small',
-            submitBtnText: '搜索',
-            forms: [
-                    { prop: 'queryKey', label: '',placeholder:'当前设备', itemType: 'select',options:[],valueKey:'id',labelKey:'name',propValue:'' },
+                inline: true,
+                size:'small',
+                submitBtnText: '搜索',
+                initParams:{queryKey:""},
+                forms: [
                     { prop: 'queryKey1', label: '',placeholder:'名称/编码' },
                 ]
             },
            table_columns:[
               { prop: 'serialNO', label: '序号',minWidth:50},
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'name', label: '名称',minWidth:130},
+              { prop: 'code', label: '编码',minWidth:220},
               { prop: 'valueType', label: '值类型',minWidth:60},
               { prop: 'offSet', label: '偏移量',minWidth:50},
               { prop: 'readFlag', label: '可读',minWidth:50,slotName:'preview-readFlag'},
               { prop: 'writeFlag', label: '可写',minWidth:50,slotName:'preview-writeFlag'},
               { prop: 'unit', label: '单位',minWidth:50},
-              { prop: 'actionType', label: '动作类型',minWidth:100,slotName:'preview-action'},
-              { prop: 'alarmType', label: '告警触发类型',minWidth:100,slotName:'preview-alarm'},
+              { prop: 'actionType', label: '动作类型',minWidth:80,slotName:'preview-action'},
+              { prop: 'alarmType', label: '告警触发类型',minWidth:80,slotName:'preview-alarm'},
               { prop: 'currValue', label: '当前读数',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
@@ -199,15 +215,14 @@ export default {
     methods:{
         //事件规则详情
       detail:function(row){
-          console.log(row)
           this.dialogInfo.id=row.id;
           this.dialogInfo.visible=true;
-      }
+      },
 
     },
     watch:{
         'form_info.id':function(val,oldval){
-            this.table_forms.forms[0].options.push({"id":this.form_info.id,"name":this.form_info.name});
+            this.table_forms.initParams.queryKey=val;
         },
         
     },

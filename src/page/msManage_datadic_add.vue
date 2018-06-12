@@ -11,49 +11,51 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>名称：
+                        <div class="loncom_add_form">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>名称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="name">
+                                        <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>编码：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="code">
+                                        <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>编码：
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>是否有效：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-radio-group v-model="form_info.vaild">
+                                        <el-radio :label="true">有效</el-radio>
+                                        <el-radio :label="false">无效</el-radio>
+                                    </el-radio-group>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    备注：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-input type="textarea" v-model="form_info.remark"></el-input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>是否有效：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-radio-group v-model="form_info.vaild">
-                                    <el-radio :label="true">有效</el-radio>
-                                    <el-radio :label="false">无效</el-radio>
-                                </el-radio-group>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                备注：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-input type="textarea" v-model="form_info.remark"></el-input>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">&nbsp;</div>
-                            <div class="loncom_list_box_right">
-                                <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">&nbsp;</div>
+                                <div class="loncom_list_box_right">
+                                    <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
+                                </div>
                             </div>
                         </div>
                         <div class="">

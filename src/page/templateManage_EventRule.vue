@@ -77,11 +77,9 @@ export default {
             },
            table_columns:[
               { prop: 'name', label: '模板名称',minWidth:150},
-              { prop: 'desc', label: '事件规则',minWidth:300},
               { prop: 'alarmType', label: '告警类型',minWidth:100,slotName:'preview-alarmType'},
+              { prop: 'desc', label: '事件规则',minWidth:300},
               { prop: 'action', label: '事件动作',minWidth:100,slotName:'preview-action'},
-              { prop: 'bitIndex', label: '比特位',minWidth:100},
-              { prop: 'vara2', label: '比特值',minWidth:100},
               { prop: 'eventLibName', label: '事件库',minWidth:100},
               { prop: 'eventLevelName', label: '事件等级',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},

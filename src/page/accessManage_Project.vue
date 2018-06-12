@@ -70,12 +70,12 @@ export default {
            table_columns:[
               { prop: 'code', label: '项目编码',minWidth:60},
               { prop: 'name', label: '项目名称',minWidth:100},
-              { prop: 'fullName', label: '项目全称',minWidth:100},
+              { prop: 'fullName', label: '项目全称',minWidth:150},
               { prop: 'custName', label: '所属客户',minWidth:100},
-              { prop: 'contacts', label: '联系人',minWidth:100},
-              { prop: 'phoneNo', label: '联系电话',minWidth:100},
-              { prop: 'loca', label: '项目位置',slotName:'preview-loca',minWidth:100},
-              { prop: 'createTime', label: '创建时间',minWidth:100},
+              { prop: 'contacts', label: '联系人',minWidth:70},
+              { prop: 'phoneNo', label: '联系电话',minWidth:90},
+              { prop: 'loca', label: '项目位置',slotName:'preview-loca',minWidth:250},
+              { prop: 'createTime', label: '创建时间',minWidth:80},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选项

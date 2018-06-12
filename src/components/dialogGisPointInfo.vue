@@ -82,6 +82,7 @@
             <h2 class="loncom_mt20">设备测点信息</h2>
             <el-search-table-pagination type="remote"
                 url="/gitMap/listPointVOForDev"
+                :params="table_forms.initParams"
                 list-field="list" 
                 total-field="total"
                 method='post' 
@@ -101,7 +102,6 @@
 export default {
     created () {
         //设备详情
-        console.log(this.dialogInfo.devId)
         this.$api.post('/device/get', {id:this.dialogInfo.devId}, r => {
             console.log(r)
             if(r.success){
@@ -112,7 +112,7 @@ export default {
         }); 
     },
     mounted() {
-       this.table_forms.forms[0].propValue=this.dialogInfo.devId;
+       //this.table_forms.forms[0].propValue=this.dialogInfo.devId;
     },
     data() {
         return {
@@ -127,29 +127,33 @@ export default {
            },
            table_data:[],
            table_forms: {
-            inline: true,
-            size:'small',
-            submitBtnText: '搜索',
-            forms: [
-                    { prop: 'queryKey', label: '',placeholder:'当前设备', itemType: 'select',options:[{id:this.dialogInfo.devId,name:this.dialogInfo.name}],valueKey:'id',labelKey:'name',propValue:'' },
+                inline: true,
+                size:'small',
+                submitBtnText: '搜索',
+                 initParams:{},
+                forms: [
                     { prop: 'queryKey1', label: '',placeholder:'名称/编码' },
                 ]
             },
            table_columns:[
-                { prop: 'serialNO', label: '序号',minWidth:100},
-              { prop: 'name', label: '名称',minWidth:100},
-             { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'currValue', label: '当前值',minWidth:100},
-              { prop: 'unit', label: '单位',minWidth:100},
-              { prop: 'lastUpdateTime', label: '最后更新时间',minWidth:100,slotName:'prev-lastTitme'},
+                { prop: 'serialNO', label: '序号',minWidth:60},
+              { prop: 'name', label: '名称',minWidth:150},
+             { prop: 'code', label: '编码',minWidth:250},
+              { prop: 'currValue', label: '当前值',minWidth:80},
+              { prop: 'unit', label: '单位',minWidth:60},
+              { prop: 'lastUpdateTime', label: '最后更新时间',minWidth:120,slotName:'prev-lastTitme'},
           ],
 
         }
     },
     methods:{
         
-       
-
+    },
+    watch:{
+        'form_info.id':function(val,oldval){
+            this.table_forms.initParams[queryKey]=val;
+        },
+        
     },
     props:["dialogInfo"],
     components:{}

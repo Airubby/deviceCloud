@@ -26,7 +26,7 @@
                         </div>
                     </template>
                     <template slot-scope="scope" slot="preview-removeTime">
-                        <div>
+                        <div v-if="scope.row.removeTime">
                             {{new Date(scope.row.removeTime).Format('yyyy-MM-dd hh:mm:ss')}}
                         </div>
                     </template>
@@ -124,13 +124,13 @@ export default {
               { prop: 'projectName', label: '项目',minWidth:100},
               { prop: 'moduleName', label: '模块',minWidth:100},
               { prop: 'devName', label: '设备',minWidth:100},
-              { prop: 'devTypeName', label: '设备类型',minWidth:100},              
+              { prop: 'devTypeName', label: '设备类型',minWidth:90},              
               { prop: 'pointName', label: '属性',minWidth:100},
-              { prop: 'name', label: '事件名称',minWidth:100},              
-              { prop: 'topLevelName', label: '事件等级',minWidth:100},              
-              { prop: 'state', label: '状态',minWidth:100,slotName:'preview-state'},              
-              { prop: 'occurTime', label: '触发时间',minWidth:100,slotName:'preview-occurTime'},
-              { prop: 'removeTime', label: '解除时间',minWidth:100,slotName:'preview-removeTime'},
+              { prop: 'name', label: '事件名称',minWidth:110},              
+              { prop: 'topLevelName', label: '事件等级',minWidth:60},              
+              { prop: 'state', label: '状态',minWidth:60,slotName:'preview-state'},              
+              { prop: 'occurTime', label: '触发时间',minWidth:90,slotName:'preview-occurTime'},
+              { prop: 'removeTime', label: '解除时间',minWidth:90,slotName:'preview-removeTime'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

@@ -61,6 +61,7 @@ export default {
            table_columns:[
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'devTypeNames', label: '已绑定设备类型',minWidth:300},
             //   { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:100},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],

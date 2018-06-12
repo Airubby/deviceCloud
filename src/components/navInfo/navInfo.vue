@@ -46,7 +46,6 @@
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 export default {
     created () {
-        console.log(123)
     },
     mounted() {
         this.loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
@@ -106,11 +105,7 @@ export default {
             // this.getComponent(this.loginInfo.id)
             // console.log(123)
             this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
-                if(r.code=='-1'){
-                    this.$message.warning("请登录系统");
-                    this.$router.push({path:'/login'});
-                }else{
-                    if(r.success){
+                if(r.success){
                         this.navList=r.data.subMenu;
                         // var urlStr=this.$route.path;
                         // var urlHas=true;
@@ -139,7 +134,6 @@ export default {
                     }else{
                         this.$message.warning("菜单获取异常");
                     }
-                }
                 
             }); 
         },

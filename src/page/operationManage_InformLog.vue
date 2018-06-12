@@ -12,7 +12,10 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
-                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                    
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >     
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="clear">清除</el-button>
+                    </div>                                                
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
@@ -56,13 +59,13 @@ export default {
            table_columns:[
               { prop: 'projectName', label: '项目',minWidth:100},
               { prop: 'addr', label: '邮件地址',minWidth:100},
-              { prop: 'title', label: '标题',minWidth:100},
-              { prop: 'appellation', label: '称谓',minWidth:100},
-              { prop: 'sendTime', label: '发送时间',minWidth:100},
-              { prop: 'state', label: '状态',minWidth:100},
-              { prop: 'bizType', label: '类型',minWidth:100},
+              { prop: 'title', label: '标题',minWidth:160},
+              { prop: 'appellation', label: '称谓',minWidth:80},
+              { prop: 'sendTime', label: '发送时间',minWidth:90},
+              { prop: 'state', label: '状态',minWidth:60},
+              { prop: 'bizType', label: '类型',minWidth:60},
               { prop: 'bizKey', label: '业务主键',minWidth:100},
-              { prop: 'channelType', label: '发送通道',minWidth:100},
+              { prop: 'channelType', label: '发送通道',minWidth:60},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -72,6 +75,16 @@ export default {
        //详情
        detail:function(row){
             this.$router.push({path:'/operationManage/informLog/detail',query:{id:row.id}});
+       },
+       clear:function(){
+            this.$api.post('/msgLog/delLogs', {}, r => {
+                console.log(r)
+                if(r.success){
+                    this.$message.success(r.msg);
+                }else{
+                    this.$message.warning(r.msg);
+                }
+            }); 
        },
 
     },

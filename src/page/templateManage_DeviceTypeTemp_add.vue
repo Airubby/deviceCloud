@@ -11,40 +11,56 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>名称：
+                        <div class="loncom_add_form">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>名称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="name">
+                                        <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>编码：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="code">
+                                        <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>编码：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入编码" v-model="form_info.code"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                &nbsp;
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    &nbsp;
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
+                                </div>
                             </div>
                         </div>
                         <div class="">
                             <div class="loncom_public_filter loncom_mtb20">
                                 <div class="loncom_fl">测点列表</div>
+                                
                                 <div class="loncom_fr">
-                                    
                                     <el-button type="primary" size="small" @click="add">新增</el-button>
+                                </div>
+                                <div class="loncom_fr loncom_mr20">
+                                    <el-button type="primary" size="small" @click="Exportp">导出测点</el-button>
+                                </div>
+                                <div class="loncom_fr loncom_mr20">
+                                    <el-upload
+                                        class="upload-demo"
+                                        action="/pointTemplate/pointTemplateImport"
+                                        multiple
+                                        :disabled="judgeUpload"
+                                        :before-upload="beforeUpload"
+                                        :limit="1">
+                                        <el-button size="small" type="primary" @click="judgeInfo">导入测点</el-button>
+                                    </el-upload>
                                 </div>
                             </div>
                             <el-search-table-pagination type="local" :show-pagination="true" border :data="table_data" :columns="table_columns"
@@ -149,16 +165,16 @@ export default {
                 // {id:'1',serialNO:'1',name:'321',code:'2342'}
            ],
            table_columns:[
-              { prop: 'serialNO', label: '序号',minWidth:100},
-              { prop: 'name', label: '名称',minWidth:100},
-              { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'valueType', label: '值类型',minWidth:100,slotName:'preview-valueType'},
-              { prop: 'offSet', label: '偏移量',minWidth:100},
-              { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-read'},
-              { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-write'},
-              { prop: 'unit', label: '单位',minWidth:100,slotName:'preview-unit'},
-              { prop: 'actionType', label: '动作类型',minWidth:100,slotName:'preview-action'},
-              { prop: 'alarmType', label: '告警触发类型',minWidth:100,slotName:'preview-alarm'},
+              { prop: 'serialNO', label: '序号',minWidth:50},
+              { prop: 'name', label: '名称',minWidth:220},
+              { prop: 'code', label: '编码',minWidth:250},
+              { prop: 'valueType', label: '值类型',minWidth:40,slotName:'preview-valueType'},
+              { prop: 'offSet', label: '偏移量',minWidth:50},
+              { prop: 'readFlag', label: '可读',minWidth:40,slotName:'preview-read'},
+              { prop: 'writeFlag', label: '可写',minWidth:40,slotName:'preview-write'},
+              { prop: 'unit', label: '单位',minWidth:50,slotName:'preview-unit'},
+              { prop: 'actionType', label: '动作类型',minWidth:60,slotName:'preview-action'},
+              { prop: 'alarmType', label: '告警触发类型',minWidth:60,slotName:'preview-alarm'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 
@@ -183,6 +199,8 @@ export default {
             unit_data:[], //单位
             action_data:[],  //测点动作类型
             alarm_data:[], //告警触发类型
+            //判断上传测点信息
+            judgeUpload:true,
 
        }
    },
@@ -313,7 +331,72 @@ export default {
             this.dialogInfo.title="编辑测点信息";
             this.dialogInfo.data=row;
        },
+       //导入测点时判断
+       judgeInfo:function(){
+            if(this.dialogInfo.typeTempId==""){
+                this.$message.warning("请先保存设备类型模板信息");
+                return;
+            }else{
+                this.judgeUpload=false;
+            }
+       },
+       //导入测点
+       beforeUpload:function(file){
+           let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }; //添加请求头
+
+            let fd = new FormData()
+            fd.append('filename', file)
+            fd.append('headers', config)
+            fd.append('typeTempId',this.dialogInfo.typeTempId)
+            console.log(fd)
+            this.$api.post('/pointTemplate/pointTemplateImport',fd, r => {
+                console.log(r);
+                if(r.success){
+                    this.$message({
+                        duration:0,
+                        showClose: true,
+                        type:'success',
+                        dangerouslyUseHTMLString: true,
+                        message: r.msg
+                    });
+                    this.getList();
+                }else{
+                    this.$message({
+                        duration:0,
+                        showClose: true,
+                        type:'error',
+                        dangerouslyUseHTMLString: true,
+                        message: r.msg
+                    });
+                }
+            });
+       },
+       //导出测点
+       Exportp:function(){
+            this.$api.get('/pointTemplate/pointTemplateExport', {typeTempId:this.dialogInfo.typeTempId}, r => {
+                console.log(r)
+                 var curWwwPath=window.document.location.href;  
+                //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp  
+                var pathName=window.document.location.pathname;  
+                var pos=curWwwPath.indexOf(pathName);  
+                //获取主机地址，如： http://localhost:8083  
+                var localhostPaht=curWwwPath.substring(0,pos);
+                location.href= localhostPaht+ "/pointTemplate/pointTemplateExport?typeTempId="+ this.dialogInfo.typeTempId;
+            }); 
+            
+       },
        
+    },
+    watch:{
+        'dialogInfo.typeTempId':function(val,oldval){
+            if(val!=''){
+                this.judgeUpload=false;
+            }
+        },
     },
     components:{noSubmitBtnInfo,dialogTempPoiint}
 }

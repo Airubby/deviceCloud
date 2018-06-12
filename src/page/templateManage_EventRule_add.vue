@@ -11,81 +11,76 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>名称：
+                        <div class="loncom_add_form">
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>名称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="name">
+                                        <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入名称" v-model="form_info.name"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>告警触发类型：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="alarmType">
+                                        <el-select v-model="form_info.alarmType" placeholder="告警触发类型" size="small">
+                                            <el-option
+                                            v-for="item in alarm_type"
+                                            :key="item.code"
+                                            :label="item.label"
+                                            :value="item.code">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>告警触发类型：
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>触发事件：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="eventLibName">
+                                        <el-input size="small" @focus="triggerEvents" placeholder="触发事件" v-model="form_info.eventLibName" suffix-icon="el-icon-tickets" readonly></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="alarmType">
-                                    <el-select v-model="form_info.alarmType" placeholder="告警触发类型" size="small">
-                                        <el-option
-                                        v-for="item in alarm_type"
-                                        :key="item.code"
-                                        :label="item.label"
-                                        :value="item.code">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>事件等级：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="eventLevel">
+                                        <el-select v-model="form_info.eventLevel" placeholder="事件等级" size="small">
+                                            <el-option
+                                            v-for="item in event_level"
+                                            :key="item.code"
+                                            :label="item.label"
+                                            :value="item.code">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </div>
                             </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>触发事件：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="eventLibId">
-                                    <el-select v-model="form_info.eventLibId" placeholder="触发事件" size="small">
-                                        <el-option
-                                        v-for="item in event_lib"
-                                        :key="item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>事件等级：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="eventLevel">
-                                    <el-select v-model="form_info.eventLevel" placeholder="事件等级" size="small">
-                                        <el-option
-                                        v-for="item in event_level"
-                                        :key="item.code"
-                                        :label="item.label"
-                                        :value="item.code">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>事件动作：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="action">
-                                    <el-select v-model="form_info.action" placeholder="事件动作" size="small">
-                                        <el-option :value="1" label="触发告警"></el-option>
-                                        <el-option :value="0" label="解除告警"></el-option>
-                                    </el-select>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>事件动作：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="action">
+                                        <el-select v-model="form_info.action" placeholder="事件动作" size="small">
+                                            <el-option :value="1" label="触发告警"></el-option>
+                                            <el-option :value="0" label="解除告警"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </div>
                             </div>
                         </div>
-                        <div v-if="form_info.alarmType=='bits'">
+                        <div v-if="form_info.alarmType=='bits'" class="loncom_add_form">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
                                     <em>*</em>比特位：
@@ -109,7 +104,7 @@
                         </div>
                         <div v-if="form_info.alarmType=='thr'">
                             
-                            <div class="loncom_list_boxform">
+                            <div class="loncom_list_boxform loncom_add_form">
                                 <div class="loncom_list_box_left">
                                     <em>*</em>自定义表达式：
                                 </div>
@@ -122,129 +117,130 @@
                             </div>
                             
                             <div v-if="!form_info.useFel">
-                                <div class="template_eventruleaddbox loncom_fl">
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>值选择：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="vara1">
-                                                <el-select v-model="form_info.vara1" placeholder="请选择" size="small">
-                                                    <el-option value="oldvalue" label="原值"></el-option>
-                                                    <el-option value="newvalue" label="新值"></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>运算符：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="opta">
-                                                <el-select v-model="form_info.opta" placeholder="请选择" size="small">
-                                                    <el-option value="+" label="+"></el-option>
-                                                    <el-option value="-" label="-"></el-option>
-                                                    <el-option value="*" label="*"></el-option>
-                                                    <el-option value="/" label="/"></el-option>
-                                                    <el-option value=">" label=">"></el-option>
-                                                    <el-option value="<" label="<"></el-option>
-                                                    <el-option value=">=" label=">="></el-option>
-                                                    <el-option value="<=" label="<="></el-option>
-                                                    <el-option value="!=" label="!="></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            <em>*</em>值选择：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-col :span="11">
-                                                <el-form-item prop="vara2">
-                                                    <el-select v-model="form_info.vara2" placeholder="请选择" size="small">
-                                                        <el-option value="oldvalue" label="原值"></el-option>
-                                                        <el-option value="newvalue" label="新值"></el-option>
-                                                    </el-select>
-                                                    
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <el-form-item prop="vara2">
-                                                    <el-input size="small" placeholder="" v-model="form_info.vara2"></el-input>
-                                                </el-form-item>
-                                            </el-col>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="loncom_fl" style="padding-top: 60px;">
-                                    <el-form-item prop="optc">
-                                        <el-select v-model="form_info.optc" placeholder="请选择" size="small">
-                                            <el-option value="||" label="||"></el-option>
-                                            <el-option value="&&" label="&&"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </div>
-                                <div class="template_eventruleaddbox loncom_fr">
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            值选择：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="varb1">
-                                                <el-select v-model="form_info.varb1" placeholder="请选择" size="small">
-                                                    <el-option value="oldvalue" label="原值"></el-option>
-                                                    <el-option value="newvalue" label="新值"></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            运算符：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-form-item prop="optb">
-                                                <el-select v-model="form_info.optb" placeholder="请选择" size="small">
-                                                    <el-option value="+" label="+"></el-option>
-                                                    <el-option value="-" label="-"></el-option>
-                                                    <el-option value="*" label="*"></el-option>
-                                                    <el-option value="/" label="/"></el-option>
-                                                    <el-option value=">" label=">"></el-option>
-                                                    <el-option value="<" label="<"></el-option>
-                                                    <el-option value=">=" label=">="></el-option>
-                                                    <el-option value="<=" label="<="></el-option>
-                                                    <el-option value="!=" label="!="></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </div>
-                                    </div>
-                                    <div class="loncom_list_boxform">
-                                        <div class="loncom_list_box_left">
-                                            值选择：
-                                        </div>
-                                        <div class="loncom_list_box_right">
-                                            <el-col :span="11">
-                                                <el-form-item prop="varb2">
-                                                    <el-select v-model="form_info.varb2" placeholder="请选择" size="small">
+                                <el-row :gutter="20">
+                                    <el-col :span="8">
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                <em>*</em>值选择：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="vara1">
+                                                    <el-select v-model="form_info.vara1" placeholder="请选择" size="small">
                                                         <el-option value="oldvalue" label="原值"></el-option>
                                                         <el-option value="newvalue" label="新值"></el-option>
                                                     </el-select>
                                                 </el-form-item>
-                                            </el-col>
-                                            <el-col :span="6">
-                                                <el-form-item prop="varb2">
-                                                    <el-input size="small" placeholder="" v-model="form_info.varb2"></el-input>
-                                                </el-form-item>
-                                            </el-col>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                <em>*</em>运算符：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="opta">
+                                                    <el-select v-model="form_info.opta" placeholder="请选择" size="small">
+                                                        <el-option value=">" label=">"></el-option>
+                                                        <el-option value="<" label="<"></el-option>
+                                                        <el-option value=">=" label=">="></el-option>
+                                                        <el-option value="<=" label="<="></el-option>
+                                                        <el-option value="==" label="=="></el-option>
+                                                        <el-option value="!=" label="!="></el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                <em>*</em>值选择：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-row>
+                                                <el-col :span="16">
+                                                    <el-form-item prop="vara2">
+                                                        <el-select v-model="form_info.vara2" placeholder="请选择" size="small">
+                                                            <el-option value="oldvalue" label="原值"></el-option>
+                                                            <el-option value="newvalue" label="新值"></el-option>
+                                                        </el-select>
+                                                        
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="8">
+                                                    <el-form-item prop="vara2">
+                                                        <el-input size="small" placeholder="" v-model="form_info.vara2"></el-input>
+                                                    </el-form-item>
+                                                </el-col>
+                                                </el-row>
+                                            </div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="8">
+                                        <div style="padding-top: 60px;text-align:center;">
+                                            <el-form-item prop="optc">
+                                                <el-select v-model="form_info.optc" placeholder="请选择" size="small">
+                                                    <el-option value="||" label="||"></el-option>
+                                                    <el-option value="&&" label="&&"></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="8">
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                值选择：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="varb1">
+                                                    <el-select v-model="form_info.varb1" placeholder="请选择" size="small">
+                                                        <el-option value="oldvalue" label="原值"></el-option>
+                                                        <el-option value="newvalue" label="新值"></el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                运算符：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-form-item prop="optb">
+                                                    <el-select v-model="form_info.optb" placeholder="请选择" size="small">
+                                                        <el-option value=">" label=">"></el-option>
+                                                        <el-option value="<" label="<"></el-option>
+                                                        <el-option value=">=" label=">="></el-option>
+                                                        <el-option value="<=" label="<="></el-option>
+                                                        <el-option value="==" label="=="></el-option>
+                                                        <el-option value="!=" label="!="></el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="loncom_list_boxform">
+                                            <div class="loncom_list_box_left">
+                                                值选择：
+                                            </div>
+                                            <div class="loncom_list_box_right">
+                                                <el-row>
+                                                <el-col :span="16">
+                                                    <el-form-item prop="varb2">
+                                                        <el-select v-model="form_info.varb2" placeholder="请选择" size="small">
+                                                            <el-option value="oldvalue" label="原值"></el-option>
+                                                            <el-option value="newvalue" label="新值"></el-option>
+                                                        </el-select>
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="8">
+                                                    <el-form-item prop="varb2">
+                                                        <el-input size="small" placeholder="" v-model="form_info.varb2"></el-input>
+                                                    </el-form-item>
+                                                </el-col>
+                                                </el-row>
+                                            </div>
+                                        </div>
+                                    </el-col>
+                                </el-row>
                             </div>
                         
-                            <div class="loncom_list_boxform" v-if="form_info.useFel">
+                            <div class="loncom_list_boxform loncom_add_form" v-if="form_info.useFel">
                                 <div class="loncom_list_box_left">
                                     <em>*</em>自定义表达式：
                                 </div>
@@ -253,21 +249,22 @@
                                 </div>
                             </div>
                         </div>
-                        
                     </el-form>
                 </div>
                 <SubmitBtnInfo v-on:submitInfo="submitInfo('formInfo')" ref="goBack"></SubmitBtnInfo>
             </div>
         </div>
+        <dialogTriggerEvents v-bind:dialogRulesInfo="dialogInfo" v-if="dialogInfo.visible"></dialogTriggerEvents>
     </div>
 </template>
 
 <script>
 import SubmitBtnInfo from '../components/submitBtnInfo.vue'
+import dialogTriggerEvents from '../components/dialogTriggerEvents.vue'
 export default {
 
     created () {
-        this.getELib();
+        
         this.getELevel();
         this.getAlarmType();
 
@@ -313,6 +310,7 @@ export default {
                varb2:'',
                action:'',
                eventLibId:'',
+               eventLibName:'',
                eventLevel:'',
                fel:'',
                alarmType:'',
@@ -335,8 +333,8 @@ export default {
                 action:[
                     { required: true, message: '请选择', trigger: 'change' },
                 ],
-                eventLibId:[
-                    { required: true, message: '请选择', trigger: 'change' },
+                eventLibName:[
+                    { required: true, message: '请选择', trigger: 'blur' },
                 ],
                 eventLevel:[
                     { required: true, message: '请选择', trigger: 'change' },
@@ -352,25 +350,23 @@ export default {
                 ],
            },
 
-           //事件库
-           event_lib:[],
            //事件等级
            event_level:[],
            //告警触发类型
            alarm_type:[],
+           //触发事件
+           dialogInfo:{
+                title:'触发事件选择',
+                visible:false,
+                width:'1000px',
+                eventLibId:'',
+                eventLibName:'',
+           },
 
        }
    },
     methods:{
-        //事件库
-        getELib:function(){
-            this.$api.post('/eventLib/list', {}, r => {
-                console.log(r)
-                if(r.success){
-                    this.event_lib=r.list;
-                }
-            }); 
-        },
+        
         //事件等级
         getELevel:function(){
             this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
@@ -406,6 +402,10 @@ export default {
                 }
             })
        },
+       //触发事件弹窗
+       triggerEvents:function(){
+            this.dialogInfo.visible=true;
+       },
 
     },
     watch:{
@@ -415,7 +415,11 @@ export default {
 
             }
         },
+        'dialogInfo.eventLibId':function(val,oldval){
+            this.form_info.eventLibId=this.dialogInfo.eventLibId;
+            this.form_info.eventLibName=this.dialogInfo.eventLibName;
+        },
     },
-    components:{SubmitBtnInfo}
+    components:{SubmitBtnInfo,dialogTriggerEvents}
 }
 </script>

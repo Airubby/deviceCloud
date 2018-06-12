@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="dialogInfo.title" :visible.sync="dialogInfo.visible" :width="dialogInfo.width">
-        <div class="loncom_dialog_con loncom_public_add_con" style="height:500px;overflow:auto;">
+        <div class="loncom_dialog_con loncom_public_add_con" style="height:450px;overflow:auto;">
             <el-form :model="form_info" :rules="formRules" ref="formInfo">
                 <el-row>
                     <el-col :span="12">
@@ -46,7 +46,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="valueType">
-                                    <el-select v-model="form_info.valueType" placeholder="请选择">
+                                    <el-select v-model="form_info.valueType" placeholder="请选择" size="small">
                                         <el-option
                                         v-for="item in valueType_data"
                                         :key="item.code"
@@ -65,7 +65,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="readFlag">
-                                    <el-select v-model="form_info.readFlag" placeholder="请选择">
+                                    <el-select v-model="form_info.readFlag" placeholder="请选择" size="small">
                                         <el-option
                                         v-for="item in readType_data"
                                         :key="item.code"
@@ -84,7 +84,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="writeFlag">
-                                    <el-select v-model="form_info.writeFlag" placeholder="请选择">
+                                    <el-select v-model="form_info.writeFlag" placeholder="请选择" size="small">
                                         <el-option
                                         v-for="item in writeType_data"
                                         :key="item.code"
@@ -103,7 +103,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="unit">
-                                    <el-select v-model="form_info.unit" placeholder="请选择">
+                                    <el-select v-model="form_info.unit" placeholder="请选择" size="small">
                                         <el-option
                                         v-for="item in unit_data"
                                         :key="item.code"
@@ -122,7 +122,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="storePolicy">
-                                    <el-select v-model="form_info.storePolicy" placeholder="请选择">
+                                    <el-select v-model="form_info.storePolicy" placeholder="请选择" size="small">
                                         <el-option
                                         v-for="item in store_data"
                                         :key="item.code"
@@ -180,7 +180,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="shakeType">
-                                        <el-select v-model="form_info.shakeType" placeholder="请选择">
+                                        <el-select v-model="form_info.shakeType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in shakeType_data"
                                             :key="item.code"
@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cmax">
-                                        <el-select v-model="form_info.cmax" placeholder="请选择">
+                                        <el-select v-model="form_info.cmax" placeholder="请选择" size="small">
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -226,7 +226,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cmin">
-                                        <el-select v-model="form_info.cmin" placeholder="请选择">
+                                        <el-select v-model="form_info.cmin" placeholder="请选择" size="small">
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cavg">
-                                        <el-select v-model="form_info.cavg" placeholder="请选择">
+                                        <el-select v-model="form_info.cavg" placeholder="请选择" size="small">
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -256,7 +256,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cincr">
-                                        <el-select v-model="form_info.cincr" placeholder="请选择">
+                                        <el-select v-model="form_info.cincr" placeholder="请选择" size="small">
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
-                                        <el-select v-model="form_info.actionType" placeholder="请选择">
+                                        <el-select v-model="form_info.actionType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in action_data_alarm"
                                             :key="item.code"
@@ -290,7 +290,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="alarmType">
-                                        <el-select v-model="form_info.alarmType" placeholder="请选择">
+                                        <el-select v-model="form_info.alarmType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in alarm_data_thr"
                                             :key="item.code"
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
-                                        <el-select v-model="form_info.actionType" placeholder="请选择">
+                                        <el-select v-model="form_info.actionType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in action_data"
                                             :key="item.code"
@@ -343,7 +343,7 @@
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="alarmType">
-                                            <el-select v-model="form_info.alarmType" placeholder="请选择">
+                                            <el-select v-model="form_info.alarmType" placeholder="请选择" size="small">
                                                 <el-option
                                                 v-for="item in alarm_data_thr"
                                                 :key="item.code"
@@ -391,7 +391,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
-                                        <el-select v-model="form_info.actionType" placeholder="请选择">
+                                        <el-select v-model="form_info.actionType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in action_data_alarm"
                                             :key="item.code"
@@ -410,7 +410,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="alarmType">
-                                        <el-select v-model="form_info.alarmType" placeholder="请选择">
+                                        <el-select v-model="form_info.alarmType" placeholder="请选择" size="small">
                                             <el-option
                                             v-for="item in alarm_data_bits"
                                             :key="item.code"
@@ -423,7 +423,7 @@
                             </div>
                         </el-col>
                     </div>
-                    <el-col :span="24">
+                    <el-col :span="12">
                         <div class="loncom_list_box_left">
                             备注：
                         </div>
@@ -521,14 +521,12 @@ export default {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
-                        // if(item=='triggerRules'){
-                        //     this.form_info.triggerRules=r.data.triggerRules.split(",");
-                        // }else if(item=='noTriggerRules'){
-                        //     this.form_info.noTriggerRules=r.data.noTriggerRules.split(",");
-                        // }else{
-                        //     this.form_info[item]=r.data[item];
-                        // }
-                        this.form_info[item]=r.data[item];
+                        if(item=='readFlag'||item=='writeFlag'){
+                            this.form_info[item]=(r.data[item]).toString();
+                        }else{
+                            this.form_info[item]=r.data[item];
+                        }
+                        //this.form_info[item]=r.data[item];
                     }
                     
                     this.form_info._triggerRules=this.form_info.triggerRules.split(",");

@@ -10,7 +10,7 @@
                     用户信息
                 </div>
                 <div class="loncom_public_add_con">
-                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
+                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form loncom_add_form">
                         <div class="loncom_list_boxform">
                             <div class="loncom_list_box_left">
                                 <em>*</em>名称：
@@ -47,7 +47,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="customerId">
-                                    <el-select v-model="form_info.customerId" placeholder="请选择">
+                                    <el-select v-model="form_info.customerId" placeholder="请选择" size="small">
                                         <el-option v-for="item in custNameList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="loncom_list_box_right">
                                 <el-form-item prop="roleIds">
-                                    <el-select v-model="form_info.roleIds" multiple collapse-tags placeholder="请选择">
+                                    <el-select v-model="form_info.roleIds" multiple collapse-tags placeholder="请选择" size="small">
                                         <el-option v-for="item in roleNamesList" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                     </el-select>
                                 </el-form-item>

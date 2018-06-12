@@ -11,55 +11,67 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
-                        <div class="loncom_list_boxform">                            
-                            <div class="loncom_list_box_left">
-                                <em>*</em>客户编码：
+                        <div class="loncom_add_form">
+                            <div class="loncom_list_boxform">                            
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>客户编码：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="code">
+                                        <el-input size="small" placeholder="请输入客户编码" v-model="form_info.code"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="code">
-                                    <el-input size="small" placeholder="请输入客户编码" v-model="form_info.code"></el-input>
-                                </el-form-item>
+                            <div class="loncom_list_boxform">                            
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>客户名称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="name">
+                                        <el-input size="small" placeholder="请输入客户名称" v-model="form_info.name"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </div>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>客户全称：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="fullName">
+                                        <el-input size="small" placeholder="请输入客户全称" v-model="form_info.fullName"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </div>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>联系人：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="contacts">
+                                        <el-input size="small" placeholder="请输入联系人" v-model="form_info.contacts"></el-input>
+                                    </el-form-item>
+                                </div>
+                            </div>
+                            <div class="loncom_list_boxform">
+                                <div class="loncom_list_box_left">
+                                    <em>*</em>联系电话：
+                                </div>
+                                <div class="loncom_list_box_right">
+                                    <el-form-item prop="phoneNo">
+                                        <el-input size="small" placeholder="请输入联系电话" v-model="form_info.phoneNo"></el-input>
+                                    </el-form-item>
+                                </div>
                             </div>
                         </div>
-                        <div class="loncom_list_boxform">                            
-                            <div class="loncom_list_box_left">
-                                <em>*</em>客户名称：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="name">
-                                    <el-input size="small" placeholder="请输入客户名称" v-model="form_info.name"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>客户全称：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="fullName">
-                                    <el-input size="small" placeholder="请输入客户全称" v-model="form_info.fullName"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>联系人：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="contacts">
-                                    <el-input size="small" placeholder="请输入联系人" v-model="form_info.contacts"></el-input>
-                                </el-form-item>
-                            </div>
-                        </div>
-                        <div class="loncom_list_boxform">
-                            <div class="loncom_list_box_left">
-                                <em>*</em>联系电话：
-                            </div>
-                            <div class="loncom_list_box_right">
-                                <el-form-item prop="phoneNo">
-                                    <el-input size="small" placeholder="请输入联系电话" v-model="form_info.phoneNo"></el-input>
-                                </el-form-item>
-                            </div>
+                        <div v-if="showPro">
+                            <h2 class="loncom_mtb20">项目信息：</h2>
+                            <el-search-table-pagination type="remote"
+                            :url="'/cust/listProjectByCustomer?queryKey1='+obj.id"
+                            list-field="list" 
+                            total-field="total"
+                            method='post' 
+                            border :data="table_data" :columns="table_columns">  
+                            </el-search-table-pagination>
                         </div>
                     </el-form>
                 </div>
@@ -74,12 +86,13 @@ import SubmitBtnInfo from '../components/submitBtnInfo.vue'
 export default {
 
     created () {
-        var obj = this.$route.query;
-        if(JSON.stringify(obj) == "{}"){
+        this.obj = this.$route.query;
+        if(JSON.stringify(this.obj) == "{}"){
             this.topInfo="新增客户信息";
         }else{
-            this.topInfo="编辑客户信息"
-            this.$api.post('/cust/get', {id:obj.id}, r => {
+            this.topInfo="编辑客户信息";
+            this.showPro=true;
+            this.$api.post('/cust/get', {id:this.obj.id}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -87,6 +100,7 @@ export default {
                     } 
                 }
             }); 
+            
         }
     },
     mounted() {
@@ -95,7 +109,9 @@ export default {
     data() {
        return {
            //新增编辑控制器头部显示
+           showPro:false,
            topInfo:'',
+           obj:'',
            form_info:{
                id:'',
                code:'',
@@ -121,6 +137,14 @@ export default {
                     { required: true, message: '请输入联系电话', trigger: 'blur' },
                 ],
            },
+           table_data:[],
+           table_columns:[
+              { prop: 'code', label: '编码',minWidth:100},
+              { prop: 'fullName', label: '项目全称',minWidth:100},
+              { prop: 'contacts', label: '联系人',minWidth:100},
+              { prop: 'phoneNo', label: '联系电话',minWidth:100},
+          ],
+          
        }
    },
     methods:{

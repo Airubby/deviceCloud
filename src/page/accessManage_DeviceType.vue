@@ -33,7 +33,7 @@
                                     <el-button type="primary" size="small" @click="save('formInfo')">保存</el-button>
                                 </div>
                             </div>
-                            <el-form :model="form_info" :rules="formRules" ref="formInfo">
+                            <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_add_form">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
                                         <em>*</em>类型编码：

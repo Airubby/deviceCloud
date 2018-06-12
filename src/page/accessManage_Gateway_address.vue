@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">接入网关 &gt; {{topInfo}}</span>
+            <span class="loncom_public_topinfo">接入模块 &gt; {{topInfo}}</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
@@ -10,7 +10,7 @@
                     地点信息
                 </div>
                 <div class="loncom_public_add_con">
-                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
+                    <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form" style="height:100%;">
                         <getAddress v-bind:addressInfo="form_info" v-if="showAddr"></getAddress>
                     </el-form>
                 </div>

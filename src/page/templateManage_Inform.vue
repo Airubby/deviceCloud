@@ -59,13 +59,13 @@ export default {
                 ]
             },
            table_columns:[
-              { prop: 'name', label: '名称',minWidth:100},
+              { prop: 'name', label: '名称',minWidth:50},
               { prop: 'title', label: '标题',minWidth:100},
-              { prop: 'occurContent', label: '发生告警',minWidth:100},
-              { prop: 'upContent', label: '告警升级',minWidth:100},
-              { prop: 'downContent', label: '告警降级',minWidth:100},
-              { prop: 'removeContent', label: '解除告警',minWidth:100},
-              { prop: 'confirmContent', label: '确认告警',minWidth:100},
+              { prop: 'occurContent', label: '发生告警',minWidth:150},
+              { prop: 'upContent', label: '告警升级',minWidth:150},
+              { prop: 'downContent', label: '告警降级',minWidth:150},
+              { prop: 'removeContent', label: '解除告警',minWidth:150},
+              { prop: 'confirmContent', label: '确认告警',minWidth:150},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选信息

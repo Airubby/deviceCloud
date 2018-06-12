@@ -67,14 +67,14 @@ export default {
                 ]
             },
            table_columns:[
-               { prop: 'serialNO', label: '序号',minWidth:100},
+               { prop: 'serialNO', label: '序号',minWidth:70},
                { prop: 'name', label: '名称',minWidth:100},
-               { prop: 'code', label: '编码',minWidth:100},
-              { prop: 'valueType', label: '值类型',minWidth:100},
-              { prop: 'offSet', label: '偏移量',minWidth:100},
-              { prop: 'readFlag', label: '可读',minWidth:100,slotName:'preview-readFlag'},
-              { prop: 'writeFlag', label: '可写',minWidth:100,slotName:'preview-writeFlag'},
-              { prop: 'unit', label: '单位',minWidth:100},
+               { prop: 'code', label: '编码',minWidth:250},
+              { prop: 'valueType', label: '值类型',minWidth:70},
+              { prop: 'offSet', label: '偏移量',minWidth:60},
+              { prop: 'readFlag', label: '可读',minWidth:60,slotName:'preview-readFlag'},
+              { prop: 'writeFlag', label: '可写',minWidth:60,slotName:'preview-writeFlag'},
+              { prop: 'unit', label: '单位',minWidth:70},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           propValue:'',  //根据项目筛选出项目下的设备
