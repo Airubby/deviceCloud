@@ -37,7 +37,10 @@
         </div>
     </div>
     <div class="loncom_sidebar_right" ref="content">
-        <router-view v-if="isRouterAlive"></router-view>
+        <keep-alive v-if="isRouterAlive">
+            <router-view></router-view>
+        </keep-alive>
+        
     </div>
 </div>
 </template>
@@ -101,39 +104,12 @@ export default {
    },
     methods:{
         getMenu:function(){
-            // console.log(this.loginInfo)
-            // this.getComponent(this.loginInfo.id)
-            // console.log(123)
             this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
                 if(r.success){
-                        this.navList=r.data.subMenu;
-                        // var urlStr=this.$route.path;
-                        // var urlHas=true;
-                        // for(var i=0;i<this.navList.length;i++){
-                        //     // if(this.navList[i].subMenu.length>0){
-                        //     //     for(var j=0;j<this.navList[i].subMenu.length;j++){
-                        //     //         if(this.navList[i].subMenu[j].url==urlStr){
-                        //     //             urlHas=true;
-                        //     //             break;
-                        //     //         }
-                        //     //     }
-                        //     // }else{
-                        //     //     if(this.navList[i].url==urlStr){
-                        //     //         urlHas=true;
-                        //     //         break;
-                        //     //     }
-                        //     // }
-                            
-                        // }
-                        // if(urlStr=='/index'){
-                        //     urlHas=true;
-                        // }
-                        // if(!urlHas){
-                        //     this.$router.push({path:'/notFoundComponent'});
-                        // }
-                    }else{
-                        this.$message.warning("菜单获取异常");
-                    }
+                    this.navList=r.data.subMenu;
+                }else{
+                    this.$message.warning("菜单获取异常");
+                }
                 
             }); 
         },

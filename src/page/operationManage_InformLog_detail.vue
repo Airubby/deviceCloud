@@ -127,11 +127,28 @@ export default {
 
     created () {
         var obj = this.$route.query;
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'MSG_STATE'},r => { //消息通知状态
+            if(r.success){
+                this.msg_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
         this.$api.post('/msgLog/getMsgLog', {id:obj.id}, r => {
-            console.log(r)
             if(r.success){
                 for(var item in this.form_info){
-                    this.form_info[item]=r.data[item];    
+                    if(item=="sendTime"){
+                        this.form_info[item]=(new Date(r.data[item]).Format("yyyy-MM-dd hh:mm:ss"))
+                    }else if(item=="state"){
+                        for(var i=0;i<this.msg_data.length;i++){
+                            if(r.data[item]==this.msg_data[i].code){
+                                this.form_info[item]=this.msg_data[i].label;
+                                continue;
+                            }
+                        }
+                        
+                    }else{
+                        this.form_info[item]=r.data[item];    
+                    }
+                    
                 } 
             }
         }); 
@@ -141,6 +158,7 @@ export default {
     },
     data() {
        return {
+           msg_data:[],
            form_info:{
                id:'',
                projectName:'',
