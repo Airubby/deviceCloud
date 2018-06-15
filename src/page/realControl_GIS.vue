@@ -7,7 +7,7 @@
         <div class="loncom_public_right" style="position:relative;">
             <div id="container" style="width:100%;height:100%;"></div>
             <div class="gis_left">
-                <div class="gis_left_box">
+                <div class="gis_left_box" @dblclick="runChild">
                     <h2>告警统计</h2>
                     <span>{{countPointWarn}}</span>
                 </div>
@@ -23,51 +23,22 @@
                 <div class="searchbox numScroll0">
                     <div class="searchboxcon numScrollCon0">
                         <div class="searchlist" v-for="item in projectList">
-                            <h2><span @click="projectInfo(item.id)">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
+                            <h2><span @click="projectInfo(item.id)" class="loncom_color">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>单位：{{item.fullName}}</p>
                             <p>项目位置：<span v-if="item.loca!=null&&item.loca!=''">{{item.loca.fullAddress}}</span></p>
                             <p>告警数量：<span>{{item.alarmNum}}</span></p>
-                            <p>接入：
+                            <p>接入设备类型：
                                 <span v-for="(initem,index) in item.devTypeCount">
-                                    <em v-if="index==0">{{initem.name}}[{{initem.count}}]</em>
-                                    <em v-else-if="index<3">，{{initem.name}}[{{initem.count}}]</em>
+                                    <em v-if="index==0">{{initem.name}}[<i class="loncom_color_main">{{initem.count}}</i>]</em>
+                                    <em v-else-if="index<3">，{{initem.name}}[<i class="loncom_color_main">{{initem.count}}</i>]</em>
                                 </span>
                             </p>
-                            <p><span class="loncom_color_main dangan" @click="custInfo(item.id)">[客户档案]</span></p>
+                            <p>[<span class="loncom_color dangan" @click="custInfo(item.id)">客户档案</span>]</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="gis_bottom" ref="showalarm">
-                <div class="gis_bottom_top">
-                    <h2>当前活动告警</h2>
-                    <span class="fa fa-eye" ref="eye" @click="showalarm"></span>
-                </div>
-                <div class="gis_bottom_con numScroll1">
-                    <div class="gis_bottom_conbox numScrollCon1">
-                        <div class="gis_bottomlist" v-for="item in alarmInfo">
-                            <div class="gis_bottomlist_left loncom_fl">
-                                <span :class="'alarm'+item.topLevel">{{item.topLevelName}}</span>
-                            </div>
-                            <div class="gis_bottomlist_center">
-                                <h2>{{item.name}}<span class="loncom_ml15">触发时间：{{new Date(item.occurTime).Format('yyyy-MM-dd hh:mm:ss')}}</span></h2>
-                                <p>
-                                    <span>项目：{{item.projectName}}</span>，
-                                    <span>设备：{{item.devName}}</span>，
-                                    <span>测点：{{item.pointName}}</span>，
-                                    <span>当前值：{{item.currValue}}</span>，
-                                    <span>先前值：{{item.preValue}}</span>，
-                                    <span>触发条件：{{item.conds}}</span>，
-                                    <span>更新时间：{{new Date(item.updateTime).Format('yyyy-MM-dd hh:mm:ss')}}</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="el-pagination is-background paginationbox">
-                            <ul class="pagination el-pager"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <gisBottomAlarm ref="runChildFun"></gisBottomAlarm>
         </div>
         <dialogCustInfo v-bind:dialogInfo="cust_Info" v-if="cust_Info.visible"></dialogCustInfo>
     </div>
@@ -75,7 +46,7 @@
 
 
 <script>
-
+import gisBottomAlarm from '../components/gisBottomAlarm.vue'
 import dialogCustInfo from '../components/dialogCustInfo.vue'
 export default {
     created () {
@@ -88,8 +59,8 @@ export default {
             }
             //获取项目列表
             this.getProList()
-            this.getAlarm();  //底部告警信息
         }); 
+
     },
     mounted() {
         var _this=this;
@@ -104,11 +75,7 @@ export default {
                 _this.getProList()
             }
         }
-        $(this.$refs.showalarm).find(".gis_bottom_top").on("dblclick",function(){
-            _this.showalarm();
-        })
         numScroll(0)
-        numScroll(1)
         
        
     },
@@ -122,9 +89,6 @@ export default {
            projectList:[],
            map:'',
            searchInfo:'',
-           show_alarm:true, //点击底部是否展示显示告警列表
-           alarmInfo:[],  //底部告警列表
-
            cust_Info:{
                 title:'客户档案信息',
                 visible:false,
@@ -132,86 +96,10 @@ export default {
                 projectId:'',
            },
 
-           //底部告警分页
-           pagin:{
-                pageNo:1,
-                pageSize:10,
-                total:'',
-                pageTotal:'',
-           }
-           
-
        }
    },
     methods:{
-        //分页
-        paginationFn:function(){
-            console.log(131231312)
-            var _this=this;
-            var current = this.pagin.pageNo;  //当前页
-            var total = this.pagin.pageTotal;  //总共页
-            var show = this.pagin.pageTotal<7?this.pagin.pageTotal:7;  //显示几个页
-            var begin = current - Math.floor(show/2);  //正常情况下当前页的最左边的页码
-            begin = begin < 1 ? 1 : begin;
-            var end = begin + show; //正常情况下当前页的最右边的页码
-            if(end>total){
-                end = total + 1;
-                begin = end -show;
-                begin = begin < 1 ? 1 : begin;
-            }
-            var container = document.getElementsByClassName('pagination')[0];
-            container.innerHTML = "";
-            var prevElement = document.createElement('li');
-            prevElement.classList.add('active');
-            prevElement.innerHTML='<a href="#" aria-label="Previous" data-num="min"><span aria-hidden="true">&laquo;</span></a>';
-            if(current==1){
-                prevElement.classList.add('disabled');
-            }
-            container.appendChild(prevElement);
-            for(var i=begin;i<end;i++){
-                var liElement = document.createElement('li');
-                liElement.innerHTML = '<a href="#" data-num="'+i+'">' + i + '</a>';
-                if (i == current) {
-                    // 此时是当前页
-                    liElement.classList.add('active');
-                }
-                container.appendChild(liElement);
-            }
-            var nextElement = document.createElement('li');
-                nextElement.classList.add('active');
-                nextElement.innerHTML = '<a href="#" aria-label="Next" data-num="add"><span aria-hidden="true">&raquo;</span></a>';
-                if(current == total){
-                nextElement.classList.add('disabled');
-                }
-                container.appendChild(nextElement);
-            
-             $('.pagination').find("li").on("click",function(){
-                 if(!$(this).hasClass("disabled")){
-                     if($(this).find("a").data("num")=="add"){
-                         _this.pagin.pageNo+=1;
-                     }else if($(this).find("a").data("num")=="min"){
-                         _this.pagin.pageNo-=1;
-                     }else{
-                        _this.pagin.pageNo=$(this).find("a").data("num");
-                     }  
-                    _this.getAlarm();
-                 }
-                
-            })
-        },
-        //获取底部告警
-        getAlarm:function(){
-            this.alarmInfo=[];
-            this.$api.post('/gitMap/listPointWarn', {pageNo:this.pagin.pageNo,pageSize:this.pagin.pageSize}, r => {
-                console.log(r)
-                if(r.success){
-                    this.alarmInfo=r.list;
-                    this.pagin.pageTotal=r.pageTotal;
-                    console.log(this.alarmInfo)
-                    this.paginationFn();
-                }
-            }); 
-        },
+        
         //获取项目列表，搜索项目列表
         getProList:function(){
             this.$api.post('/gitMap/projectList', {queryKey:this.searchInfo}, r => {
@@ -276,25 +164,7 @@ export default {
                 this.$message.warning("还没有设置位置信息，请到项目管理中添加位置信息");
             }
         },
-        
-        //底部告警信息显示隐藏
-       showalarm:function(){
-            if(this.show_alarm){
-                $(this.$refs.showalarm).css({
-                    "bottom":"0px",
-                    "transition":"all 0.4s ease-in"
-                });
-                $(this.$refs.eye).addClass("fa-eye-slash");
-                this.show_alarm=false;
-            }else{
-                $(this.$refs.showalarm).css({
-                    "bottom":"-300px",
-                    "transition":"all 0.4s ease-in"
-                });
-                $(this.$refs.eye).removeClass("fa-eye-slash");
-                this.show_alarm=true;
-            }
-       },
+    
        //单位档案
        custInfo:function(id){
             this.cust_Info.projectId=id;
@@ -303,7 +173,9 @@ export default {
        //项目详情
        projectInfo:function(id){
            this.$router.push({path:'/realControl/gis/info',query:{projectId:id}});
-       }
+       },
+       //点击弹出告警列表
+       runChild:function(){this.$refs.runChildFun.showalarm()},
 
 
     },
@@ -311,19 +183,8 @@ export default {
         map:function(val,oldval){
             this.getMap();
         },
-        // pagin:{
-        //   handler:function(val,oldval){
-        //       console.log(this.pagin)
-        //       this.getAlarm();
-        //       if(this.alarmInfo.length>0){
-        //         this.paginationFn();
-        //       }
-              
-        //   },
-        //   deep: true
-        // },
-
+        
    },
-    components:{dialogCustInfo}
+    components:{dialogCustInfo,gisBottomAlarm}
 }
 </script>

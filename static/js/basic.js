@@ -196,7 +196,7 @@ function wsConnection(port, type, callback) {
 
 
 
-//echarts 图 index也有用
+//echarts 图
 function echartLine(ID,xData,yData){
     var myChart = echarts.init(document.getElementById(ID));
     option = {
@@ -318,17 +318,99 @@ function barChar(ID,xData,yData){
     myChart.setOption(option, true);
     return myChart; 
 }
-
-function piemoreChar(ID,xData,yData,allAlarm) {
+function LineChar(ID,xData,yData,color){
+    //color=["#DA632A","#f7bca0","#ffe9de"]
     var myChart = echarts.init(document.getElementById(ID));
+    option = {
+        color:[color[0]],
+        tooltip : {
+            trigger: 'axis'
+        },
+        grid: {
+            left: '20px',
+            right: '20px',
+            top:'5px',
+            bottom: '10px',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            axisTick:{
+                show:false
+            }, 
+            axisLine:{
+                show:false,
+                lineStyle:{
+                    color:"#304a5d",
+                    width:1,
+                }
+            },
+            axisLabel:{
+                color:"#ccc"    
+            },     
+            data: xData
+        },
+        yAxis: {
+            axisTick:{
+                show:false,
+            },
+            splitLine:{
+                show:true,
+                lineStyle:{
+                    color:"#EAEEF1",
+                    width:1,
+                    type:"solid",
+                }
+            },
+            axisLine:{
+                show:false
+            },
+            axisLabel:{
+                color:"#ccc",
+                formatter: '{value}'
+            }
+        },
+        series: [{
+            data: yData,
+            type: 'line',
+            lineStyle:{
+                width:5,
+                color:'#DA632A'
+            },
+            smooth: true,
+            symbol:"line", //不要圆圈
+            symbolSize:0, //平滑的时候设置为0
+            areaStyle: {normal: {color:new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                    {offset: 0, color: color[1]},
+                    {offset: 0.99, color: color[2]}
+                ]
+            )}},
+
+        }]
+    };
+    myChart.setOption(option, true);
+    return myChart;
+}
+function piemoreChar(ID,xData,yData,allAlarm,color) {
+    var myChart = echarts.init(document.getElementById(ID));
+    var _color=["#e92f0d","#fbf320","#09c","#3ff504"];
+    if(color){
+        for(var i=0;i<color.length;i++){
+            if(color[i]!=""){
+                _color[i]=color[i];
+            }
+        }
+    }
     var option = {
-        color:["#e92f0d","#fbf320","#ccc","#3ff504"],
+        color:_color,
         title:{
             text:"告警总数："+allAlarm,  
             top: 15,
             left:15,
             textStyle:{
-                color:"#DA632A",
+                color:_color[0],
             },
         },
         tooltip: {
@@ -336,8 +418,9 @@ function piemoreChar(ID,xData,yData,allAlarm) {
             formatter: "{b}: {c} ({d}%)"
         },
         legend: {
-            x: 'center',
-            bottom:'15px',
+            y: 'center',
+            orient: 'vertical',
+            x: '20px',
             textStyle:{
                 color:'#000'
             },
@@ -346,7 +429,7 @@ function piemoreChar(ID,xData,yData,allAlarm) {
         series: [
             {
                 type:'pie',
-                radius: ['40%', '60%'],
+                radius: ['70%', '80%'],
                 avoidLabelOverlap: false,
                 label: {
                     normal: {
@@ -374,29 +457,30 @@ function piemoreChar(ID,xData,yData,allAlarm) {
     return myChart; 
 }
 
-function twoLineChar(ID,xData,yData1,yData2,name){
+function twoLineChar(ID,xData,yData1,yData2,color1,color2,name){
     // var xData=['23','234','54'];
     // var yData1=[123,124,323]
     // var yData2=[173,324,323]
     // var name=['大大','xia']
+    // color1=["#5085FF","#B5CAFE","#F4F8FF"];
     var myChart = echarts.init(document.getElementById(ID));
     var option = {
-        color:["#DA632A","#277ace"],
+        color:[color1[0],color2[0]],
         tooltip : {
             trigger: 'axis'
         },
         legend: {
-            bottom: 10,
+            bottom: 5,
             textStyle:{
-                color:"#000"
+                color:"#ccc"
             },
             data:name
         },
         grid: {
-            left: '15px',
-            right: '45px',
-            top:'15%',
-            bottom: '15%',
+            left: '20px',
+            right: '20px',
+            top:'5px',
+            bottom: '40px',
             containLabel: true
         },
         xAxis : [
@@ -404,6 +488,7 @@ function twoLineChar(ID,xData,yData1,yData2,name){
                 type : 'category',
                 boundaryGap : false,
                 axisLine:{
+                    show:false,
                     lineStyle:{
                         color:"#333",
                         width:1,
@@ -422,6 +507,7 @@ function twoLineChar(ID,xData,yData1,yData2,name){
                     show:true,
                 },
                 axisLine:{
+                    show:false,
                     lineStyle:{
                         color:"#333",
                         width:1,
@@ -430,16 +516,16 @@ function twoLineChar(ID,xData,yData1,yData2,name){
                  splitLine:{
                     show:true,
                     lineStyle:{
-                        color:"#ccc",
+                        color:"#EAEEF1",
                         width:1,
-                        type:"dashed",
+                        type:"solid",
                     }
                 },
                 axisTick:{
                     show:false
                 },
                 axisLabel:{
-                    color:"#000",
+                    color:"#ccc",
 					formatter: '{value}'
                 }
             }
@@ -451,6 +537,13 @@ function twoLineChar(ID,xData,yData1,yData2,name){
             smooth:"true", 
             symbol:"line",
             symbolSize:0,
+            areaStyle: {normal: {color:new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                    {offset: 0, color: color1[1]},
+                    {offset: 0.99, color: color1[2]}
+                ]
+            )}},
             data:yData1
         },
         {
@@ -459,9 +552,88 @@ function twoLineChar(ID,xData,yData1,yData2,name){
             smooth:"true", //平滑
             symbol:"line", //不要圆圈
             symbolSize:0, //平滑的时候设置为0
+            areaStyle: {normal: {color:new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                    {offset: 0, color: color2[1]},
+                    {offset: 0.99, color: color2[2]}
+                ]
+            )}},
             data:yData2
         },
     ]
+    };
+    myChart.setOption(option, true);
+    return myChart; 
+}
+function gaugeChar(ID,title,value,max){
+    var myChart = echarts.init(document.getElementById(ID));
+   var option = {
+        
+        tooltip : {
+            formatter: "{a} : {c}"
+        },
+        series: [
+            {
+                name: 'PUE',
+                type: 'gauge',
+                radius:'95%',
+                min:0,
+                max:max,
+                splitNumber:0,
+                axisLine:{
+                    lineStyle:{
+                        color:[[value/max, new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        {offset: 0, color: '#F8666B'},
+                                        {offset: 0.99, color: '#5C72F7'}
+                                    ]
+                                )],[1, "#E2E2EA"]],
+                        width:'10',
+                    }
+                },
+                splitLine:{
+                    show:false
+                },
+                axisTick:{
+                    show:false
+                },
+                axisLabel:{
+                    show:false
+                },
+                pointer:{
+                    length:'75%',
+                    width:'4%'
+                },
+                itemStyle:{
+                    normal:{
+                        color:new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1,
+                                    [
+                                        {offset: 0, color: '#F8666B'},
+                                        {offset: 0.99, color: '#5C72F7'}
+                                    ]
+                                )
+                    }
+                },
+                title:{
+                    show:false
+                },
+                detail: {
+                        show: true,
+						textStyle: {
+							fontSize: 15,
+							color:'#5E73F6',
+						},
+                        formatter: title+':' + '{value}',
+                        offsetCenter: [0, '88%'],
+                        
+
+                    },
+                data: [{value: value}]
+            }
+        ]
     };
     myChart.setOption(option, true);
     return myChart; 

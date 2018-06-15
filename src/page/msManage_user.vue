@@ -125,7 +125,7 @@ export default {
 		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,action:9}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.$refs['thisRef'].searchHandler(false)
+                        this.$refs['thisRef'].searchHandler(false);
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -152,7 +152,7 @@ export default {
 		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":true}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false);
 		       		}else{
                         this.$message.warning(r.msg);
                     }
@@ -178,7 +178,7 @@ export default {
 		    	 this.$api.post('/user/batchUpdateUserState', {"ids":thisID,"action":false}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
-                        this.getList();
+                        this.$refs['thisRef'].searchHandler(false);
 		       		}else{
                         this.$message.warning(r.msg);
                     }

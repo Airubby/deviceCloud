@@ -64,13 +64,14 @@
                             </div>
                         </div>
                         <div v-if="showPro">
-                            <h2 class="loncom_mtb20">项目信息：</h2>
+                            <h2 class="loncom_mt20">项目信息：</h2>
                             <el-search-table-pagination type="remote"
-                            :url="'/cust/listProjectByCustomer?queryKey1='+obj.id"
+                            :params="table_forms.initParams"
+                            url="/cust/listProjectByCustomer"
                             list-field="list" 
                             total-field="total"
                             method='post' 
-                            border :data="table_data" :columns="table_columns">  
+                            :formOptions="table_forms" border :data="table_data" :columns="table_columns">  
                             </el-search-table-pagination>
                         </div>
                     </el-form>
@@ -138,6 +139,11 @@ export default {
                 ],
            },
            table_data:[],
+           table_forms: {
+                inline: true,
+                initParams:{queryKey1:""},
+                forms: []
+            },
            table_columns:[
               { prop: 'code', label: '编码',minWidth:100},
               { prop: 'fullName', label: '项目全称',minWidth:100},
@@ -166,6 +172,13 @@ export default {
             })
        },
 
+    },
+    watch:{
+        'form_info.id':function(val,oldval){
+            console.log(val)
+            this.table_forms.initParams.queryKey1=val;
+        },
+        
     },
     components:{SubmitBtnInfo}
 }

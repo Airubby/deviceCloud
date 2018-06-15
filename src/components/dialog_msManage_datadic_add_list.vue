@@ -34,7 +34,7 @@
                 </div>
                 <div class="loncom_list_boxform">
                     <div class="loncom_list_box_left">
-                        扩展参数一：
+                        扩展参数二：
                     </div>
                     <div class="loncom_list_box_right">
                         <el-form-item prop="var2">

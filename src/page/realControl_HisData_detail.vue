@@ -52,18 +52,23 @@ export default {
     created () {
         var obj = this.$route.query;
         this.forms.queryKey1=obj.id;
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_REGULARTYPE'},r => { //测点规整类型
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_REGULARTYPE'},r => { //测点规整类型
             console.log(r)
             if(r.success){
                 this.typelist=r.data
             }else{this.$message.warning(r.msg);}
         });
+        
     },
     mounted() {
         scrollCon();
         this.getData();
-        
+        var _this=this;
+        $(window).resize(function () {
+            _this._echartLine.resize();
+        });
     },
+  
     data() {
        return {
            typelist:[],
@@ -77,7 +82,7 @@ export default {
                 datetime:'',
                 type:'',
            },
-           
+           _echartLine:'',
 
        }
    },
@@ -92,7 +97,7 @@ export default {
                         xData.push(r.list[i][0])
                         yData.push(r.list[i][1])
                     }
-                    echartLine("echartLine",xData,yData)
+                    this._echartLine=echartLine("echartLine",xData,yData)
                 }else{this.$message.warning(r.msg);}
             });
         },
@@ -109,7 +114,7 @@ export default {
            }
            this.getData();
        },
-
+       
     },
     components:{noSubmitBtnInfo}
 }

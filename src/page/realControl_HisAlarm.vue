@@ -48,12 +48,12 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
-                this.table_forms.forms[0].options.unshift({'id':'',name:'全部'})
+                this.table_forms.forms[0].options.unshift({'id':'',name:''})
             }
         }); 
         
         //获取事件状态
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_STATE'},r => { 
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_STATE'},r => { 
             console.log(r)
             if(r.success){
                 this.eventType=r.data;
@@ -83,7 +83,6 @@ export default {
         var _this=this;
         var dev_type=[];
         function spread(menus) {
-            console.log(menus)
             if(menus!=undefined&&menus.length>0){
                 for (var i=0; i < menus.length; i++ ) {
                     var menu = Object.assign({}, menus[i])
@@ -94,7 +93,6 @@ export default {
                     }
                 }
             }
-            console.log(_this.table_forms.forms[1].options)
         }
 
     },
@@ -111,8 +109,8 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[{'id':'',name:'全部'}],valueKey:'id',labelKey:'name' },
-                    {prop:'queryKey2', placeholder:'设备类型',itemType: 'select',options:[{'id':'',name:'全部'}],valueKey:'id',labelKey:'name'},
+                    { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name' },
+                    {prop:'queryKey2', placeholder:'设备类型',itemType: 'select',options:[{'id':'',name:''}],valueKey:'id',labelKey:'name'},
                     {prop:'queryKey3',placeholder:'设备编码/名称'},
                     {prop:'queryKey4',placeholder:'省份名'},
                     {prop:'queryKey5',placeholder:'城市名'},

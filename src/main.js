@@ -40,6 +40,7 @@ Vue.prototype.getComponent = function (id,loginIn){
         {path:'/accessManage/client/add',component:(resolve) => require(['@/page/accessManage_Client_Add'], resolve)}, //新增客户信息
         {path:'/accessManage/project',component:(resolve) => require(['@/page/accessManage_Project'], resolve)},//项目管理
         {path:'/accessManage/project/add',component:(resolve) => require(['@/page/accessManage_Project_add'], resolve)},//项目管理新增
+        {path:'/accessManage/project/msg',component:(resolve) => require(['@/page/accessManage_Project_msg'], resolve)},//项目管理消息接收组
         {path:'/accessManage/gateway',component:(resolve) => require(['@/page/accessManage_Gateway'], resolve)}, //接入网关
         {path:'/accessManage/gateway/add',component:(resolve) => require(['@/page/accessManage_Gateway_add'], resolve)}, //接入网关
         {path:'/accessManage/gateway/address',component:(resolve) => require(['@/page/accessManage_Gateway_address'], resolve)}, //地点信息

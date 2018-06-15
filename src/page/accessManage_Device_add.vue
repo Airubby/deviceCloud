@@ -141,12 +141,12 @@ export default {
             }
         }); 
 
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
             if(r.success){
                 this.action_data=r.data;
             }else{this.$message.warning(r.msg);}
         });
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
             if(r.success){
                 this.alarm_data=r.data;
             }else{this.$message.warning(r.msg);}

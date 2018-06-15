@@ -51,7 +51,7 @@
 export default {
     created () {
         //this.getList();
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
             console.log(r.data)
             if(r.success){
                 this.alarm_data=r.data;

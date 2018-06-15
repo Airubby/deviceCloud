@@ -67,7 +67,7 @@ export default {
         this.getList();
         //解除告警：
         this.getList1();
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
             console.log(r.data)
             if(r.success){
                 this.alarm_data=r.data;
@@ -139,7 +139,7 @@ export default {
                 if(this.multipleSelection.length>0){
                     ids=this.multipleSelection;
                 }else{
-                    this.$message.warning("请勾选需要删除的用户");
+                    this.$message.warning("请勾选需要删除的项");
                     return;
                 }
            }
@@ -178,10 +178,10 @@ export default {
             if(row!=undefined&&row.id!=undefined){ //单条删除
                ids.push(row.id);
            }else{  //多条删除
-                if(this.multipleSelection.length>0){
-                    ids=this.multipleSelection;
+                if(this.multipleSelection1.length>0){
+                    ids=this.multipleSelection1;
                 }else{
-                    this.$message.warning("请勾选需要删除的用户");
+                    this.$message.warning("请勾选需要删除的项");
                     return;
                 }
            }

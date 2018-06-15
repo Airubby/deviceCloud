@@ -17,12 +17,6 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                          
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                     <template slot-scope="scope" slot="vaild">
-                        <div>
-                            <span v-if="scope.row.vaild==true||scope.row.vaild=='true'">有效</span>
-                            <span v-else>无效</span>
-                        </div>
-                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
@@ -70,7 +64,6 @@ export default {
               { prop: 'name', label: '名称',minWidth:100},
               { prop: 'code', label: '编码',minWidth:100},
               { prop: 'remark', label: '备注',minWidth:300},
-              { prop: 'vaild', label: '是否有效',slotName:'vaild',minWidth:60},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选框

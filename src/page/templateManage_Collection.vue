@@ -45,7 +45,7 @@
 
 export default {
     created () {
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
             if(r.success){
                 console.log(r)
                 this.transferCode_data=r.data;

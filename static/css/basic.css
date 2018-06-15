@@ -43,7 +43,7 @@ a{
   cursor: pointer;
   color: #666;
 }
-em{
+em,i{
   font-style: normal;
 }
 .loncom_ml5{
@@ -374,7 +374,6 @@ em{
 .loncom_public_filter{
   width: 100%;
   height: 40px;
-  line-height: 40px;
   background: #fff;
 }
 .loncom_filter_group{
@@ -588,6 +587,10 @@ input:-webkit-autofill {
   margin-bottom: 20px;
   border-radius: 10px;
   font-size: 16px;
+  
+}
+.gis_left .gis_left_box:nth-of-type(1){
+  cursor: pointer;
 }
 .gis_left .gis_left_box span{
   font-size: 26px;
@@ -625,9 +628,7 @@ input:-webkit-autofill {
 }
 .gis_right .searchlist h2 span{
   cursor: pointer;
-}
-.gis_right .searchlist h2 span:hover{
-  color: #ce612e;
+  font-weight: bold;
 }
 .gis_right .searchlist h2 i{
   color: #ce612e;
@@ -824,45 +825,42 @@ input:-webkit-autofill {
 }
 /*首页*/
 .index_content{
-  padding: 20px 0 20px 20px;
+  padding: 20px 0 0 20px;
+  height: 100%;
 }
 .index_box{
   padding-right: 20px;
   float: left;
-  height: 300px;
+  height: calc(35% - 20px);
   margin-bottom: 20px;
-}
-.index_box1{
-  width: 65%;
-  height: 300px;
+  width: 50%;
+  overflow: hidden;
 }
 .index_box2{
-  width: 35%;
-  height: 300px;
-}
-.index_box3{
-  width: 50%;
-}
-.index_box4{
   width: 100%;
+  height: calc(30% - 20px);
 }
+
 .boxcontent{
   width: 100%;
   height: 100%;
-  border: 1px solid #E0E0E0;
   background: #fff;
+  box-shadow: 0px 0px 5px #d9dace;
 }
 .index_box_title{
     width: 100%;
     height: 40px;
     line-height: 40px;
-    background: #F3F3F3;
     text-indent: 15px;
-    border-bottom: 1px solid #e0e0e0;
 }
 .index_box_con{
   width: 100%;
   height: calc(100% - 40px);
+}
+.index_boxgauge{
+  width: 20%;
+  height: 100%;
+  float: left;
 }
 
 

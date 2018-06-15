@@ -2,8 +2,8 @@
     <div class="top_loginInfo">
         <div class="top_loginInfo_con">
             <span class="top_time">{{top_time}}</span>
-            <span class="top_people" @click="showInfo"><img src="static/images/top_people.svg"><em>{{user_info.username}}</em></span>
-            <span class="top_logout" @click="logout"><img src="static/images/top_logout.svg"></span>
+            <span class="top_people" @click="showInfo"><img src="/static/images/top_people.svg"><em>{{user_info.username}}</em></span>
+            <span class="top_logout" @click="logout"><img src="/static/images/top_logout.svg"></span>
         </div>
         <userInfo v-bind:dialogInfo="user_info"></userInfo>
     </div>

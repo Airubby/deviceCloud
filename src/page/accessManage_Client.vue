@@ -62,9 +62,9 @@ export default {
               { prop: 'code', label: '客户编码',minWidth:100},
               { prop: 'name', label: '客户名称',minWidth:150},
               { prop: 'fullName', label: '客户全称',minWidth:250},
-              { prop: 'contacts', label: '联系人',minWidth:100},
-              { prop: 'phoneNo', label: '联系电话',minWidth:100},
-              { prop: 'createTime', label: '创建时间',minWidth:100},
+              { prop: 'contacts', label: '联系人',minWidth:60},
+              { prop: 'phoneNo', label: '联系电话',minWidth:80},
+              { prop: 'createTime', label: '创建时间',minWidth:120},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
 

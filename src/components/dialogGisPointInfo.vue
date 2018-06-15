@@ -130,7 +130,7 @@ export default {
                 inline: true,
                 size:'small',
                 submitBtnText: '搜索',
-                 initParams:{},
+                initParams:{queryKey:''},
                 forms: [
                     { prop: 'queryKey1', label: '',placeholder:'名称/编码' },
                 ]
@@ -151,7 +151,7 @@ export default {
     },
     watch:{
         'form_info.id':function(val,oldval){
-            this.table_forms.initParams[queryKey]=val;
+            this.table_forms.initParams.queryKey=val;
         },
         
     },

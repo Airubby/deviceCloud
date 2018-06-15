@@ -34,17 +34,6 @@
                             </div>
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>是否有效：
-                                </div>
-                                <div class="loncom_list_box_right">
-                                    <el-radio-group v-model="form_info.vaild">
-                                        <el-radio :label="true">有效</el-radio>
-                                        <el-radio :label="false">无效</el-radio>
-                                    </el-radio-group>
-                                </div>
-                            </div>
-                            <div class="loncom_list_boxform">
-                                <div class="loncom_list_box_left">
                                     备注：
                                 </div>
                                 <div class="loncom_list_box_right">

@@ -34,6 +34,7 @@
 <script>
 
 export default {
+    
     created () {
         
         //获取项目
@@ -41,6 +42,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options.unshift({'id':'',name:''})
             }
         }); 
         //获取设备
@@ -87,6 +89,7 @@ export default {
                 console.log(r)
                 if(r.success){
                     this.table_forms.forms[1].options=r.list;
+                    this.table_forms.forms[1].options.unshift({'id':'',name:''})
                 }
             });
         },
@@ -94,9 +97,7 @@ export default {
        detail:function(row){
             this.$router.push({path:'/realControl/hisData/detail',query:{id:row.id}});
        },
-       searchHandler:function(){
-            this.$message.info("请选择项目和设备查询信息");
-       },
+       
 
     },
      watch:{

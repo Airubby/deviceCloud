@@ -20,6 +20,9 @@
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
                             <p>
+                                <a href="javascript:;" class="loncom_color" @click="msgGroup(scope.row)">消息接收组</a> 
+                            </p>
+                            <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                 <em>|</em> 
                                 <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
@@ -60,22 +63,22 @@ export default {
                 // {id:'1',name:'小微产品',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
            table_forms: {
-            inline: true,
-            size:'small',
-            submitBtnText: '搜索',
-            forms: [
-                    { prop: 'queryKey', label: '',placeholder:'名称' },
-                ]
+                inline: true,
+                size:'small',
+                submitBtnText: '搜索',
+                forms: [
+                        { prop: 'queryKey', label: '',placeholder:'名称' },
+                    ]
             },
            table_columns:[
               { prop: 'code', label: '项目编码',minWidth:60},
               { prop: 'name', label: '项目名称',minWidth:100},
               { prop: 'fullName', label: '项目全称',minWidth:150},
               { prop: 'custName', label: '所属客户',minWidth:100},
-              { prop: 'contacts', label: '联系人',minWidth:70},
-              { prop: 'phoneNo', label: '联系电话',minWidth:90},
+              { prop: 'contacts', label: '联系人',minWidth:60},
+              { prop: 'phoneNo', label: '联系电话',minWidth:80},
               { prop: 'loca', label: '项目位置',slotName:'preview-loca',minWidth:250},
-              { prop: 'createTime', label: '创建时间',minWidth:80},
+              { prop: 'createTime', label: '创建时间',minWidth:120},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
           //勾选项
@@ -126,6 +129,10 @@ export default {
        //编辑
        edit:function(row){
             this.$router.push({path:'/accessManage/project/add',query:{id:row.id}});
+       },
+       //消息接收组
+       msgGroup:function(row){
+            this.$router.push({path:'/accessManage/project/msg',query:{id:row.id}});
        },
        //新增
        add:function(){

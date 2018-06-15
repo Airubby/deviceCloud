@@ -24,10 +24,10 @@
                         <span v-else>离线</span>
                     </template>
                     <template slot-scope="scope" slot="preview-dtype">
-                        {{scope.row.name}}
+                        {{scope.row.dtype.name}}
                     </template>
                     <template slot-scope="scope" slot="preview-aclient">
-                        {{scope.row.name}}
+                        {{scope.row.aclient.name}}
                     </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>

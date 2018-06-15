@@ -129,13 +129,13 @@
                             <el-col :span="8">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>值选择：
+                                        <em>*</em>采集值：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="vara1">
                                             <el-select v-model="form_info.vara1" placeholder="请选择" size="small">
-                                                <el-option value="oldvalue" label="原值"></el-option>
-                                                <el-option value="newvalue" label="新值"></el-option>
+                                                <el-option value="oldvalue" label="上次采集值"></el-option>
+                                                <el-option value="newvalue" label="当前采集值"></el-option>
                                             </el-select>
                                         </el-form-item>
                                     </div>
@@ -159,25 +159,19 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>值选择：
+                                        <em>*</em>采集值：
                                     </div>
                                     <div class="loncom_list_box_right">
-                                        <el-row>
-                                        <el-col :span="16">
-                                            <el-form-item prop="vara2">
-                                                <el-select v-model="form_info.vara2" placeholder="请选择" size="small">
-                                                    <el-option value="oldvalue" label="原值"></el-option>
-                                                    <el-option value="newvalue" label="新值"></el-option>
-                                                </el-select>
-                                                
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="8">
-                                            <el-form-item prop="vara2">
-                                                <el-input size="small" placeholder="" v-model="form_info.vara2"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                        </el-row>
+                                        <el-form-item prop="vara2">
+                                            <el-autocomplete
+                                            class="inline-input"
+                                            v-model="form_info.vara2"
+                                            :fetch-suggestions="querySearch"
+                                            placeholder="请输入或选择内容"
+                                                size="small"
+                                                style="width:100%"
+                                            ></el-autocomplete>
+                                        </el-form-item>
                                     </div>
                                 </div>
                             </el-col>
@@ -194,13 +188,13 @@
                             <el-col :span="8">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        值选择：
+                                        采集值：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="varb1">
                                             <el-select v-model="form_info.varb1" placeholder="请选择" size="small">
-                                                <el-option value="oldvalue" label="原值"></el-option>
-                                                <el-option value="newvalue" label="新值"></el-option>
+                                                <el-option value="oldvalue" label="上次采集值"></el-option>
+                                                <el-option value="newvalue" label="当前采集值"></el-option>
                                             </el-select>
                                         </el-form-item>
                                     </div>
@@ -224,24 +218,19 @@
                                 </div>
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        值选择：
+                                        采集值：
                                     </div>
                                     <div class="loncom_list_box_right">
-                                        <el-row>
-                                        <el-col :span="16">
-                                            <el-form-item prop="varb2">
-                                                <el-select v-model="form_info.varb2" placeholder="请选择" size="small">
-                                                    <el-option value="oldvalue" label="原值"></el-option>
-                                                    <el-option value="newvalue" label="新值"></el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="8">
-                                            <el-form-item prop="varb2">
-                                                <el-input size="small" placeholder="" v-model="form_info.varb2"></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                        </el-row>
+                                        <el-form-item prop="varb2">
+                                            <el-autocomplete
+                                            class="inline-input"
+                                            v-model="form_info.varb2"
+                                            :fetch-suggestions="querySearch"
+                                            placeholder="请输入或选择内容"
+                                                size="small"
+                                                style="width:100%"
+                                            ></el-autocomplete>
+                                        </el-form-item>
                                     </div>
                                 </div>
                             </el-col>
@@ -313,7 +302,6 @@ export default {
                fel:'',
                alarmType:'',
                bitIndex:'',
-               vara2:'',
            },
            formRules:{
                 name:[
@@ -332,7 +320,7 @@ export default {
                     { required: true, message: '请选择', trigger: 'change' },
                 ],
                 eventLibName:[
-                    { required: true, message: '请选择', trigger: 'blur' },
+                    { required: true, message: '请选择', trigger: 'change' },
                 ],
                 eventLevel:[
                     { required: true, message: '请选择', trigger: 'change' },
@@ -359,14 +347,19 @@ export default {
                 eventLibId:'',
                 eventLibName:'',
            },
-           
+           //输入框带提示选择
+           restaurants:[{label:'newvalue',value:'当前采集值'},{label:'oldvalue',value:'上次采集值'}],
 
         }
     },
     methods:{
+         //输入框带提示选择   
+        querySearch:function(queryString, cb) {
+            cb(this.restaurants);
+        },
         //事件等级
         getELevel:function(){
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
                 console.log(r)
                 if(r.success){
                     this.event_level=r.data;
@@ -375,7 +368,7 @@ export default {
         },
         //告警触发类型
         getAlarmType:function(){
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { 
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { 
                 console.log(r)
                 if(r.success){
                     this.alarm_type=r.data;
@@ -390,11 +383,21 @@ export default {
        dialogSure:function(formName){
             this.$refs[formName].validate((valid) => {
                 if(valid){
-                    console.log(this.form_info)
+                    if(this.form_info.alarmType=='thr'){
+                        if(this.form_info.varb2=="当前采集值"){
+                            this.form_info.varb2="newvalue"
+                        }else if(this.form_info.varb2=="上次采集值"){
+                            this.form_info.varb2="oldvalue"
+                        }
+                        if(this.form_info.vara2=="当前采集值"){
+                            this.form_info.vara2="newvalue"
+                        }else if(this.form_info.vara2=="上次采集值"){
+                            this.form_info.vara2="oldvalue"
+                        }
+                    }
                     this.$api.post('/device/saveEventRule', this.form_info, r => {
                         console.log(r)
                         if(r.success){
-                            console.log(this)
                             this.dialogRulesInfo.visible=false;
                             this.$message.success(r.msg);
                             this.$parent.$parent.getList();

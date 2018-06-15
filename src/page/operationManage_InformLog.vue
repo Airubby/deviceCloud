@@ -17,6 +17,14 @@
                         <el-button type="primary" size="small" @click="clear">清除</el-button>
                     </div>                                                
                     <el-table-column slot="prepend" type="selection"></el-table-column>
+                    <template slot-scope="scope" slot="preview-state">
+                        <div v-for="item in msg_data">
+                            <span v-if="item.code==scope.row.state">{{item.label}}</span>
+                        </div>
+                    </template>
+                    <template slot-scope="scope" slot="preview-sendTime">
+                        <span v-if="scope.row.sendTime">{{(new Date(scope.row.sendTime)).Format("yyyy-MM-dd hh:mm:ss")}}</span>
+                    </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
                     </template>
@@ -34,14 +42,24 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options.unshift({'id':'',name:''})
             }
         }); 
+
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'MSG_STATE'},r => { //消息通知状态
+            console.log(r.data)
+            if(r.success){
+                this.msg_data=r.data;
+            }else{this.$message.warning(r.msg);}
+        });
+
     },
     mounted() {
         scrollCon();
     },
     data() {
        return {
+           msg_data:[],  //消息通知状态
            table_data:[
                 // {id:'1',name:'小张',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
@@ -50,9 +68,8 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
-                    { prop: 'queryKey1', label: '',placeholder:'项目ID',itemType: 'select',
-                        options:[],valueKey:'id',labelKey:'name' },
-                    { prop: 'queryKey2', label: '',placeholder:'邮件信息' },
+                    { prop: 'queryKey1', label: '',placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name' },
+                    { prop: 'queryKey2', label: '',placeholder:'邮件地址' },
                     { prop: 'queryKey3-queryKey4', label: '',placeholder:'时间',itemType: 'datetimerange' },
                 ]
             },
@@ -61,8 +78,8 @@ export default {
               { prop: 'addr', label: '邮件地址',minWidth:100},
               { prop: 'title', label: '标题',minWidth:160},
               { prop: 'appellation', label: '称谓',minWidth:80},
-              { prop: 'sendTime', label: '发送时间',minWidth:90},
-              { prop: 'state', label: '状态',minWidth:60},
+              { prop: 'sendTime', label: '发送时间',minWidth:120,slotName:'preview-sendTime'},
+              { prop: 'state', label: '状态',minWidth:60,slotName:'preview-state'},
               { prop: 'bizType', label: '类型',minWidth:60},
               { prop: 'bizKey', label: '业务主键',minWidth:100},
               { prop: 'channelType', label: '发送通道',minWidth:60},

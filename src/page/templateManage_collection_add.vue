@@ -110,7 +110,7 @@ export default {
         }
 
         
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
             if(r.success){
                 this.transferCode_data=r.data;
             }else{this.$message.warning(r.msg);}

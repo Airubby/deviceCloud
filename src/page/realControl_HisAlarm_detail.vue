@@ -41,7 +41,7 @@
                         <el-table-column label="所属工程" prop="projectName"></el-table-column>
                         <el-table-column label="设备名称" prop="devName"></el-table-column>
                         <el-table-column label="测点名称" prop="pointName"></el-table-column>
-                        <el-table-column label="时间名称" prop="name"></el-table-column>
+                        <el-table-column label="事件名称" prop="name"></el-table-column>
                         <el-table-column label="最高等级" prop="topLevelName"></el-table-column>
                         <el-table-column label="触发时间" prop="occurTime">
                             <template slot-scope="prop">
@@ -73,14 +73,14 @@ export default {
         this.form_info.id=obj.id;
 
         //获取事件等级
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
             console.log(r)
             if(r.success){
                 this.eventLevel=r.data;
             }else{this.$message.warning(r.msg);}
         });
         //事件动作
-        this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'EVENT_ACTION'},r => { 
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_ACTION'},r => { 
             console.log(r)
             if(r.success){
                 this.eventAction=r.data;

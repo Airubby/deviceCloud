@@ -207,38 +207,38 @@ export default {
     methods:{
          //获取类型
         getType:function(){
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_VALUETYPE'},r => { //值类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_VALUETYPE'},r => { //值类型
                 console.log(r)
                 if(r.success){
                     this.valueType_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_SHAKETYPE'},r => { //抖动类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_SHAKETYPE'},r => { //抖动类型
                 if(r.success){
                     this.shakeType_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_WRITETYPE'},r => { //写类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_WRITETYPE'},r => { //写类型
                 if(r.success){
                     this.writeType_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //读类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_READTYPE'},r => { //读类型
                 if(r.success){
                     this.readType_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_UNIT'},r => { //单位
                 if(r.success){
                     this.unit_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'PACTION_TYPE'},r => { //测点动作类型
                 if(r.success){
                     this.action_data=r.data;
                 }else{this.$message.warning(r.msg);}
             });
-            this.$api.post('/sysDic/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
+            this.$api.post('/comm/getDicItemByDicCode',{dicCode:'ALARMACTION_TYPE'},r => { //告警类型
                 if(r.success){
                     this.alarm_data=r.data;
                 }else{this.$message.warning(r.msg);}

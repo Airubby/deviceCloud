@@ -53,6 +53,8 @@
                         
                         <el-button @click="getState()" type="info" size="mini" plain>获取状态</el-button>
                         <el-button @click="sendParam()" type="info" size="mini" plain>发送参数</el-button>
+                        <el-button @click="Reconnect()" type="info" size="mini" plain>强制重连</el-button>
+
                         <el-button-group>
                             <el-button @click="startCollect()" type="info" size="mini" plain>启用采集</el-button>
                             <el-button @click="stopCollect()" type="info" size="mini" plain>停用采集</el-button>
@@ -373,7 +375,33 @@ export default {
 	      });
 
        },
+       //强制重连
+       Reconnect:function(){
+            var ids=[];
+            if(this.multipleSelection.length>0){
+                ids=this.multipleSelection;
+            }else{
+                this.$message.warning("请勾选需要重连的项");
+                return;
+            }
 
+           this.$confirm("确定强制重连?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+		    	 this.$api.post('/module/forceReconnect', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+       },
        
        
 
