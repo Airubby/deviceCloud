@@ -28,6 +28,11 @@
                                 <span v-if="item.code==scope.row.msgChannel">{{item.label}}</span>
                             </div>
                         </template>
+                        <template slot-scope="scope" slot="preview-alarmLevel">
+                            <div v-for="item in alarm_level">
+                                <span v-if="item.code==scope.row.alarmLevel">{{item.label}}</span>
+                            </div>
+                        </template>
                         <template slot-scope="scope" slot="preview-handle">
                             <div>
                                 <p>
@@ -63,6 +68,13 @@ export default {
                 this.msg_type=r.data;
             }else{this.$message.warning(r.msg);}
         }); 
+         //告警等级
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+            console.log(r)
+            if(r.success){
+                this.alarm_level=r.data;
+            }else{this.$message.warning(r.msg);}
+        }); 
 
         this.getList();
        
@@ -74,6 +86,7 @@ export default {
        return {
            obj:'',
            msg_type:[],
+           alarm_level:[],
            table_data:[
                 // {id:'1',name:'小微产品',fullName:'admin',contacts:'小明',phoneNo:'15225252525',vaild:true}
            ],
@@ -81,6 +94,7 @@ export default {
               { prop: 'appellation', label: '称谓',minWidth:100},
               { prop: 'addr', label: '接收地址',minWidth:300},
               { prop: 'msgChannel', label: '通道类型',minWidth:100,slotName:'preview-msg'},
+              { prop: 'alarmLevel', label: '告警等级',minWidth:100,slotName:'preview-alarmLevel'},
               { prop: 'vaild', label: '是否启用',slotName:'preview-vaild',width:100},
               { prop: 'handle', label: '操作',slotName:'preview-handle',width:100},
           ],

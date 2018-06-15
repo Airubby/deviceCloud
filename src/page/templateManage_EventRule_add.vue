@@ -185,6 +185,7 @@
                                             <div class="loncom_list_box_right">
                                                 <el-form-item prop="varb1">
                                                     <el-select v-model="form_info.varb1" placeholder="请选择" size="small">
+                                                        <el-option value="" label=""></el-option>
                                                         <el-option value="oldvalue" label="上次采集值"></el-option>
                                                         <el-option value="newvalue" label="当前采集值"></el-option>
                                                     </el-select>

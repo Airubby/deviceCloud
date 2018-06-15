@@ -38,17 +38,19 @@
     </div>
     <div class="loncom_sidebar_right" ref="content">
         <keep-alive v-if="isRouterAlive">
-            <router-view></router-view>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>
+            <router-view v-if="!$route.meta.keepAlive && isRouterAlive"></router-view>
         
     </div>
 </div>
 </template>
 
 <script>
-import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
+
 export default {
     created () {
+        
     },
     mounted() {
         this.loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
@@ -121,7 +123,9 @@ export default {
                 clearInterval(index_getal);
             }
             this.isRouterAlive = false
-            this.$nextTick(() => (this.isRouterAlive = true))
+            this.$nextTick(() => {
+                this.isRouterAlive = true
+            })
         },   
         //初始化
         init:function(){
@@ -285,7 +289,7 @@ export default {
             })
         },
    },
-    components:{CollapseTransition}
+    components:{}
 }
 </script>
 

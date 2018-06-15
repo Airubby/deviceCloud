@@ -212,6 +212,7 @@
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cmax">
                                         <el-select v-model="form_info.cmax" placeholder="请选择" size="small">
+                                            <el-option value="" label=""></el-option>
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -227,6 +228,7 @@
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cmin">
                                         <el-select v-model="form_info.cmin" placeholder="请选择" size="small">
+                                            <el-option value="" label=""></el-option>
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -242,6 +244,7 @@
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cavg">
                                         <el-select v-model="form_info.cavg" placeholder="请选择" size="small">
+                                            <el-option value="" label=""></el-option>
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -257,6 +260,7 @@
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="cincr">
                                         <el-select v-model="form_info.cincr" placeholder="请选择" size="small">
+                                            <el-option value="" label=""></el-option>
                                             <el-option :value="true" label="是"></el-option>
                                             <el-option :value="false" label="否"></el-option>
                                         </el-select>
@@ -311,7 +315,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="enumDic">
-                                        <el-input size="small" placeholder="格式：0,高压;1,低压;" v-model="form_info.enumDic"></el-input>
+                                        <el-input size="small" placeholder="0,高压;1,低压;" v-model="form_info.enumDic"></el-input>
                                     </el-form-item>
                                 </div>
                             </div>
@@ -665,6 +669,7 @@ export default {
             this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_SHAKETYPE'},r => { //抖动类型
                 if(r.success){
                     this.shakeType_data=r.data;
+                    this.shakeType_data.unshift({code:'',label:''});
                 }else{this.$message.warning(r.msg);}
             });
             this.$api.post('/comm/getDicItemByDicCode',{dicCode:'POINT_WRITETYPE'},r => { //写类型
@@ -681,6 +686,7 @@ export default {
                 console.log(r.data)
                 if(r.success){
                     this.unit_data=r.data;
+                    this.unit_data.unshift({code:'',label:''});
                 }else{this.$message.warning(r.msg);}
             });
             this.$api.post('/comm/getDicItemByDicCode',{dicCode:'PSTORE_POLICY'},r => { //日志存储策略

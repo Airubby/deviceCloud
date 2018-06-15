@@ -13,8 +13,11 @@ import loginInfo from './components/loginInfo'
 import api from './api/index.js'
 // 将API方法绑定到全局
 Vue.prototype.$api = api
+//Vue.prototype.isRouterAlive = true
 
+Vue.prototype.reload=function(){
 
+}
 
 Vue.prototype.getComponent = function (id,loginIn){
   var componentList=[   
@@ -23,30 +26,30 @@ Vue.prototype.getComponent = function (id,loginIn){
       component:(resolve) => require(['@/page/realControl'], resolve),
       redirect:'/realControl/gis',
       children:[
-        {path:'/realControl/gis',component:(resolve) => require(['@/page/realControl_GIS'], resolve)}, //设备监控
-        {path:'/realControl/gis/info',component:(resolve) => require(['@/page/realControl_GIS_info'], resolve)}, //设备监控
-        {path:'/realControl/listView',component:(resolve) => require(['@/page/realControl_ListView'], resolve)},
-        {path:'/realControl/hisData',component:(resolve) => require(['@/page/realControl_HisData'], resolve)},//设备历史数据
-        {path:'/realControl/hisData/detail',component:(resolve) => require(['@/page/realControl_HisData_detail'], resolve)},//设备历史数据
-        {path:'/realControl/hisAlarm',component:(resolve) => require(['@/page/realControl_HisAlarm'], resolve)},//设备历史告警
-        {path:'/realControl/hisAlarm/detail',component:(resolve) => require(['@/page/realControl_HisAlarm_detail'], resolve)},//设备历史告警
+        {path:'/realControl/gis',meta:{keepAlive:false},component:(resolve) => require(['@/page/realControl_GIS'], resolve)}, //设备监控
+        {path:'/realControl/gis/info',meta:{keepAlive:false},component:(resolve) => require(['@/page/realControl_GIS_info'], resolve)}, //设备监控
+        // {path:'/realControl/listView',meta:{keepAlive:false},component:(resolve) => require(['@/page/realControl_ListView'], resolve)},
+        {path:'/realControl/hisData',meta:{keepAlive:true},component:(resolve) => require(['@/page/realControl_HisData'], resolve)},//设备历史数据
+        {path:'/realControl/hisData/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/realControl_HisData_detail'], resolve)},//设备历史数据
+        {path:'/realControl/hisAlarm',meta:{keepAlive:true},component:(resolve) => require(['@/page/realControl_HisAlarm'], resolve)},//设备历史告警
+        {path:'/realControl/hisAlarm/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/realControl_HisAlarm_detail'], resolve)},//设备历史告警
       ]
     },{ //接入管理
       path:'/accessManage',
       component:(resolve) => require(['@/page/accessManage'], resolve),
       redirect:'/accessManage/client',
       children:[
-        {path:'/accessManage/client',component:(resolve) => require(['@/page/accessManage_Client'], resolve)},//客户管理
-        {path:'/accessManage/client/add',component:(resolve) => require(['@/page/accessManage_Client_Add'], resolve)}, //新增客户信息
-        {path:'/accessManage/project',component:(resolve) => require(['@/page/accessManage_Project'], resolve)},//项目管理
-        {path:'/accessManage/project/add',component:(resolve) => require(['@/page/accessManage_Project_add'], resolve)},//项目管理新增
-        {path:'/accessManage/project/msg',component:(resolve) => require(['@/page/accessManage_Project_msg'], resolve)},//项目管理消息接收组
-        {path:'/accessManage/gateway',component:(resolve) => require(['@/page/accessManage_Gateway'], resolve)}, //接入网关
-        {path:'/accessManage/gateway/add',component:(resolve) => require(['@/page/accessManage_Gateway_add'], resolve)}, //接入网关
-        {path:'/accessManage/gateway/address',component:(resolve) => require(['@/page/accessManage_Gateway_address'], resolve)}, //地点信息
-        {path:'/accessManage/device',component:(resolve) => require(['@/page/accessManage_Device'], resolve)},//接入设备
-        {path:'/accessManage/device/detail',component:(resolve) => require(['@/page/accessManage_Device_add'], resolve)},//接入设备
-        {path:'/accessManage/deviceType',component:(resolve) => require(['@/page/accessManage_DeviceType'], resolve)},//设备类型管理
+        {path:'/accessManage/client',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Client'], resolve)},//客户管理
+        {path:'/accessManage/client/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Client_Add'], resolve)}, //新增客户信息
+        {path:'/accessManage/project',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Project'], resolve)},//项目管理
+        {path:'/accessManage/project/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Project_add'], resolve)},//项目管理新增
+        {path:'/accessManage/project/msg',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Project_msg'], resolve)},//项目管理消息接收组
+        {path:'/accessManage/gateway',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Gateway'], resolve)}, //接入网关
+        {path:'/accessManage/gateway/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Gateway_add'], resolve)}, //接入网关
+        {path:'/accessManage/gateway/address',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Gateway_address'], resolve)}, //地点信息
+        {path:'/accessManage/device',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Device'], resolve)},//接入设备
+        {path:'/accessManage/device/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_Device_add'], resolve)},//接入设备
+        {path:'/accessManage/deviceType',meta:{keepAlive:false},component:(resolve) => require(['@/page/accessManage_DeviceType'], resolve)},//设备类型管理
         
       ]
     },{
@@ -54,43 +57,42 @@ Vue.prototype.getComponent = function (id,loginIn){
       component:(resolve) => require(['@/page/operationManage'], resolve),
       redirect:'/operationManage/abnormalLog',
       children:[
-        {path:'/operationManage/abnormalLog',component:(resolve) => require(['@/page/operationManage_AbnormalLog'], resolve)},//系统异常日志
-        {path:'/operationManage/abnormalLog/detail',component:(resolve) => require(['@/page/operationManage_AbnormalLog_detail'], resolve)},//系统异常日志
-        {path:'/operationManage/operationLog',component:(resolve) => require(['@/page/operationManage_OperationLog'], resolve)},//系统操作日志
-        {path:'/operationManage/operationLog/detail',component:(resolve) => require(['@/page/operationManage_OperationLog_detail'], resolve)},//系统操作日志
-        {path:'/operationManage/control',component:(resolve) => require(['@/page/operationManage_Control'], resolve)}, //队列监控
-        {path:'/operationManage/informLog',component:(resolve) => require(['@/page/operationManage_InformLog'], resolve)},//通知消息日志
-        {path:'/operationManage/informLog/detail',component:(resolve) => require(['@/page/operationManage_InformLog_detail'], resolve)},//通知消息日志
+        {path:'/operationManage/abnormalLog',meta:{keepAlive:true},component:(resolve) => require(['@/page/operationManage_AbnormalLog'], resolve)},//系统异常日志
+        {path:'/operationManage/abnormalLog/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/operationManage_AbnormalLog_detail'], resolve)},//系统异常日志
+        {path:'/operationManage/operationLog',meta:{keepAlive:true},component:(resolve) => require(['@/page/operationManage_OperationLog'], resolve)},//系统操作日志
+        {path:'/operationManage/operationLog/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/operationManage_OperationLog_detail'], resolve)},//系统操作日志
+        // {path:'/operationManage/control',meta:{keepAlive:false},component:(resolve) => require(['@/page/operationManage_Control'], resolve)}, //队列监控
+        {path:'/operationManage/informLog',meta:{keepAlive:true},component:(resolve) => require(['@/page/operationManage_InformLog'], resolve)},//通知消息日志
+        {path:'/operationManage/informLog/detail',meta:{keepAlive:false},component:(resolve) => require(['@/page/operationManage_InformLog_detail'], resolve)},//通知消息日志
       ]
     },{
       path:'/templateManage',  //模板管理
       component:(resolve) => require(['@/page/templateManage'], resolve),
       redirect:'/templateManage/collection',
       children:[
-          {path:'/templateManage/collection',component:(resolve) => require(['@/page/templateManage_Collection'], resolve)},//采集控制模板
-          {path:'/templateManage/collection/add',component:(resolve) => require(['@/page/templateManage_collection_add'], resolve)},
-          {path:'/templateManage/deviceTypeTemp',component:(resolve) => require(['@/page/templateManage_DeviceTypeTemp'], resolve)},//设备类型模板
-          {path:'/templateManage/deviceTypeTemp/add',component:(resolve) => require(['@/page/templateManage_DeviceTypeTemp_add'], resolve)},//设备类型模板增加
-          {path:'/templateManage/eventRule',component:(resolve) => require(['@/page/templateManage_EventRule'], resolve)},//事件规则模板
-          {path:'/templateManage/eventRule/add',component:(resolve) => require(['@/page/templateManage_EventRule_add'], resolve)},//事件规则增加
-          {path:'/templateManage/inform',component:(resolve) => require(['@/page/templateManage_Inform'], resolve)},//消息模板
-          {path:'/templateManage/inform/add',component:(resolve) => require(['@/page/templateManage_Inform_add'], resolve)},//消息模板新增
-          {path:'/templateManage/eventBase',component:(resolve) => require(['@/page/templateManage_EventBase'], resolve)},//事件库
-          {path:'/templateManage/eventBase/add',component:(resolve) => require(['@/page/templateManage_EventBase_add'], resolve)},
+          {path:'/templateManage/collection',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_Collection'], resolve)},//采集控制模板
+          {path:'/templateManage/collection/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_collection_add'], resolve)},
+          {path:'/templateManage/deviceTypeTemp',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_DeviceTypeTemp'], resolve)},//设备类型模板
+          {path:'/templateManage/deviceTypeTemp/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_DeviceTypeTemp_add'], resolve)},//设备类型模板增加
+          {path:'/templateManage/eventRule',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_EventRule'], resolve)},//事件规则模板
+          {path:'/templateManage/eventRule/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_EventRule_add'], resolve)},//事件规则增加
+          {path:'/templateManage/inform',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_Inform'], resolve)},//消息模板
+          {path:'/templateManage/inform/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_Inform_add'], resolve)},//消息模板新增
+          {path:'/templateManage/eventBase',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_EventBase'], resolve)},//事件库
+          {path:'/templateManage/eventBase/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/templateManage_EventBase_add'], resolve)},
       ]
     },{
       path:'/msManage',  //系统管理
       component:(resolve) => require(['@/page/msManage'], resolve),
       redirect:'/msManage/userManage',
       children:[
-        {path:'/msManage/userManage',component:(resolve) => require(['@/page/msManage_User'], resolve)},//用户管理
-        {path:'/msManage/userManage/add',component:(resolve) => require(['@/page/msManage_user_add'], resolve)},  //新增用户信息
-        {path:'/msManage/roleManage',component:(resolve) => require(['@/page/msManage_Role'], resolve) },
-        {path:'/msManage/roleManage/add',component:(resolve) => require(['@/page/msManage_role_add'], resolve)},  //新增角色信息
-        {path:'/msManage/limitsManage',component:(resolve) => require(['@/page/msManage_Limits'], resolve) },//权限管理
-        
-        {path:'/msManage/datadicManage',component:(resolve) => require(['@/page/msManage_Datadic'], resolve) },//数据字典管理
-        {path:'/msManage/datadicManage/add',component:(resolve) => require(['@/page/msManage_datadic_add'], resolve) },  //数据字典新增
+        {path:'/msManage/userManage',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_User'], resolve)},//用户管理
+        {path:'/msManage/userManage/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_user_add'], resolve)},  //新增用户信息
+        {path:'/msManage/roleManage',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_Role'], resolve) },
+        {path:'/msManage/roleManage/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_role_add'], resolve)},  //新增角色信息
+        {path:'/msManage/limitsManage',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_Limits'], resolve) },//权限管理
+        {path:'/msManage/datadicManage',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_Datadic'], resolve) },//数据字典管理
+        {path:'/msManage/datadicManage/add',meta:{keepAlive:false},component:(resolve) => require(['@/page/msManage_datadic_add'], resolve) },  //数据字典新增
         
       ]
     },

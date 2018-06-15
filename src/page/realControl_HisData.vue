@@ -42,7 +42,7 @@ export default {
             console.log(r)
             if(r.success){
                 this.table_forms.forms[0].options=r.list;
-                this.table_forms.forms[0].options.unshift({'id':'',name:''})
+                this.table_forms.forms[0].options.unshift({id:'',name:''})
             }
         }); 
         //获取设备

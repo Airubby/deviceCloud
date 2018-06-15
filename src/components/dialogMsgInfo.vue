@@ -1,6 +1,6 @@
 <template>
     <el-dialog :title="dialogInfo.title" :visible.sync="dialogInfo.visible" :width="dialogInfo.width">
-        <div class="loncom_dialog_con loncom_public_add_con" style="height:300px;overflow:auto;">
+        <div class="loncom_dialog_con loncom_public_add_con" style="height:350px;overflow:auto;">
             <el-form :model="form_info" :rules="formRules" ref="formInfo" class="loncom_public_add_form">
             <div class="loncom_list_boxform">
                 <div class="loncom_list_box_left">
@@ -31,6 +31,23 @@
                         <el-select v-model="form_info.msgChannel" placeholder="请输入通道类型" size="small">
                             <el-option
                             v-for="item in msg_type"
+                            :key="item.code"
+                            :label="item.label"
+                            :value="item.code">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </div>
+            </div>
+            <div class="loncom_list_boxform">
+                <div class="loncom_list_box_left">
+                    <em>*</em>告警等级：
+                </div>
+                <div class="loncom_list_box_right">
+                    <el-form-item prop="alarmLevel">
+                        <el-select v-model="form_info.alarmLevel" placeholder="请输入告警等级" size="small">
+                            <el-option
+                            v-for="item in alarm_level"
                             :key="item.code"
                             :label="item.label"
                             :value="item.code">
@@ -78,7 +95,13 @@ export default {
                 this.msg_type=r.data;
             }else{this.$message.warning(r.msg);}
         }); 
-
+        //告警等级
+        this.$api.post('/comm/getDicItemByDicCode',{dicCode:'EVENT_LEVEL'},r => { 
+            console.log(r)
+            if(r.success){
+                this.alarm_level=r.data;
+            }else{this.$message.warning(r.msg);}
+        }); 
 
     },
     mounted() {
@@ -96,12 +119,14 @@ export default {
         };
         return {
             msg_type:[],
+            alarm_level:[],
            form_info:{
                id:'',
                projectId:'',
                appellation:'',
                addr:'',
                msgChannel:'',
+               alarmLevel:'',
                vaild:true,
            },
            formRules:{
@@ -114,6 +139,9 @@ export default {
                 ],
                 msgChannel:[
                     { required: true, message: '请输入通道类型', trigger: 'blur' },
+                ],
+                alarmLevel:[
+                    { required: true, message: '请输入告警等级', trigger: 'blur' },
                 ],
            },
 

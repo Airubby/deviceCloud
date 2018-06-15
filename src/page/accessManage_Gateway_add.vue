@@ -167,6 +167,7 @@
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="directConnect">
                                             <el-select v-model="form_info.directConnect" placeholder="请选择" size="small">
+                                                <el-option label="" value=""></el-option>
                                                 <el-option label="是" :value="true"></el-option>
                                                 <el-option label="否" :value="false"></el-option>
                                             </el-select>
@@ -182,6 +183,7 @@
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="handleShake">
                                             <el-select v-model="form_info.handleShake" placeholder="请选择" size="small">
+                                                <el-option label="" value=""></el-option>
                                                 <el-option label="是" :value="true"></el-option>
                                                 <el-option label="否" :value="false"></el-option>
                                             </el-select>
@@ -197,6 +199,7 @@
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="handleEvent">
                                             <el-select v-model="form_info.handleEvent" placeholder="请选择" size="small">
+                                                <el-option label="" value=""></el-option>
                                                 <el-option label="是" :value="true"></el-option>
                                                 <el-option label="否" :value="false"></el-option>
                                             </el-select>
@@ -231,14 +234,15 @@ export default {
             console.log(r)
             if(r.success){
                 this.projectList=r.list;
+                this.projectList.unshift({id:'',name:''});
             }
         }); 
         //采集控制模板：
         this.$api.post('/accessConfigTemplate/list', {}, r => {
             console.log(r)
             if(r.success){
-                console.log(r.list[0].id)
                 this.configList=r.list;
+                this.configList.unshift({id:'',name:''});
             }
         }); 
         this.$api.post('/comm/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则

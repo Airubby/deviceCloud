@@ -152,7 +152,8 @@ export default {
           ],
           
        }
-   },
+    },
+   
     methods:{
        //提交
        submitInfo:function(formName){
