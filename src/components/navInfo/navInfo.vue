@@ -106,14 +106,16 @@ export default {
    },
     methods:{
         getMenu:function(){
-            this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
-                if(r.success){
-                    this.navList=r.data.subMenu;
-                }else{
-                    this.$message.warning("菜单获取异常");
-                }
+            this.navList=this.$store.state.navList;
+            // this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
+            //     console.log(r)
+            //     if(r.success){
+            //         this.navList=r.data.subMenu;
+            //     }else{
+            //         this.$message.warning("菜单获取异常");
+            //     }
                 
-            }); 
+            // }); 
         },
         //点击刷新
         reload:function() {

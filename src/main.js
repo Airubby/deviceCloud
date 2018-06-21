@@ -8,13 +8,14 @@ import App from './App'
 import router from './router'
 import navInfo from './components/navInfo'
 import loginInfo from './components/loginInfo'
+import store from './store'
 
 // 引用API文件
 import api from './api/index.js'
 // 将API方法绑定到全局
 Vue.prototype.$api = api
 
-Vue.prototype.getComponent = function (id,loginIn){
+Vue.prototype.getComponent = function (id){
   var componentList=[   
     {
       path:'/realControl',  //监控管理
@@ -99,6 +100,7 @@ Vue.prototype.getComponent = function (id,loginIn){
       if(r.success){
           var menu=r.data.subMenu;
           console.log(menu);
+          store.state.navList=r.data.subMenu;
           for(var i=0;i<menu.length;i++){
             for(var j=0;j<componentList.length;j++){
               if(menu[i].url==componentList[j].path){
@@ -111,6 +113,10 @@ Vue.prototype.getComponent = function (id,loginIn){
                   for(var n=0;n<componentList[j].children.length;n++){
                     if(componentList[j].children[n].path.indexOf(menu[i].subMenu[m].url)!=-1){
                       obj.children.push(componentList[j].children[n]);
+                      // for(var k=0;k<menu[i].subMenu[m].subMenu.length;k++){
+                      //   store.state[menu[i].code][menu[i].subMenu[m].subMenu[k].code]=true;
+                      // }
+                      
                     }
                   }
                 }
@@ -125,11 +131,10 @@ Vue.prototype.getComponent = function (id,loginIn){
           for(var i=0;i<routerList.length;i++){
             router.options.routes.push(routerList[i]);
           }
+          console.log(store.state)
           router.addRoutes(routerList);
       }else{
-          if(loginIn=='true'){
-            ElementUI.Message.warning("菜单获取异常");
-          }
+          ElementUI.Message.warning("菜单获取异常");
           
       }
       
@@ -150,6 +155,7 @@ Vue.use(loginInfo)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

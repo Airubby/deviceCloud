@@ -77,7 +77,7 @@ export default {
               { prop: 'readFlag', label: '可读',minWidth:60,slotName:'preview-readFlag'},
               { prop: 'writeFlag', label: '可写',minWidth:60,slotName:'preview-writeFlag'},
               { prop: 'unit', label: '单位',minWidth:70},
-              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:60},
           ],
           propValue:'',  //根据项目筛选出项目下的设备
        }

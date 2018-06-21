@@ -65,7 +65,7 @@ export default {
                                 loginInfo.username=this.user.userid;
                                 loginInfo.id=re.data.id;
                                 sessionStorage.loginInfo = JSON.stringify(loginInfo);
-                                this.getComponent(re.data.id,'true');
+                                this.getComponent(re.data.id);
                                 this.$router.push({path:'/'});
                             }else{
                                 this.$message.warning(re.msg);

@@ -29,8 +29,8 @@
                         <div>
                             <p>
                                 <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
-                                <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
+                                <em v-if="scope.row.name!='admin'">|</em> 
+                                <a href="javascript:;" v-if="scope.row.name!='admin'" class="loncom_color" @click="del(scope.row)">删除</a>
                             </p>
                         </div>
                     </template>
@@ -97,7 +97,12 @@ export default {
             console.log(val)
             this.multipleSelection=[];
             for(var i=0;i<val.length;i++){
-                this.multipleSelection.push(val[i].id);
+                if(val[i].name=="admin"){
+                    this.$message.info("不能删除admin！");
+                }else{
+                    this.multipleSelection.push(val[i].id);
+                }
+                
             }
         },
        //删除
@@ -110,7 +115,7 @@ export default {
                 if(this.multipleSelection.length>0){
                     ids=this.multipleSelection;
                 }else{
-                    this.$message.warning("请勾选需要删除的用户");
+                    this.$message.warning("请勾选admin以外需要删除的用户");
                     return;
                 }
            }

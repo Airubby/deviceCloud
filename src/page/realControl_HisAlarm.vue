@@ -133,7 +133,7 @@ export default {
               { prop: 'state', label: '状态',minWidth:60,slotName:'preview-state'},              
               { prop: 'occurTime', label: '触发时间',minWidth:90,slotName:'preview-occurTime'},
               { prop: 'removeTime', label: '解除时间',minWidth:90,slotName:'preview-removeTime'},
-              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:60},
           ],
            //勾选的
           multipleSelection:[],
