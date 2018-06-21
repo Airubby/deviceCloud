@@ -13,7 +13,11 @@
                 total-field="total"
                 method='post' 
                 class="hisalarm_table"
-                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >                                                   
+                @selection-change="handleSelectionChange"
+                :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >    
+                    <div class="form_add">
+                        <el-button type="primary" size="small" @click="clear">手动解除</el-button>
+                    </div>                                                     
                     <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-state">
                         <div v-for="item in eventType">
@@ -44,10 +48,10 @@
 export default {
     created () {
         //获取项目
-        this.$api.post('/project/list', {}, r => {
+        this.$api.post('/project/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options=r.data;
                 this.table_forms.forms[0].options.unshift({'id':'',name:''})
             }
         }); 
@@ -131,13 +135,49 @@ export default {
               { prop: 'removeTime', label: '解除时间',minWidth:90,slotName:'preview-removeTime'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
           ],
+           //勾选的
+          multipleSelection:[],
 
        }
    },
     methods:{
+        //勾选框
+        handleSelectionChange:function(val){
+            this.multipleSelection=[];
+            for(var i=0;i<val.length;i++){
+                this.multipleSelection.push(val[i].id);
+            }
+        },
        //详情
        detail:function(row){
             this.$router.push({path:'/realControl/hisAlarm/detail',query:{id:row.id}});
+       },
+       clear:function(){
+           var ids=[];
+           if(this.multipleSelection.length>0){
+                ids=this.multipleSelection;
+            }else{
+                this.$message.warning("请勾选需要手动解除的项");
+                return;
+            }
+            this.$confirm("确定解除勾选的项吗?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+                var thisID=ids.toString();
+                console.log(thisID);
+		    	 this.$api.post('/eventlog/removeEvent', {"ids":thisID}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.$refs['thisRef'].searchHandler(false)
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+            
        },
 
     },

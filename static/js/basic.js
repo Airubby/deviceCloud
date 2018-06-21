@@ -639,6 +639,16 @@ function gaugeChar(ID,title,value,max){
     return myChart; 
 }
 
+//编辑时下拉框中判断编辑返回的信息在下拉信息中是否存在
+function checkHasId(id,list){
+    for(var i=0;i<list.length;i++){
+        if(id==list[i].id){
+            return list[i].id;
+        }
+    }
+    return '';
+}
+
 
 
 

@@ -126,33 +126,12 @@ import getAddress from '../components/getAddress.vue'
 export default {
 
     created () {
-        var obj = this.$route.query;
-        if(JSON.stringify(obj) == "{}"){
-            this.topInfo="新增项目信息";
-            this.showAddr=true;
-        }else{
-            this.topInfo="编辑项目信息";
-            this.$api.post('/project/get', {id:obj.id}, r => {
-                console.log(r)
-                if(r.success){
-                    for(var item in this.form_info){
-                        if(item=="loca"&&r.data.loca!=null&&r.data.loca!=''){
-                            for(var initem in this.addr_info){
-                                this.addr_info[initem]=r.data[item][initem];
-                            }
-                        }else{
-                            this.form_info[item]=r.data[item];    
-                        }
-                    } 
-                    this.showAddr=true;
-                }
-            }); 
-        }
+        
         //所属客户
-        this.$api.post('/cust/list', {}, r => {
+        this.$api.post('/cust/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.cust_data=r.list;
+                this.cust_data=r.data;
             }else{
                 this.$message.warning(r.msg);
             }
@@ -172,6 +151,31 @@ export default {
     },
     mounted() {
         scrollCon();
+        var obj = this.$route.query;
+        if(JSON.stringify(obj) == "{}"){
+            this.topInfo="新增项目信息";
+            this.showAddr=true;
+        }else{
+            this.topInfo="编辑项目信息";
+            this.$api.post('/project/get', {id:obj.id}, r => {
+                console.log(r)
+                if(r.success){
+                    for(var item in this.form_info){
+                        if(item=="loca"&&r.data.loca!=null&&r.data.loca!=''){
+                            for(var initem in this.addr_info){
+                                this.addr_info[initem]=r.data[item][initem];
+                            }
+                        }else if(item=="custId"){
+                            this.form_info.custId=checkHasId(r.data[item],this.cust_data);
+                        }else{
+                            this.form_info[item]=r.data[item];    
+                        }
+                    } 
+                    this.showAddr=true;
+                }
+            }); 
+        }
+
     },
     data() {
        return {

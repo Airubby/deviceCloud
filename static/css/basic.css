@@ -136,6 +136,12 @@ em,i{
 .loncom_color_main{
   color: #DA632A;
 }
+.loncom_online{
+  color:#33C466;
+}
+.loncom_offline{
+  color:#da632a;
+}
 .loncom_color{
   color: #409EFF;
 }
@@ -331,6 +337,7 @@ em,i{
 }
 .el-form-item__content{
   display: block !important;
+  height: 40px;
 }
 .loncom_list_box_right .el-select{
   width: 100%;
@@ -490,7 +497,9 @@ em,i{
 .hisalarm_table form input{
   width: 120px;
 }
-
+.hisalarm_table form .el-date-editor--datetimerange.el-input__inner{
+  width: 330px;
+}
 /*登录页面*/
 
 .loncom_login {

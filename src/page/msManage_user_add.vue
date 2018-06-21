@@ -98,17 +98,17 @@ export default {
 
     created () {
         //获取角色信息
-        this.$api.post('/role/roleList', {}, r => {
+        this.$api.post('/role/allRole', {}, r => {
             console.log(r)
             if(r.success){
-                this.roleNamesList=r.list;
+                this.roleNamesList=r.data;
             }
         }); 
         //获取客户信息
-        this.$api.post('/cust/list', {}, r => {
+        this.$api.post('/cust/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.custNameList=r.list;
+                this.custNameList=r.data;
                 this.custNameList.unshift({id:'',name:''})
             }
         }); 
@@ -126,8 +126,11 @@ export default {
                     for(var item in this.form_info){
                         if(item=='roleIds'){
                             for(var i=0;i<r.data['roles'].length;i++){
-                                this.form_info.roleIds.push(r.data['roles'][i].id);
+                                var id=checkHasId(r.data['roles'][i].id,this.roleNamesList);
+                                this.form_info.roleIds.push(id);
                             }
+                        }else if(item=="customerId"){
+                            this.form_info.customerId=checkHasId(r.data[item],this.custNameList);
                         }else{
                             this.form_info[item]=r.data[item]; 
                         }

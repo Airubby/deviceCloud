@@ -38,10 +38,10 @@ export default {
     created () {
         
         //获取项目
-        this.$api.post('/project/list', {}, r => {
+        this.$api.post('/project/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options=r.data;
                 this.table_forms.forms[0].options.unshift({id:'',name:''})
             }
         }); 

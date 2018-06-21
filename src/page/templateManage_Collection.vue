@@ -84,15 +84,6 @@ export default {
        }
    },
     methods:{
-         //获取模板列表
-        getList:function(){
-            // this.$api.post('/accessConfigTemplate/list', {}, r => {
-            //     console.log(r)
-            //     if(r.success){
-            //         this.table_data=r.data;
-            //     }
-            // }); 
-        },
         //勾选框角色
         handleSelectionChange:function(val){
             this.multipleSelection=[];

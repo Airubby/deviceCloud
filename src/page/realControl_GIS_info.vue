@@ -26,7 +26,7 @@
                             <h2><span @click="pointInfo(item)" class="loncom_color">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>设备编码：{{item.code}}</p>
                             <p>启用状态：<span v-if="item.state==1">启用</span><span v-else>停用</span></p>
-                            <p>在线状态：<span v-if="item.online==true" style="color:#33C466">在线</span><span style="color:#E9664B" v-else>离线</span></p>
+                            <p>在线状态：<span v-if="item.online==true" class="loncom_online">在线</span><span class="loncom_offline" v-else>离线</span></p>
                             <p>告警数量：<span>{{item.alarmNum}}</span></p>
                         </div>
                     </div>

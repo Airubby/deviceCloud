@@ -51,7 +51,7 @@
                             <el-col :span="12">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        所属项目：
+                                        <em>*</em>所属项目：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="projectId">
@@ -65,7 +65,7 @@
                             <el-col :span="12" v-if="hide">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        采集控制模板：
+                                        <em>*</em>采集控制模板：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="configId">
@@ -234,15 +234,13 @@ export default {
             console.log(r)
             if(r.success){
                 this.projectList=r.list;
-                this.projectList.unshift({id:'',name:''});
             }
         }); 
         //采集控制模板：
-        this.$api.post('/accessConfigTemplate/list', {}, r => {
+        this.$api.post('/accessConfigTemplate/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.configList=r.list;
-                this.configList.unshift({id:'',name:''});
+                this.configList=r.data;
             }
         }); 
         this.$api.post('/comm/getDicItemByDicCode',{dicCode:'TRANS_CODE'},r => { //传输规则
@@ -331,6 +329,12 @@ export default {
            formRules:{
                 sno:[
                     { required: true, message: '请输入模块序列号', trigger: 'blur' },
+                ],
+                projectId:[
+                    { required: true, message: '请选择项目', trigger: 'change' },
+                ],
+                configId:[
+                    { required: true, message: '请选择采集控制模板', trigger: 'change' },
                 ],
                 'config.collectCycle':[
                     { required: true, message: '请输入采集周期', trigger: 'blur' },

@@ -13,11 +13,6 @@ import loginInfo from './components/loginInfo'
 import api from './api/index.js'
 // 将API方法绑定到全局
 Vue.prototype.$api = api
-//Vue.prototype.isRouterAlive = true
-
-Vue.prototype.reload=function(){
-
-}
 
 Vue.prototype.getComponent = function (id,loginIn){
   var componentList=[   
@@ -126,28 +121,14 @@ Vue.prototype.getComponent = function (id,loginIn){
               
             }
           }
-          console.log(routerList)
           routerList.push({ path: '*', component: (resolve) => require(['@/page/notFoundComponent'], resolve)  })
           for(var i=0;i<routerList.length;i++){
             router.options.routes.push(routerList[i]);
           }
           router.addRoutes(routerList);
-
-          // for(var i=0;i<menu.length;i++){
-          //     for(var j=0;j<componentList.length;j++){
-          //         if(menu[i].url==componentList[j].path){
-          //             componentList[j].redirect=menu[i].subMenu[0].url;
-          //         }
-          //     }
-          // }
-          // for(var i=0;i<componentList.length;i++){
-          //   router.options.routes.push(componentList[i]);
-          // }
-          // router.addRoutes(componentList);
-          console.log(router)
       }else{
           if(loginIn=='true'){
-            this.$message.warning("菜单获取异常");
+            ElementUI.Message.warning("菜单获取异常");
           }
           
       }

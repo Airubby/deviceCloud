@@ -28,8 +28,8 @@
                         <span v-else>停用</span>
                     </template>
                     <template slot-scope="scope" slot="preview-online">
-                        <span v-if="scope.row.online==true||scope.row.online=='true'">在线</span>
-                        <span v-else>离线</span>
+                        <span v-if="scope.row.online==true||scope.row.online=='true'" class="loncom_online">在线</span>
+                        <span v-else class="loncom_offline">离线</span>
                     </template>
                     <template slot-scope="scope" slot="preview-handle">
                         <div>
@@ -47,19 +47,23 @@
                         </div>
                     </template>
                     <div class="loncom_table_btn">
-                        <el-button @click="start()" type="info" size="mini" plain>启用</el-button>
-                        <el-button @click="stop()" type="info" size="mini" plain>停用</el-button>
+                        
+                        
                         <el-button @click="del()" type="info" size="mini" plain>删除</el-button>
                         
                         <el-button @click="getState()" type="info" size="mini" plain>获取状态</el-button>
                         <el-button @click="sendParam()" type="info" size="mini" plain>发送参数</el-button>
                         <el-button @click="Reconnect()" type="info" size="mini" plain>强制重连</el-button>
 
-                        <el-button-group>
+                        <el-button-group class="loncom_ml10">
+                            <el-button @click="start()" type="info" size="mini" plain>启用</el-button>
+                            <el-button @click="stop()" type="info" size="mini" plain>停用</el-button>
+                        </el-button-group>
+                        <el-button-group class="loncom_ml10">
                             <el-button @click="startCollect()" type="info" size="mini" plain>启用采集</el-button>
                             <el-button @click="stopCollect()" type="info" size="mini" plain>停用采集</el-button>
                         </el-button-group>
-                        <el-button-group>
+                        <el-button-group class="loncom_ml10">
                             <el-button @click="startReport()" type="info" size="mini" plain>启用上报</el-button>
                             <el-button @click="stopReport()" type="info" size="mini" plain>停用上报</el-button>
                         </el-button-group>

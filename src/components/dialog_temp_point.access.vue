@@ -435,74 +435,6 @@
                             <el-input type="textarea" v-model="form_info.remark"></el-input>
                         </div>
                     </el-col>
-                    <div v-if="form_info.alarmType=='thr' || form_info.alarmType=='bits'">
-                        <el-col :span="24">
-                            <h2 style="height: 40px;line-height:30px;">
-                                <span class="loncom_fl">触发告警条件</span>
-                                <!--
-                                <div class="loncom_fr" style="width: 100px;">
-                                    <el-form-item prop="_triggerRules">
-                                        <el-checkbox-group v-model="form_info._triggerRules" style="display:none;float:right:width:100px;">
-                                            <el-checkbox label=""></el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form-item>
-                                </div>
-                                -->
-                            </h2>
-                            <div>
-                                <el-transfer
-                                v-model="form_info._triggerRules"
-                                filterable
-                                :filter-method="filterMethod"
-                                :props="{
-                                key: 'id',
-                                }"
-                                :render-content="renderFunc"
-                                :titles="['条件选择', '触发告警条件']"
-                                :button-texts="['移出', '选择']"
-                                :format="{
-                                    noChecked: '${total}',
-                                    hasChecked: '${checked}/${total}'
-                                }"
-                                @change="handleChange"
-                                :data="transfer_datay">
-                                </el-transfer>
-                            </div>
-                        </el-col>
-                        <el-col :span="24">
-                            <h2 style="height: 40px;line-height:40px;">
-                                <span class="loncom_fl">解除告警条件</span>
-                                <!--
-                                <div class="loncom_fr" style="width: 100px;">
-                                    <el-form-item prop="_noTriggerRules">
-                                        <el-checkbox-group v-model="form_info._noTriggerRules" style="display:none;float:right:width:100px;">
-                                            <el-checkbox label=""></el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form-item>
-                                </div>
-                                -->
-                            </h2>
-                            <div>
-                                <el-transfer
-                                v-model="form_info._noTriggerRules"
-                                filterable
-                                :filter-method="filterMethod"
-                                :props="{
-                                key: 'id',
-                                }"
-                                :render-content="renderFunc"
-                                :titles="['条件选择', '解除告警条件']"
-                                :button-texts="['移出', '选择']"
-                                :format="{
-                                    noChecked: '${total}',
-                                    hasChecked: '${checked}/${total}'
-                                }"
-                                @change="handleChange"
-                                :data="transfer_datan">
-                                </el-transfer>
-                            </div>
-                        </el-col>
-                    </div>
                     
                 </el-row>
             </el-form>
@@ -521,7 +453,7 @@ export default {
         if(this.dialogInfo.add){
             this.change_info=true;
         }else{ //编辑
-            this.$api.post('/pointTemplate/getById', {id:this.dialogInfo.data.id}, r => {
+            this.$api.post('/device/getDevicePointInfoById', {pointId:this.dialogInfo.data.id}, r => {
                 console.log(r)
                 if(r.success){
                     for(var item in this.form_info){
@@ -533,8 +465,6 @@ export default {
                         //this.form_info[item]=r.data[item];
                     }
                     
-                    this.form_info._triggerRules=this.form_info.triggerRules.split(",");
-                    this.form_info._noTriggerRules=this.form_info.noTriggerRules.split(",");
                 }
             }); 
         }
@@ -599,10 +529,6 @@ export default {
                storePolicy:'',  //日志存储策略：
                timingTarget:'',  // 统计目标值
                timingTotal:'',  //统计值
-               _triggerRules:[],
-               triggerRules:'',
-               _noTriggerRules:[],
-               noTriggerRules:'',
                remark:'',  
            },
            formRules:{
@@ -750,9 +676,7 @@ export default {
                     console.log(this.form_info)
                     //var _form_info=Object.assign({}, this.form_info)
                     this.form_info.typeTempId=this.dialogInfo.typeTempId;
-                    this.form_info.triggerRules=this.form_info._triggerRules.toString();
-                    this.form_info.noTriggerRules=this.form_info._noTriggerRules.toString();
-                    this.$api.post('/pointTemplate/saveOrUpdateEntity', this.form_info, r => {
+                    this.$api.post('/device/updateDevPoint', this.form_info, r => {
                         console.log(r)
                         if(r.success){
                             this.transfer_datan=r.data;
@@ -766,12 +690,6 @@ export default {
                 }
             })
         },
-        handleChange(value, direction, movedKeys) {
-            // console.log(this.form_info.triggerRules)
-            // console.log(this.form_info.noTriggerRules)
-            // console.log(value, direction, movedKeys);
-        },
-        
 
     },
     watch:{

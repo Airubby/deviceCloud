@@ -110,6 +110,8 @@
                                 </div>
                             </template>
                             <template slot-scope="scope" slot="preview-handle">
+                               <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
+                               <em>|</em> 
                                <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">规则详情</a> 
                             </template>
                         </el-search-table-pagination>
@@ -119,12 +121,14 @@
             </div>
         </div>
         <dialogRules v-bind:dialogInfo="dialogInfo" v-if="dialogInfo.visible"></dialogRules>
+        <dialogTempPoiint v-bind:dialogInfo="dialog_Info" v-if="dialog_Info.visible"></dialogTempPoiint>
     </div>
 </template>
 
 <script>
 import noSubmitBtnInfo from '../components/nosubmitBtnInfo.vue'
 import dialogRules from '../components/dialogRules.vue'
+import dialogTempPoiint from '../components/dialog_temp_point.access.vue'
 
 export default {
 
@@ -200,7 +204,7 @@ export default {
               { prop: 'actionType', label: '动作类型',minWidth:80,slotName:'preview-action'},
               { prop: 'alarmType', label: '告警触发类型',minWidth:80,slotName:'preview-alarm'},
               { prop: 'currValue', label: '当前读数',minWidth:100},
-              { prop: 'handel', label: '操作',slotName:'preview-handle',width:100},
+              { prop: 'handel', label: '操作',slotName:'preview-handle',width:120},
           ],
           dialogInfo:{
                 title:"事件规则详情",
@@ -208,7 +212,14 @@ export default {
                 width:"1200px",
                 id:'',
             },
-
+            dialog_Info:{
+                title:'新增测点信息',
+                visible:false,
+                width:"900px",
+                add:true,  //默认新增
+                typeTempId:'',
+                data:{},
+            },
 
        }
    },
@@ -218,6 +229,13 @@ export default {
           this.dialogInfo.id=row.id;
           this.dialogInfo.visible=true;
       },
+      //编辑设备类型模板项测点信息
+       edit:function(row){
+            this.dialog_Info.visible=true;
+            this.dialog_Info.add=false;
+            this.dialog_Info.title="编辑测点信息";
+            this.dialog_Info.data=row;
+       },
 
     },
     watch:{
@@ -226,6 +244,6 @@ export default {
         },
         
     },
-    components:{noSubmitBtnInfo,dialogRules}
+    components:{noSubmitBtnInfo,dialogRules,dialogTempPoiint}
 }
 </script>

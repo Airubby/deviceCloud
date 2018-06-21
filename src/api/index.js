@@ -53,6 +53,7 @@ function filterNull (o) {
 */
 
 function apiAxios (method, url, params, success, failure) {
+  console.log(url)
   if (params) {
     params = filterNull(params)
   }
@@ -66,9 +67,16 @@ function apiAxios (method, url, params, success, failure) {
     withCredentials: true
   })
   .then(function (res) {
+    console.log(res)
     if(res.data.code=="-1"){
         ElementUI.Message.warning("请登录系统");
         router.push({path:'/login'});
+    }
+    if(res.data.code=="-2"){
+        ElementUI.Message.warning("无权限访问");
+    }
+    if(res.data.code=="-9"){
+        ElementUI.Message.warning("菜单权限为空");
     }
     if(success){
       success(res.data);

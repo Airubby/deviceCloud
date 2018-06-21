@@ -16,7 +16,6 @@
                     <div class="form_add">
                         <el-button type="primary" size="small" @click="clear">清除</el-button>
                     </div>                                                
-                    <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-state">
                         <div v-for="item in msg_data">
                             <span v-if="item.code==scope.row.state">{{item.label}}</span>
@@ -38,10 +37,10 @@
 
 export default {
     created () {
-        this.$api.post('/project/list', {}, r => {
+        this.$api.post('/project/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.table_forms.forms[0].options=r.list;
+                this.table_forms.forms[0].options=r.data;
                 this.table_forms.forms[0].options.unshift({'id':'',name:''})
             }
         }); 
@@ -98,6 +97,7 @@ export default {
                 console.log(r)
                 if(r.success){
                     this.$message.success(r.msg);
+                    this.$refs['thisRef'].searchHandler(false);
                 }else{
                     this.$message.warning(r.msg);
                 }

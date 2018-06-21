@@ -16,7 +16,6 @@
                     <div class="form_add">
                         <el-button type="primary" size="small" @click="clear">清除</el-button>
                     </div>                                                         
-                    <el-table-column slot="prepend" type="selection"></el-table-column>
                     <template slot-scope="scope" slot="preview-handle">
                         <a href="javascript:;" class="loncom_color" @click="detail(scope.row)">详情</a> 
                     </template>
@@ -70,6 +69,7 @@ export default {
                 console.log(r)
                 if(r.success){
                     this.$message.success(r.msg);
+                    this.$refs['thisRef'].searchHandler(false);
                 }else{
                     this.$message.warning(r.msg);
                 }
