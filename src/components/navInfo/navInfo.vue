@@ -47,10 +47,10 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
     created () {
-        
+        this.navList=this.$store.state.navList;
     },
     mounted() {
         this.loginInfo=sessionStorage.loginInfo?JSON.parse(sessionStorage.loginInfo):{};
@@ -63,7 +63,11 @@ export default {
         }
         
     },
-    
+    computed:{
+      ...mapGetters([
+        'getNavInfo'
+      ])
+    },
     data() {
        return {
            loginInfo:{},
@@ -106,7 +110,8 @@ export default {
    },
     methods:{
         getMenu:function(){
-            this.navList=this.$store.state.navList;
+            //console.log(this.$store.state.navList)
+            //this.navList=this.$store.state.navList;
             // this.$api.post('/comm/getUserRoleMenu', {userId:this.loginInfo.id}, r => {
             //     console.log(r)
             //     if(r.success){
@@ -280,6 +285,9 @@ export default {
         },
     },
     watch:{
+        getNavInfo: function(val) { 
+            this.navList=val;
+        },
         navList:function(val,oldval){
             var _this=this;
             this.$nextTick(function(){

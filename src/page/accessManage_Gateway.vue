@@ -49,7 +49,7 @@
                     <div class="loncom_table_btn">
                         
                         
-                        <el-button @click="del()" type="info" size="mini" plain>删除</el-button>
+                        <el-button @click="del()" type="danger" size="mini" plain>删除</el-button>
                         
                         <el-button @click="getState()" type="info" size="mini" plain>获取状态</el-button>
                         <el-button @click="sendParam()" type="info" size="mini" plain>发送参数</el-button>
@@ -57,15 +57,15 @@
 
                         <el-button-group class="loncom_ml10">
                             <el-button @click="start()" type="info" size="mini" plain>启用</el-button>
-                            <el-button @click="stop()" type="info" size="mini" plain>停用</el-button>
+                            <el-button @click="stop()" type="danger" size="mini" plain>停用</el-button>
                         </el-button-group>
                         <el-button-group class="loncom_ml10">
                             <el-button @click="startCollect()" type="info" size="mini" plain>启用采集</el-button>
-                            <el-button @click="stopCollect()" type="info" size="mini" plain>停用采集</el-button>
+                            <el-button @click="stopCollect()" type="danger" size="mini" plain>停用采集</el-button>
                         </el-button-group>
                         <el-button-group class="loncom_ml10">
                             <el-button @click="startReport()" type="info" size="mini" plain>启用上报</el-button>
-                            <el-button @click="stopReport()" type="info" size="mini" plain>停用上报</el-button>
+                            <el-button @click="stopReport()" type="danger" size="mini" plain>停用上报</el-button>
                         </el-button-group>
                     </div>
                     

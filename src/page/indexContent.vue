@@ -80,7 +80,6 @@ export default {
         var _this=this;
         //注册概况
         this.$api.post('/dash/getSysInfo', {}, r => {
-            console.log(r)
             if(r.success){
                 var max='';
                 for(var item in r.data){
@@ -137,6 +136,11 @@ export default {
             _this._piemoreChar.resize();
             _this._LineChar1.resize();
             _this._LineChar2.resize();
+            _this._gaugeChar1.resize();
+            _this._gaugeChar2.resize();
+            _this._gaugeChar3.resize();
+            _this._gaugeChar4.resize();
+            _this._gaugeChar5.resize();
         });
 
         
@@ -171,7 +175,6 @@ export default {
         //告警信息
         getAlarm:function(){
             this.$api.post('/dash/getActiveAlarmInfo', {}, r => {
-                console.log(r)
                 if(r.success){
                     var xData=[];
                     var yData=[];

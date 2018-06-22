@@ -11,18 +11,17 @@ export default new Router({
       component: (resolve) => require(['@/page/index'], resolve),
       redirect:'/index',
       children:[
-        {path:'/index',component:(resolve) => require(['@/page/indexContent'], resolve)},
+        {path:'/index',meta:{keepAlive:false},component:(resolve) => require(['@/page/indexContent'], resolve)},
       ]
     },{
       path: '/',
       component: (resolve) => require(['@/page/index'], resolve),
       redirect:'/index',
       children:[
-        {path:'/index',component:(resolve) => require(['@/page/indexContent'], resolve)},
+        {path:'/index',meta:{keepAlive:false},component:(resolve) => require(['@/page/indexContent'], resolve)},
       ]
     },{
-      path: '/login',
-      component: (resolve) => require(['@/page/login'], resolve)
+      path: '/login',meta:{keepAlive:false},component: (resolve) => require(['@/page/login'], resolve)
     },
     
     

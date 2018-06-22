@@ -20,8 +20,8 @@
                         <span v-else>停用</span>
                     </template>
                     <template slot-scope="scope" slot="preview-online">
-                        <span v-if="scope.row.online==true||scope.row.online=='true'">在线</span>
-                        <span v-else>离线</span>
+                        <span v-if="scope.row.online==true||scope.row.online=='true'" class="loncom_online">在线</span>
+                        <span v-else class="loncom_offline">离线</span>
                     </template>
                     <template slot-scope="scope" slot="preview-dtype">
                         {{scope.row.dtype.name}}
@@ -62,6 +62,8 @@ export default {
     },
     data() {
        return {
+           DELETE:this.$store.state.accessManage.delete, //删除
+           SAVE:this.$store.state.accessManage.save, //新增编辑
            table_data:[
                 // {name:'物联网关',code:'123',state:1,devNum:20,loca:'四川省，成都市，武侯区，科园南二路2号'}
            ],
@@ -117,7 +119,6 @@ export default {
             type:'warning',
 	        }).then(() => {
                 var thisID=ids.toString();
-                console.log(thisID);
 		    	 this.$api.post('/device/updateState', {"ids":thisID,"state":1}, r => {
 		       		if(r.success){
                         this.$message.success(r.msg);
@@ -142,7 +143,6 @@ export default {
                     return;
                 }
             }
-           console.log(123123)
            this.$confirm("确定停用?", '提示', {
 	        confirmButtonText: '确定',
 	        cancelButtonText: '取消',

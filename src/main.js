@@ -99,8 +99,8 @@ Vue.prototype.getComponent = function (id){
   Vue.prototype.$api.post('/comm/getUserRoleMenu', {userId:id}, r => {
       if(r.success){
           var menu=r.data.subMenu;
-          console.log(menu);
-          store.state.navList=r.data.subMenu;
+          Vue.prototype.getFunc(menu)
+          store.commit('resetNavList',menu)
           for(var i=0;i<menu.length;i++){
             for(var j=0;j<componentList.length;j++){
               if(menu[i].url==componentList[j].path){
@@ -113,10 +113,6 @@ Vue.prototype.getComponent = function (id){
                   for(var n=0;n<componentList[j].children.length;n++){
                     if(componentList[j].children[n].path.indexOf(menu[i].subMenu[m].url)!=-1){
                       obj.children.push(componentList[j].children[n]);
-                      // for(var k=0;k<menu[i].subMenu[m].subMenu.length;k++){
-                      //   store.state[menu[i].code][menu[i].subMenu[m].subMenu[k].code]=true;
-                      // }
-                      
                     }
                   }
                 }
@@ -131,17 +127,29 @@ Vue.prototype.getComponent = function (id){
           for(var i=0;i<routerList.length;i++){
             router.options.routes.push(routerList[i]);
           }
-          console.log(store.state)
           router.addRoutes(routerList);
       }else{
-          ElementUI.Message.warning("菜单获取异常");
+          if(sessionStorage.loginInfo){
+              ElementUI.Message.warning("菜单获取异常");
+          }
           
       }
       
   }); 
 }
 
-
+Vue.prototype.getFunc=function(menu){
+  store.commit('resetModel',{})
+  for(var i=0;i<menu.length;i++){
+    for(var j=0;j<menu[i].subMenu.length;j++){
+      for(var k=0;k<menu[i].subMenu[j].subMenu.length;k++){
+        var arr=(menu[i].subMenu[j].subMenu[k].code).split("/");
+        var key=arr[arr.length-1]
+        store.commit('setModel',[menu[i].code,key])
+      }
+    }
+  }
+}
 
 
 

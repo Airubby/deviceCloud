@@ -109,6 +109,9 @@
                                     <span v-if="scope.row.alarmType==item.code">{{item.label}}</span>
                                 </div>
                             </template>
+                            <template slot-scope="scope" slot="preview-time">
+                                <span v-if="scope.row.lastUpdateTime">{{new Date(scope.row.lastUpdateTime).Format("yyyy-MM-dd hh:mm:ss")}}</span>
+                            </template>
                             <template slot-scope="scope" slot="preview-handle">
                                <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
                                <em>|</em> 
@@ -198,12 +201,13 @@ export default {
               { prop: 'code', label: '编码',minWidth:220},
               { prop: 'valueType', label: '值类型',minWidth:60},
               { prop: 'offSet', label: '偏移量',minWidth:50},
-              { prop: 'readFlag', label: '可读',minWidth:50,slotName:'preview-readFlag'},
-              { prop: 'writeFlag', label: '可写',minWidth:50,slotName:'preview-writeFlag'},
+              { prop: 'readFlag', label: '可读',minWidth:40,slotName:'preview-readFlag'},
+              { prop: 'writeFlag', label: '可写',minWidth:40,slotName:'preview-writeFlag'},
               { prop: 'unit', label: '单位',minWidth:50},
               { prop: 'actionType', label: '动作类型',minWidth:80,slotName:'preview-action'},
               { prop: 'alarmType', label: '告警触发类型',minWidth:80,slotName:'preview-alarm'},
-              { prop: 'currValue', label: '当前读数',minWidth:100},
+              { prop: 'currValue', label: '当前读数',minWidth:60},
+              { prop: 'lastUpdateTime', label: '最后更新时间',minWidth:80,slotName:'preview-time'},
               { prop: 'handel', label: '操作',slotName:'preview-handle',width:120},
           ],
           dialogInfo:{

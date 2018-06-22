@@ -22,7 +22,9 @@
 <script>
 export default {
   created () {
-      
+      sessionStorage.clear();
+      clearInterval(index_getacc);
+      clearInterval(index_getal); 
  },
  data(){
   
@@ -51,7 +53,6 @@ export default {
         this.$refs[formName].validate((valid) => {
             if (valid) {
                 this.$api.post('/login/getSalt', {}, r => {
-                    console.log(r)
                     if(r.success){
                         var md5pwd= b64_md5(b64_md5(this.user.userid+ r.salt1 + b64_md5(this.user.psword)) + r.salt2);
                         this.$api.post('/login/login', {user:this.user.userid,pagePwd:md5pwd}, re => {

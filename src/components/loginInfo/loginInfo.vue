@@ -47,7 +47,6 @@ export default {
             type:'warning',
 	        }).then(() => {
 		    	 this.$api.post('/login/logout', {}, r => {
-                console.log(r)
                 if(r.success){
                     this.$message.success(r.msg);
                     this.$router.push({path:'/login'});

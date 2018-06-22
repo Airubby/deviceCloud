@@ -18,12 +18,12 @@
                         <el-button type="primary" size="small" @click="add">新增</el-button>
                     </div>                                                   
                     <el-table-column slot="prepend" type="selection"></el-table-column>
-                    <template slot-scope="scope" slot="preview-handle">
+                    <template slot-scope="scope" slot="preview-handle" >
                         <div>
                             <p>
-                                <a href="javascript:;" class="loncom_color" @click="edit(scope.row)">编辑</a> 
+                                <a href="javascript:;" class="loncom_color" @click="edit(scope.row)" >{{this}}编辑</a> 
                                 <em>|</em> 
-                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)">删除</a>
+                                <a href="javascript:;" class="loncom_color" @click="del(scope.row)" >删除</a>
                             </p>
                         </div>
                     </template>
