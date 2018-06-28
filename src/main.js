@@ -9,6 +9,7 @@ import router from './router'
 import navInfo from './components/navInfo'
 import loginInfo from './components/loginInfo'
 import store from './store'
+import 'babel-polyfill'  //兼容低版本浏览器
 
 // 引用API文件
 import api from './api/index.js'
@@ -151,6 +152,18 @@ Vue.prototype.getFunc=function(menu){
   }
 }
 
+Vue.prototype.resultInfo=function(response){
+  if(response.code=="-1"){
+        ElementUI.Message.warning("请登录系统");
+        router.push({path:'/login'});
+    }
+    if(response.code=="-2"){
+        ElementUI.Message.warning(res.data.msg);
+    }
+    if(response.code=="-9"){
+        ElementUI.Message.warning(res.data.msg);
+    }
+}
 
 
 

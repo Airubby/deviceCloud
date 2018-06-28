@@ -18,6 +18,7 @@
             </div>
             <div class="gis_right">
                 <el-input placeholder="请输入内容" v-model="searchInfo" size="small">
+                    <template slot="prepend"><i @click="back" class="fa fa-mail-reply" style="cursor:pointer"></i></template>
                     <el-button slot="append" icon="el-icon-search" @click="getDevList"></el-button>
                 </el-input>
                 <div class="searchbox numScroll0">
@@ -64,7 +65,7 @@ export default {
         numScroll(0)
         //地图信息
         this.map = new BMap.Map("container");
-        this.map.centerAndZoom("成都",6); 
+        this.map.centerAndZoom("成都",5); 
         this.map.enableScrollWheelZoom();
 
         var _this=this;
@@ -138,12 +139,13 @@ export default {
             this.map.clearOverlays();
             for(var i=0;i<this.devList.length;i++){
                 if(this.devList[i].loca!=null&&this.devList[i].loca!=''){
+                    var statestr=this.devList[i].state==1?"启用":"停用"
                     var iconurl='./static/images/index_normal.svg';
                     var content = '<div class="loncom_map_box">'+
                                 '<div class="loncom_map_boxtop">'+this.devList[i].name+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>设备编码：'+this.devList[i].code+'</p>'+
-                                    '<p>启用状态：<span v-if="'+this.devList[i].state+'==1">启用</span><span v-else>停用</span></p>'+
+                                    '<p>启用状态：'+statestr+'</p>'+
                                     '<p>告警数量：'+this.devList[i].alarmNum+'</p>'+
                                 '</div>' +
                             '</div>';
@@ -153,7 +155,7 @@ export default {
                                 '<div class="loncom_map_boxtop loncom_map_boxtopalarm">'+this.devList[i].name+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>设备编码：'+this.devList[i].code+'</p>'+
-                                    '<p>启用状态：<span v-if="'+this.devList[i].state+'==1">启用</span><span v-else>停用</span></p>'+
+                                    '<p>启用状态：'+statestr+'</p>'+
                                     '<p>告警数量：'+this.devList[i].alarmNum+'</p>'+
                                 '</div>' +
                             '</div>';
@@ -188,7 +190,9 @@ export default {
         },
         //点击弹出告警列表
         runChild:function(){this.$refs.runChildFun.showalarm()},
-
+        back:function(){
+            this.$router.push({path:'/realControl/gis'});
+        },
     },
     components:{dialogPointInfo,gisBottomAlarm}
 }

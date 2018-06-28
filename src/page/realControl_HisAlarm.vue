@@ -1,7 +1,7 @@
 <template>
     <div class="loncom_content">
         <div class="loncom_public_top">
-            <span class="loncom_public_topinfo">告警历史数据</span>
+            <span class="loncom_public_topinfo">告警记录查询</span>
             <loginInfo></loginInfo>
         </div>
         <div class="loncom_public_right loncom_scroll_con">
@@ -51,8 +51,8 @@ export default {
         this.$api.post('/project/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.table_forms.forms[0].options=r.data;
-                this.table_forms.forms[0].options.unshift({'id':'',name:''})
+                this.table_forms.forms[1].options=r.data;
+                this.table_forms.forms[1].options.unshift({'id':'',name:''})
             }
         }); 
         
@@ -61,15 +61,11 @@ export default {
             console.log(r)
             if(r.success){
                 this.eventType=r.data;
+                this.table_forms.forms[0].options=r.data;
+                this.table_forms.forms[0].options.unshift({'code':'',"label":''})
             }else{this.$message.warning(r.msg);}
         });
-        // //获取设备
-        // this.$api.post('/device/list', {}, r => {
-        //     console.log(r)
-        //     if(r.success){
-        //         this.table_forms.forms[1].options=r.list;
-        //     }
-        // }); 
+        
 
     },
     mounted() {
@@ -92,7 +88,7 @@ export default {
                     var menu = Object.assign({}, menus[i])
                     if (menu.subTypes) {
                         delete menu.subTypes
-                        _this.table_forms.forms[1].options.push(menu)
+                        _this.table_forms.forms[2].options.push(menu)
                         spread(menus[i].subTypes)
                     }
                 }
@@ -113,11 +109,12 @@ export default {
             size:'small',
             submitBtnText: '搜索',
             forms: [
+                    { prop: 'queryKey7', placeholder:'事件状态',itemType: 'select',options:[],valueKey:'code',labelKey:'label' },
                     { prop: 'queryKey1', placeholder:'项目',itemType: 'select',options:[],valueKey:'id',labelKey:'name' },
                     {prop:'queryKey2', placeholder:'设备类型',itemType: 'select',options:[{'id':'',name:''}],valueKey:'id',labelKey:'name'},
                     {prop:'queryKey3',placeholder:'设备编码/名称'},
-                    {prop:'queryKey4',placeholder:'省份名'},
-                    {prop:'queryKey5',placeholder:'城市名'},
+                    {prop:'queryKey4',placeholder:'模块所在省份'},
+                    {prop:'queryKey5',placeholder:'模块所在城市'},
                     {prop:'queryKey6',placeholder:'事件编码/名称'},
                     { prop: 't1-t2', label: '',placeholder:'时间',itemType: 'datetimerange' },
                 ]

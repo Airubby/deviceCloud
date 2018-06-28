@@ -11,6 +11,7 @@
                 </div>
                 <div class="loncom_public_add_con">
                     <div class="loncom_public_add_form">
+                        <el-button type="primary" size="small" @click="clear" class="loncom_fr loncom_mb10">手动解除</el-button>     
                         <el-table :data="table_data" border style="width: 100%">
                         <el-table-column type="expand">
                             <template slot-scope="props">
@@ -28,6 +29,7 @@
                                         </template>
                                     </el-table-column>
                                     <el-table-column label="读数" prop="occurValue"></el-table-column>
+                                    <el-table-column label="触发条件" prop="conds"></el-table-column>
                                     <el-table-column label="事件动作" prop="eventAction">
                                         <template slot-scope="prop">
                                             <div v-for="item in eventAction">
@@ -111,12 +113,31 @@ export default {
             this.$api.post('/eventlog/get',this.form_info,r => { 
                 console.log(r)
                 if(r.success){
+                    this.table_data=[];
                     this.table_data.push(r.data)
                 }else{this.$message.warning(r.msg);}
             });
         },
        //
-       
+       clear:function(){
+            this.$confirm("确定手动解除吗?", '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type:'warning',
+	        }).then(() => {
+		    	 this.$api.post('/eventlog/removeEvent', {"ids":this.form_info.id}, r => {
+		       		if(r.success){
+                        this.$message.success(r.msg);
+                        this.getData()
+		       		}else{
+                        this.$message.warning(r.msg);
+                    }
+		       	});
+	          
+	      });
+            
+       },
+
 
     },
     components:{noSubmitBtnInfo}

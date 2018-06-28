@@ -5,12 +5,16 @@
             <div class="loncom_logo_text">设备云管理系统</div>
             <div class="loncom_login_input">
                 <el-form :model="user" :rules="rules" ref="userName">
-                    <el-form-item prop="userid" class="loncom_user">
-                        <el-input v-model.trim="user.userid" placeholder="请输入用户名称"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="psword" class="loncom_pass">
-                        <el-input v-model.trim="user.psword" type="password" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
-                    </el-form-item>
+                    <div class="loncom_user">
+                        <el-form-item prop="userid">
+                            <el-input v-model.trim="user.userid" placeholder="请输入用户名称"></el-input>
+                        </el-form-item>
+                    </div>
+                    <div class="loncom_pass">
+                        <el-form-item prop="psword">
+                            <el-input v-model.trim="user.psword" type="password" placeholder="请输入登录密码" @keyup.native="keyLogin($event,'userName')"></el-input>
+                        </el-form-item>
+                    </div>
                     <el-button type="warning" @click="loginIn('userName')" @keydown="keyLogin($event,'userName')">登录</el-button>
                 </el-form>
             </div>

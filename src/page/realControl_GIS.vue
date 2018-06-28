@@ -26,7 +26,7 @@
                             <h2><span @click="projectInfo(item.id)" class="loncom_color">{{item.name}}</span><i class="el-icon-location-outline" @click="addrCenter(item)"></i></h2>
                             <p>单位：{{item.fullName}}</p>
                             <p>项目位置：<span v-if="item.loca!=null&&item.loca!=''">{{item.loca.fullAddress}}</span></p>
-                            <p>告警数量：<span>{{item.alarmNum}}</span></p>
+                            <p>设备数量：<span class="loncom_mr20">{{item.devNum}}</span>告警数量：<span>{{item.alarmNum}}</span></p>
                             <p>接入设备类型：
                                 <span v-for="(initem,index) in item.devTypeCount">
                                     <em v-if="index==0">{{initem.name}}[<i class="loncom_color_main">{{initem.count}}</i>]</em>
@@ -65,7 +65,7 @@ export default {
     mounted() {
         var _this=this;
         this.map = new BMap.Map("container");
-        this.map.centerAndZoom("成都",6); 
+        this.map.centerAndZoom("成都",5); 
         this.map.enableScrollWheelZoom();
 
     
@@ -112,12 +112,15 @@ export default {
         },
         //地图项目坐标展示
         getMap:function(){
+            // <router-link :to="/realControl/gis/info"></router-link>
+
             this.map.clearOverlays();
             for(var i=0;i<this.projectList.length;i++){
                 if(this.projectList[i].loca!=null&&this.projectList[i].loca!=''){
                     var iconurl='./static/images/index_normal.svg';
+                    var router='<a href="#/realControl/gis/info?projectId='+this.projectList[i].id+'">'+this.projectList[i].name+'</a>'
                     var content = '<div class="loncom_map_box">'+
-                                '<div class="loncom_map_boxtop">'+this.projectList[i].name+'</div>' +
+                                '<div class="loncom_map_boxtop">'+router+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>公司：'+this.projectList[i].fullName+'</p>'+
                                     '<p>联系人：'+this.projectList[i].contacts+'</p>'+
@@ -127,8 +130,8 @@ export default {
                             '</div>';
                     if(this.projectList[i].alarmNum>0){
                         iconurl='./static/images/index_warning.svg'
-                         var content = '<div class="loncom_map_box">'+
-                                '<div class="loncom_map_boxtop loncom_map_boxtopalarm">'+this.projectList[i].name+'</div>' +
+                        content = '<div class="loncom_map_box">'+
+                                '<div class="loncom_map_boxtop loncom_map_boxtopalarm">'+router+'</div>' +
                                 '<div class="loncom_map_boxcon">'+
                                     '<p>公司：'+this.projectList[i].fullName+'</p>'+
                                     '<p>联系人：'+this.projectList[i].contacts+'</p>'+

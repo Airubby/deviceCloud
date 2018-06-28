@@ -11,6 +11,7 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
+                @resultData="resultInfo"
                 :formOptions="table_forms"
                 @selection-change="handleSelectionChange" ref="thisRef" > 
                     <div class="form_add">

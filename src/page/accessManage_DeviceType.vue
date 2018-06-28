@@ -85,10 +85,10 @@
 export default {
     created () {
         //获取设备类型模板
-        this.$api.post('/typeTemplate/list', {}, r => {
+        this.$api.post('/typeTemplate/getSelect', {}, r => {
             console.log(r)
             if(r.success){
-                this.templist=r.list;
+                this.templist=r.data;
             }
         }); 
          //获取权限树

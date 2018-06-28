@@ -14,8 +14,9 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
+                @resultData="resultInfo"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" 
-                 highlight-current-row @current-change="handleCellChange" ref="thisRef">   
+                 highlight-current-row @current-change="handleCellChange" @row-click="handleCellChange" ref="thisRef">   
                             <div class="form_add">
                                 <el-button type="primary" size="small" @click="save">保存</el-button>
                                 <el-button type="primary" size="small" @click="add">新增</el-button>

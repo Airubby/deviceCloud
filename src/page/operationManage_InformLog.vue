@@ -12,6 +12,7 @@
                 list-field="list" 
                 total-field="total"
                 method='post' 
+                @resultData="resultInfo"
                 :formOptions="table_forms" :show-pagination="true" border :data="table_data" :columns="table_columns" ref="thisRef" >     
                     <div class="form_add">
                         <el-button type="primary" size="small" @click="clear">清除</el-button>
