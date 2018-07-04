@@ -746,7 +746,6 @@ input:-webkit-autofill {
     margin-right: 10px;
     cursor: pointer;
 }
-.infoBox{z-index: 1000}
 .loncom_map_box{
   min-width: 300px;
   height: auto;
@@ -754,8 +753,8 @@ input:-webkit-autofill {
   box-shadow: 1px 1px 3px #ccc;
   background: #fff;
   margin-bottom: 10px;
-  z-index: 99999;
-  position: relative;
+  /*z-index: 99999;
+  position: relative;*/
 }
 .loncom_map_boxtop {
     width: 100%;

@@ -271,7 +271,7 @@
                         <el-col :span="12">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>动作类型：
+                                    动作类型：
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
@@ -290,7 +290,7 @@
                         <el-col :span="12">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>告警类型：
+                                    告警类型：
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="alarmType">
@@ -315,7 +315,7 @@
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="enumDic">
-                                        <el-input size="small" placeholder="0,高压;1,低压;" v-model="form_info.enumDic"></el-input>
+                                        <el-input size="small" placeholder="0,高压;1,低压" v-model="form_info.enumDic"></el-input>
                                     </el-form-item>
                                 </div>
                             </div>
@@ -323,7 +323,7 @@
                         <el-col :span="12">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>动作类型：
+                                   动作类型：
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
@@ -343,7 +343,7 @@
                             <el-col :span="12">
                                 <div class="loncom_list_boxform">
                                     <div class="loncom_list_box_left">
-                                        <em>*</em>告警类型：
+                                        告警类型：
                                     </div>
                                     <div class="loncom_list_box_right">
                                         <el-form-item prop="alarmType">
@@ -391,7 +391,7 @@
                         <el-col :span="12">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>动作类型：
+                                    动作类型：
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="actionType">
@@ -410,7 +410,7 @@
                         <el-col :span="12">
                             <div class="loncom_list_boxform">
                                 <div class="loncom_list_box_left">
-                                    <em>*</em>告警类型：
+                                    告警类型：
                                 </div>
                                 <div class="loncom_list_box_right">
                                     <el-form-item prop="alarmType">
@@ -548,7 +548,7 @@ export default {
     data() {
         var validatePass = (rule, value, callback) => {
             if (value != '') {
-                var re=/(([\u4e00-\u9fa5\w]{1,})([,，]{1})([\u4e00-\u9fa5\w]{1,})([;；]{1})){1,}/;
+                var re=/^[\w]+\,[\w\u4e00-\u9fa5\.\#\$]+(\;[\w]+\,[\w\u4e00-\u9fa5\.\#\$]+)*$/;
                 console.log(re.test(value))
                 if (!re.test(value)) {
                     callback(new Error('请输入正确的格式'));
@@ -630,12 +630,6 @@ export default {
                 storePolicy:[
                     { required: true, message: '请选择', trigger: 'change' },
                 ],
-                actionType:[
-                    { required: true, message: '请选择', trigger: 'change' },
-                ],
-                alarmType:[
-                    { required: true, message: '请选择', trigger: 'change' },
-                ],
                 timingTarget:[
                     { required: true, message: '请输入', trigger: 'blur' },
                 ],
@@ -698,11 +692,13 @@ export default {
                 console.log(r.data)
                 if(r.success){
                     this.action_data=r.data;
+                    this.action_data.unshift({code:"",label:""})
                     for(var i=0;i<r.data.length;i++){
                         if(r.data[i].code=="timelength"){
                             this.action_data_timelength.push(r.data[i])
                         }else if(r.data[i].code=="alarm"){
                             this.action_data_alarm.push(r.data[i])
+                            this.action_data_alarm.unshift({code:"",label:""})
                         }
                     }
                 }else{this.$message.warning(r.msg);}
@@ -714,8 +710,10 @@ export default {
                     for(var i=0;i<r.data.length;i++){
                         if(r.data[i].code=="thr"){
                             this.alarm_data_thr.push(r.data[i])
+                            this.alarm_data_thr.unshift({code:"",label:""})
                         }else if(r.data[i].code=="bits"){
                             this.alarm_data_bits.push(r.data[i])
+                            this.alarm_data_bits.unshift({code:"",label:""})
                         }
                     }
                 }else{this.$message.warning(r.msg);}

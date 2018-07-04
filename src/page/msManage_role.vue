@@ -114,7 +114,7 @@ export default {
         //获取权限树
         getTree:function(){
             this.tree_data=[];
-            this.$api.post('/menu/getById', {id:1}, r => {
+            this.$api.post('/menu/getUserPower', {}, r => {
                 if(r.success){
                     this.tree_data.push(r.data);
                 }
